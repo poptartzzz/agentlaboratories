@@ -442,6 +442,7 @@ export default function CreateAgent() {
         isUser: true
       }]);
 
+      // Define the context here
       const context = `You are an AI Bot Creation Assistant helping users design custom automation solutions. You're creative and open to any type of bot idea.
 
 Current conversation:
@@ -472,19 +473,25 @@ Do not include any text outside of this JSON structure. All your communication s
         parsedResponse = JSON.parse(response.trim());
       } catch (parseError) {
         console.error('Failed to parse AI response:', parseError);
-        parsedResponse = {
-          message: `🤖 ${response}`,
-          config_updates: {}
-        };
+        // If parsing fails, just show the raw response
+        setChat(prev => [...prev, {
+          id: generateUniqueId(),
+          text: `🤖 ${response}`,
+          timestamp: Date.now(),
+          isUser: false
+        }]);
+        return;
       }
 
+      // Add the AI response to chat
       setChat(prev => [...prev, {
         id: generateUniqueId(),
-        text: parsedResponse.message,
+        text: parsedResponse.message || response,
         timestamp: Date.now(),
         isUser: false
       }]);
 
+      // Handle configuration updates if they exist
       if (parsedResponse.config_updates && Object.keys(parsedResponse.config_updates).length > 0) {
         handleConfigUpdates(parsedResponse.config_updates);
       }

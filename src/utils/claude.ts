@@ -26,7 +26,7 @@ export async function generateAgentResponse(context: string) {
     if (error instanceof Error) {
       throw new Error(`AI Service Error: ${error.message}`);
     }
-    throw new Error('Failed to generate response. Please check your API configuration.');
+    throw new Error('Failed to generate response');
   }
 }
 

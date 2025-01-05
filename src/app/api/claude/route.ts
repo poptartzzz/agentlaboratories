@@ -5,9 +5,9 @@ export async function POST(req: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {
-    console.error('Missing ANTHROPIC_API_KEY');
+    console.error('Missing ANTHROPIC_API_KEY in environment:', process.env);
     return NextResponse.json(
-      { error: 'API configuration error' },
+      { error: 'API configuration error - Key missing' },
       { status: 500 }
     );
   }
@@ -21,6 +21,8 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    console.log('Attempting Anthropic API call with key:', apiKey.substring(0, 10) + '...');
 
     const anthropic = new Anthropic({
       apiKey: apiKey
