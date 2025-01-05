@@ -5,9 +5,17 @@ export async function POST(req: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {
-    console.error('Missing ANTHROPIC_API_KEY in environment:', process.env);
+    console.error('API Key Error - Available env vars:', Object.keys(process.env).join(', '));
     return NextResponse.json(
-      { error: 'API configuration error - Key missing' },
+      { error: 'API configuration error - Please contact support' },
+      { status: 500 }
+    );
+  }
+
+  if (!apiKey.startsWith('sk-ant')) {
+    console.error('Invalid API key format');
+    return NextResponse.json(
+      { error: 'Invalid API configuration' },
       { status: 500 }
     );
   }
