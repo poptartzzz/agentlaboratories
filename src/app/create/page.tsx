@@ -61,12 +61,6 @@ interface ConfigCategory {
   }[];
 }
 
-// Add this interface to track editing states
-interface EditingState {
-  fieldKey: string | null;
-  tempValue: string | string[] | Record<string, string> | { [key: string]: string | undefined } | null;
-}
-
 // Add the flash animation
 const flashAnimation = `
   @keyframes flash {
@@ -77,6 +71,18 @@ const flashAnimation = `
 
   .animate-flash {
     animation: flash 0.5s ease-in-out infinite;
+  }
+`;
+
+// Add this CSS animation for the spinning circle
+const spinAnimation = `
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .spin {
+    animation: spin 2s linear infinite;
   }
 `;
 
@@ -95,6 +101,25 @@ interface ChatMessage {
   isThinking?: boolean;
 }
 
+// Add these example suggestions
+const botSuggestions = [
+  {
+    id: 'inverse-cramer',
+    text: "Make me a bot that buys/sells the opposite of @jimcramer sentiment on Twitter",
+  },
+  {
+    id: 'github-monitor',
+    text: "Create a bot that monitors GitHub repositories for security vulnerabilities and sends alerts to Discord",
+  },
+  {
+    id: 'content-curator',
+    text: "Build a bot that curates and summarizes crypto news from multiple sources and posts daily reports to Telegram",
+  }
+];
+
+// Move the type definition outside
+type ConfigValue = string | string[] | Record<string, string | undefined>;
+
 export default function CreateAgent() {
   const [chat, setChat] = useState<ChatMessage[]>([
     {
@@ -105,7 +130,7 @@ export default function CreateAgent() {
     }
   ]);
   const [userInput, setUserInput] = useState('');
-  const [isThinking, setIsThinking] = useState(false);
+  const [isThinking] = useState(false);
   const [agentConfig, setAgentConfig] = useState<AgentConfig>({
     name: '',
     type: '',
@@ -143,6 +168,14 @@ export default function CreateAgent() {
     discordApiKey: ''
   });
 
+  // Move handleFieldUpdate inside the component
+  const handleFieldUpdate = (fieldKey: keyof AgentConfig, value: ConfigValue) => {
+    setAgentConfig(prev => ({
+      ...prev,
+      [fieldKey]: value
+    }));
+  };
+
   // Add this state for managing expanded sections
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['Basic Info']);
 
@@ -153,7 +186,7 @@ export default function CreateAgent() {
   const [flashingSection, setFlashingSection] = useState<string | null>(null);
 
   // Add these to track AI-suggested requirements
-  const [aiSuggestedRequirements, setAiSuggestedRequirements] = useState<string[]>([]);
+  const [aiSuggestedRequirements] = useState<string[]>([]);
 
   // Move categoryHasRequired inside the component
   const categoryHasRequired = (category: ConfigCategory) => {
@@ -208,7 +241,6 @@ export default function CreateAgent() {
           label: 'Exchange APIs (max 5)', 
           type: 'array',
           description: 'Add exchange API keys for automated trading (e.g., Binance, Coinbase, KuCoin)',
-          required: () => dynamicRequirements.includes('exchangeApi'),
           maxEntries: 5
         },
         { 
@@ -216,7 +248,6 @@ export default function CreateAgent() {
           label: 'Data Provider APIs (max 5)', 
           type: 'array',
           description: 'Add data provider API keys for market data (e.g., CoinGecko, CryptoCompare)',
-          required: () => dynamicRequirements.includes('dataApi'),
           maxEntries: 5
         }
       ]
@@ -240,29 +271,25 @@ export default function CreateAgent() {
           key: 'maxPositionSize', 
           label: 'Max Position Size', 
           type: 'text',
-          description: 'Maximum size for any single trade (in quote currency)',
-          required: (key) => aiSuggestedRequirements.includes(key)
+          description: 'Maximum size for any single trade (in quote currency)'
         },
         { 
           key: 'stopLossDefault', 
           label: 'Default Stop Loss', 
           type: 'text',
-          description: 'Default stop loss percentage for trades',
-          required: (key) => aiSuggestedRequirements.includes(key)
+          description: 'Default stop loss percentage for trades'
         },
         { 
           key: 'takeProfitDefault', 
           label: 'Default Take Profit', 
           type: 'text',
-          description: 'Default take profit percentage for trades',
-          required: (key) => aiSuggestedRequirements.includes(key)
+          description: 'Default take profit percentage for trades'
         },
         { 
           key: 'tradingTimeframe', 
           label: 'Trading Timeframe', 
           type: 'text',
-          description: '1m, 5m, 15m, 1h, 4h, 1d, etc.',
-          required: (key) => aiSuggestedRequirements.includes(key)
+          description: '1m, 5m, 15m, 1h, 4h, 1d, etc.'
         },
         { 
           key: 'indicators', 
@@ -275,7 +302,7 @@ export default function CreateAgent() {
           label: 'Max Daily Trades', 
           type: 'text',
           description: 'Maximum number of trades per 24h period'
-        },
+        }
       ]
     },
     {
@@ -331,343 +358,153 @@ export default function CreateAgent() {
           description: 'How often to backup bot data and settings'
         },
       ]
-    },
-    {
-      title: "Platform Integration",
-      fields: [
-        { 
-          key: 'telegramApiKey', 
-          label: 'Telegram API Key', 
-          type: 'text',
-          description: 'Your Telegram bot API key',
-          required: (key) => dynamicRequirements.includes(key)
-        },
-        { 
-          key: 'twitterApiKey', 
-          label: 'Twitter API Key', 
-          type: 'text',
-          description: 'Your Twitter developer API key',
-          required: (key) => dynamicRequirements.includes(key)
-        },
-        { 
-          key: 'discordApiKey', 
-          label: 'Discord Bot Token', 
-          type: 'text',
-          description: 'Your Discord bot token',
-          required: (key) => dynamicRequirements.includes(key)
-        }
-      ]
     }
   ];
-
-  const [editingState, setEditingState] = useState<EditingState>({
-    fieldKey: null,
-    tempValue: null
-  });
 
   const handleUserInput = async (message: string) => {
     if (!message.trim()) return;
 
-    const newMessageId = generateUniqueId();
+    // Add user message
+    setChat(prev => [...prev, {
+      id: generateUniqueId(),
+      text: message,
+      timestamp: Date.now(),
+      isUser: true
+    }]);
+
+    // Add thinking message
     const thinkingId = generateUniqueId();
+    setChat(prev => [...prev, {
+      id: thinkingId,
+      text: "🤖 Thinking...",
+      timestamp: Date.now(),
+      isUser: false,
+      isThinking: true
+    }]);
 
     try {
-      // Add user message
-      setChat(prev => [...prev, {
-        id: newMessageId,
-        text: message,
-        timestamp: Date.now(),
-        isUser: true
-      }]);
-      setUserInput('');
-      setIsThinking(true);
-
-      // Add thinking message
-      setChat(prev => [...prev, {
-        id: thinkingId,
-        text: "Thinking...",
-        timestamp: Date.now(),
-        isUser: false,
-        isThinking: true
-      }]);
-
       // Define the context for the AI
-      const context = `You are an AI agent creator assistant. Help create a crypto trading bot by extracting information from the conversation and suggesting configurations.
+      const context = `You are an AI Bot Creation Assistant helping users design custom automation solutions. You're creative and open to any type of bot idea.
 
-Current configuration:
-${JSON.stringify(agentConfig, null, 2)}
+Current conversation:
+${chat.map(msg => msg.text).join('\n')}
 
-Chat history:
-${chat.map(msg => `${msg.isUser ? 'User' : 'Assistant'}: ${msg.text}`).join('\n')}
+User's latest message: ${message}
 
-New message: ${message}
-
-Analyze the message and previous chat to extract or suggest bot configuration details. Always respond with a JSON object containing:
-1. A conversational message to the user
-2. Any configuration updates detected or suggested
-
-Response format:
+Extract information and provide it in this JSON format:
 {
-  "message": "Your conversational response here",
-  "updates": {
-    "name": "suggested or mentioned bot name",
-    "type": "trading/sentiment/monitoring/etc",
-    "platform": "telegram/discord/twitter",
-    "description": "detailed bot description",
-    "features": ["feature 1", "feature 2"],
-    "commands": ["command 1", "command 2"],
-    "triggers": ["trigger 1", "trigger 2"]
+  "message": "Your conversational response here (starting with 🤖)",
+  "config_updates": {
+    "name": "extract or suggest bot name if mentioned",
+    "type": "extract or suggest bot type based on conversation",
+    "platform": "extract platform (Discord/Telegram) if mentioned",
+    "description": "create a clear description of the bot's purpose",
+    "features": ["list", "key", "features", "mentioned", "or", "suggested"],
+    "apiKeys": ["list", "required", "API", "integrations"],
+    "triggers": ["list", "event", "triggers", "or", "commands"]
   }
-}`;
+}
+
+Focus on extracting these key details from the conversation. If any field is not relevant or not mentioned, omit it from the config_updates object.`;
 
       const response = await generateAgentResponse(context);
 
-      // Remove thinking message and add response
-      setChat(prev => {
-        const filteredChat = prev.filter(msg => msg.id !== thinkingId);
+      if (!response) {
+        setChat(prev => 
+          prev.filter(msg => msg.id !== thinkingId).concat({
+            id: generateUniqueId(),
+            text: "🤖 I'm having trouble processing your request. Please try again.",
+            timestamp: Date.now(),
+            isUser: false
+          })
+        );
+        return;
+      }
+
+      try {
+        const parsedResponse = JSON.parse(response);
         
-        try {
-          if (!response) {
-            return [
-              ...filteredChat,
-              {
-                id: generateUniqueId(),
-                text: "I'm having trouble processing your request. Please try again.",
-                timestamp: Date.now(),
-                isUser: false
-              }
-            ];
-          }
+        if (parsedResponse.config_updates) {
+          // Track which sections need updating
+          const updates = parsedResponse.config_updates;
+          const sectionsToUpdate = new Set<string>();
 
-          // First try to parse as JSON
-          try {
-            const parsedResponse = JSON.parse(response);
+          // Update the configuration
+          setAgentConfig(prev => {
+            const newConfig = { ...prev };
             
-            // Process configuration updates if available
-            if (parsedResponse.updates) {
-              setAgentConfig(prev => {
-                const newConfig = { ...prev };
-                Object.entries(parsedResponse.updates).forEach(([key, value]) => {
-                  if (value && key in newConfig) {
-                    if (Array.isArray(value)) {
-                      (newConfig[key as keyof AgentConfig] as string[]) = value;
-                    } else if (typeof value === 'string') {
-                      (newConfig[key as keyof AgentConfig] as string) = value;
-                    }
-                  }
-                });
-                return newConfig;
-              });
+            // Process each update
+            Object.entries(updates).forEach(([key, value]) => {
+              if (value && key in newConfig) {
+                // Update the value
+                if (Array.isArray(value)) {
+                  (newConfig[key as keyof AgentConfig] as string[]) = 
+                    [...new Set([...(newConfig[key as keyof AgentConfig] as string[]), ...value])];
+                } else {
+                  (newConfig[key as keyof AgentConfig] as string) = value as string;
+                }
 
-              // Update suggested requirements
-              const suggestedReqs = Object.keys(parsedResponse.updates).filter(
-                key => parsedResponse.updates[key]
-              );
-              if (suggestedReqs.length > 0) {
-                setAiSuggestedRequirements(prev => [...new Set([...prev, ...suggestedReqs])]);
-              }
-            }
+                // Determine which section this field belongs to
+                const section = configCategories.find(cat => 
+                  cat.fields.some(field => field.key === key)
+                )?.title;
 
-            // Return chat with the message from parsed response
-            return [
-              ...filteredChat,
-              {
-                id: generateUniqueId(),
-                text: parsedResponse.message || response,
-                timestamp: Date.now(),
-                isUser: false
+                if (section) {
+                  sectionsToUpdate.add(section);
+                  // Also expand the section
+                  setExpandedCategories(prev => 
+                    prev.includes(section) ? prev : [...prev, section]
+                  );
+                }
               }
-            ];
-          } catch {
-            // If JSON parsing fails, use the raw response
-            return [
-              ...filteredChat,
-              {
-                id: generateUniqueId(),
-                text: response,
-                timestamp: Date.now(),
-                isUser: false
-              }
-            ];
-          }
-        } catch (error) {
-          console.error('Error processing response:', error);
-          return [
-            ...filteredChat,
-            {
-              id: generateUniqueId(),
-              text: "An error occurred while processing the response. Please try again.",
-              timestamp: Date.now(),
-              isUser: false
-            }
-          ];
+            });
+
+            return newConfig;
+          });
+
+          // Flash updated sections sequentially
+          Array.from(sectionsToUpdate).forEach((section, index) => {
+            setTimeout(() => {
+              setFlashingSection(section);
+              setTimeout(() => setFlashingSection(null), 2000);
+            }, index * 2500);
+          });
         }
-      });
 
+        // Update chat with AI response
+        setChat(prev => 
+          prev.filter(msg => msg.id !== thinkingId).concat({
+            id: generateUniqueId(),
+            text: parsedResponse.message,
+            timestamp: Date.now(),
+            isUser: false
+          })
+        );
+      } catch (parseError) {
+        console.error('Parse error:', parseError);
+        // Handle raw response if JSON parsing fails
+        setChat(prev => 
+          prev.filter(msg => msg.id !== thinkingId).concat({
+            id: generateUniqueId(),
+            text: response,
+            timestamp: Date.now(),
+            isUser: false
+          })
+        );
+      }
     } catch (error) {
       console.error('Error:', error);
-      setChat(prev => [
-        ...prev.filter(msg => msg.id !== thinkingId),
-        {
+      setChat(prev => 
+        prev.filter(msg => msg.id !== thinkingId).concat({
           id: generateUniqueId(),
-          text: "An error occurred. Please try again.",
+          text: "🤖 I encountered an error. Please try again.",
           timestamp: Date.now(),
           isUser: false
-        }
-      ]);
-    } finally {
-      setIsThinking(false);
+        })
+      );
     }
-  };
 
-  const renderEditableField = (
-    label: string, 
-    value: string | string[] | Record<string, string> | { [key: string]: string | undefined },
-    fieldKey: string
-  ) => {
-    const field = configCategories
-      .flatMap(category => category.fields)
-      .find(f => f.key === fieldKey);
-
-    if (!field) return null;
-
-    // Helper function to format value for display
-    const getDisplayValue = (val: typeof value): string | string[] => {
-      if (typeof val === 'string' || Array.isArray(val)) {
-        return val;
-      }
-      // For objects (like notificationSettings and customResponses)
-      return Object.entries(val)
-        .map(([k, v]) => `${k}: ${v || ''}`)
-        .filter(Boolean);
-    };
-
-    // Get the actual value to display
-    const displayValue = getDisplayValue(value);
-
-    const isCurrentlyEditing = editingState.fieldKey === fieldKey;
-    const currentEntries = Array.isArray(displayValue) ? displayValue.length : 0;
-
-    const startEditing = () => {
-      let initialValue: typeof editingState.tempValue;
-
-      if (Array.isArray(value)) {
-        initialValue = [...value];
-      } else if (typeof value === 'object' && value !== null) {
-        initialValue = { ...value };
-      } else {
-        initialValue = value as string;
-      }
-
-      setEditingState({
-        fieldKey: fieldKey,
-        tempValue: initialValue
-      });
-    };
-
-    const handleSave = () => {
-      if (editingState.tempValue !== null) {
-        setAgentConfig(prev => ({
-          ...prev,
-          [fieldKey]: editingState.tempValue
-        }));
-      }
-      setEditingState({ fieldKey: null, tempValue: null });
-    };
-
-    const handleChange = (newValue: string | string[] | Record<string, string> | { [key: string]: string | undefined }) => {
-      setEditingState(prev => ({
-        ...prev,
-        tempValue: newValue
-      }));
-    };
-
-    return (
-      <div>
-        <div className="flex justify-between text-[#00ff00]/70 mb-1">
-          <div>
-            {label}
-            {field.required && <span className="text-red-500 ml-1">*</span>}
-          </div>
-          <div className="flex gap-2">
-            {field.type === 'array' && (
-              <button
-                onClick={() => {
-                  if (Array.isArray(editingState.tempValue)) {
-                    handleChange([...editingState.tempValue, '']);
-                  }
-                  if (!isCurrentlyEditing) {
-                    startEditing();
-                  }
-                }}
-                className="text-xs hover:text-white px-2 border border-[#00ff00]/50 hover:border-[#00ff00]"
-                disabled={field.maxEntries ? currentEntries >= field.maxEntries : false}
-              >
-                + ADD {field.maxEntries && `(${currentEntries}/${field.maxEntries})`}
-              </button>
-            )}
-            <button
-              onClick={() => {
-                if (isCurrentlyEditing) {
-                  handleSave();
-                } else {
-                  startEditing();
-                }
-              }}
-              className="text-xs hover:text-white"
-            >
-              {isCurrentlyEditing ? 'SAVE' : 'EDIT'}
-            </button>
-          </div>
-        </div>
-        {field.description && (
-          <div className="text-xs text-[#00ff00]/50 mb-2 italic">
-            {field.description}
-          </div>
-        )}
-        <div className="border border-[#00ff00]/20 p-2">
-          {isCurrentlyEditing ? (
-            field.type === 'array' ? (
-              <>
-                <textarea
-                  className="w-full bg-black text-[#00ff00] border-none outline-none"
-                  value={Array.isArray(displayValue) ? displayValue.join('\n') : ''}
-                  onChange={(e) => {
-                    const newValues = e.target.value.split('\n').filter(Boolean);
-                    if (!field.maxEntries || newValues.length <= field.maxEntries) {
-                      handleChange(newValues);
-                    }
-                  }}
-                  rows={4}
-                  placeholder="Enter one item per line"
-                />
-                {field.maxEntries && (
-                  <div className="text-xs text-[#00ff00]/50 mt-1">
-                    {currentEntries}/{field.maxEntries} entries
-                  </div>
-                )}
-              </>
-            ) : (
-              <input
-                className="w-full bg-black text-[#00ff00] border-none outline-none"
-                value={typeof displayValue === 'string' ? displayValue : ''}
-                onChange={(e) => handleChange(e.target.value)}
-              />
-            )
-          ) : field.type === 'array' ? (
-            Array.isArray(displayValue) && displayValue.length > 0 ? (
-              <ul className="list-disc pl-4">
-                {displayValue.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            ) : '...'
-          ) : (
-            (typeof displayValue === 'string' ? displayValue : '...') || '...'
-          )}
-        </div>
-      </div>
-    );
+    setUserInput('');
   };
 
   const [isBaking, setIsBaking] = useState(false);
@@ -734,6 +571,7 @@ Response format:
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] ${pressStart.className}`}>
       <style jsx>{flashAnimation}</style>
+      <style jsx>{spinAnimation}</style>
       {/* Matrix Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(0deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:100%_2px]"></div>
@@ -768,23 +606,41 @@ Response format:
                 )}
               </div>
 
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleUserInput(userInput)}
-                  placeholder="Describe your bot..."
-                  className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-sm focus:outline-none focus:border-white"
-                  disabled={isThinking}
-                />
-                <button
-                  onClick={() => handleUserInput(userInput)}
-                  disabled={!userInput.trim() || isThinking}
-                  className="px-4 py-1 border border-[#00ff00] hover:bg-[#00ff00] hover:text-black transition-all text-sm disabled:opacity-50"
-                >
-                  SEND
-                </button>
+              <div className="border-t border-[#00ff00]/20 pt-4">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleUserInput(userInput)}
+                    placeholder="Describe your bot..."
+                    className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-sm focus:outline-none focus:border-white"
+                    disabled={isThinking}
+                  />
+                  <button
+                    onClick={() => handleUserInput(userInput)}
+                    disabled={!userInput.trim() || isThinking}
+                    className="px-4 py-1 border border-[#00ff00] hover:bg-[#00ff00] hover:text-black transition-all text-sm disabled:opacity-50"
+                  >
+                    SEND
+                  </button>
+                </div>
+
+                {/* Add suggestion buttons */}
+                <div className="mt-4 space-y-2">
+                  <div className="text-xs text-[#00ff00]/50">Try these examples:</div>
+                  <div className="flex flex-wrap gap-2">
+                    {botSuggestions.map((suggestion) => (
+                      <button
+                        key={suggestion.id}
+                        onClick={() => handleUserInput(suggestion.text)}
+                        className="text-xs border border-[#00ff00]/30 px-3 py-1.5 hover:border-[#00ff00] hover:bg-[#00ff00]/10 transition-all text-[#00ff00]/70 hover:text-[#00ff00] text-left"
+                      >
+                        {suggestion.text}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -795,10 +651,10 @@ Response format:
               <div className="space-y-6">
                 {configCategories.map((category) => (
                   <div key={category.title} 
-                    className={`border border-[#00ff00]/20 transition-all ${
+                    className={`border transition-all duration-500 ${
                       flashingSection === category.title 
-                        ? 'animate-flash border-red-500' 
-                        : ''
+                        ? 'border-[#00ff00] bg-[#00ff00]/10'
+                        : 'border-[#00ff00]/20 bg-transparent'
                     }`}
                   >
                     <button
@@ -819,11 +675,58 @@ Response format:
                     {expandedCategories.includes(category.title) && (
                       <div className="p-4 space-y-4">
                         {category.fields.map((field) => (
-                          <div key={`${category.title}-${field.key}`}>
-                            {renderEditableField(
-                              field.label,
-                              agentConfig[field.key],
-                              field.key
+                          <div key={field.key} className="space-y-2">
+                            <label className="text-sm text-[#00ff00]/70">
+                              {field.label}
+                              {field.required && <span className="text-red-500 ml-1">*</span>}
+                            </label>
+                            {field.type === 'array' ? (
+                              <div className="space-y-2">
+                                {(agentConfig[field.key] as string[]).map((item, index) => (
+                                  <div key={index} className="flex gap-2">
+                                    <input
+                                      type="text"
+                                      value={item}
+                                      onChange={(e) => {
+                                        const newArray = [...(agentConfig[field.key] as string[])];
+                                        newArray[index] = e.target.value;
+                                        handleFieldUpdate(field.key, newArray);
+                                      }}
+                                      className="flex-1 bg-black border border-[#00ff00]/30 text-[#00ff00] px-2 py-1 text-sm"
+                                    />
+                                    <button
+                                      onClick={() => {
+                                        const newArray = (agentConfig[field.key] as string[]).filter((_, i) => i !== index);
+                                        handleFieldUpdate(field.key, newArray);
+                                      }}
+                                      className="text-[#00ff00]/70 hover:text-[#00ff00]"
+                                    >
+                                      ×
+                                    </button>
+                                  </div>
+                                ))}
+                                <button
+                                  onClick={() => {
+                                    const newArray = [...(agentConfig[field.key] as string[]), ''];
+                                    handleFieldUpdate(field.key, newArray);
+                                  }}
+                                  className="text-xs text-[#00ff00]/70 hover:text-[#00ff00]"
+                                >
+                                  + Add {field.label}
+                                </button>
+                              </div>
+                            ) : (
+                              <input
+                                type="text"
+                                value={agentConfig[field.key] as string}
+                                onChange={(e) => handleFieldUpdate(field.key, e.target.value)}
+                                className="w-full bg-black border border-[#00ff00]/30 text-[#00ff00] px-2 py-1 text-sm"
+                              />
+                            )}
+                            {field.description && (
+                              <div className="text-xs text-[#00ff00]/50 italic">
+                                {field.description}
+                              </div>
                             )}
                           </div>
                         ))}
@@ -833,47 +736,55 @@ Response format:
                 ))}
 
                 {/* Custom Responses Section */}
-                <div className="border border-[#00ff00]/20">
+                <div className="border border-red-500/50">
                   <button
-                    className="w-full px-4 py-2 bg-[#00ff00]/10 hover:bg-[#00ff00]/20 transition-all flex justify-between items-center"
+                    className="w-full px-4 py-2 bg-red-500/10 hover:bg-red-500/20 transition-all flex justify-between items-center"
                     onClick={() => setExpandedCategories(prev => 
                       prev.includes('Custom Responses') 
                         ? prev.filter(c => c !== 'Custom Responses')
                         : [...prev, 'Custom Responses']
                     )}
                   >
-                    <span>Custom Responses</span>
+                    <div className="flex items-center gap-2">
+                      <span>Custom Responses</span>
+                      <div className="w-2 h-2 rounded-full bg-red-500 spin"></div>
+                      <span className="text-xs text-red-500">(Coming Soon)</span>
+                    </div>
                     <span>{expandedCategories.includes('Custom Responses') ? '−' : '+'}</span>
                   </button>
                   
                   {expandedCategories.includes('Custom Responses') && (
-                    <div className="p-4 space-y-4">
-                      {renderEditableField('Welcome Message', agentConfig.customResponses.welcome, 'welcome')}
-                      {renderEditableField('Success Message', agentConfig.customResponses.success, 'success')}
-                      {renderEditableField('Error Message', agentConfig.customResponses.error, 'error')}
+                    <div className="p-4 space-y-4 bg-red-500/5">
+                      <div className="text-center text-red-500/70 py-8">
+                        Feature coming soon...
+                      </div>
                     </div>
                   )}
                 </div>
 
                 {/* Notification Settings Section */}
-                <div className="border border-[#00ff00]/20">
+                <div className="border border-red-500/50">
                   <button
-                    className="w-full px-4 py-2 bg-[#00ff00]/10 hover:bg-[#00ff00]/20 transition-all flex justify-between items-center"
+                    className="w-full px-4 py-2 bg-red-500/10 hover:bg-red-500/20 transition-all flex justify-between items-center"
                     onClick={() => setExpandedCategories(prev => 
-                      prev.includes('Notifications') 
-                        ? prev.filter(c => c !== 'Notifications')
-                        : [...prev, 'Notifications']
+                      prev.includes('Notification Settings') 
+                        ? prev.filter(c => c !== 'Notification Settings')
+                        : [...prev, 'Notification Settings']
                     )}
                   >
-                    <span>Notification Settings</span>
-                    <span>{expandedCategories.includes('Notifications') ? '−' : '+'}</span>
+                    <div className="flex items-center gap-2">
+                      <span>Notification Settings</span>
+                      <div className="w-2 h-2 rounded-full bg-red-500 spin"></div>
+                      <span className="text-xs text-red-500">(Coming Soon)</span>
+                    </div>
+                    <span>{expandedCategories.includes('Notification Settings') ? '−' : '+'}</span>
                   </button>
                   
-                  {expandedCategories.includes('Notifications') && (
-                    <div className="p-4 space-y-4">
-                      {renderEditableField('Telegram', agentConfig.notificationSettings.telegram || '', 'telegram')}
-                      {renderEditableField('Discord', agentConfig.notificationSettings.discord || '', 'discord')}
-                      {renderEditableField('Email', agentConfig.notificationSettings.email || '', 'email')}
+                  {expandedCategories.includes('Notification Settings') && (
+                    <div className="p-4 space-y-4 bg-red-500/5">
+                      <div className="text-center text-red-500/70 py-8">
+                        Feature coming soon...
+                      </div>
                     </div>
                   )}
                 </div>
