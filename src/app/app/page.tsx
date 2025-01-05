@@ -9,141 +9,48 @@ const pressStart = Press_Start_2P({
 });
 
 // Example bots data
-const exampleBots = [
+const agents = [
   {
-    id: 'bot_1',
-    name: 'Uniswap Alpha',
-    type: 'trading',
-    status: 'active',
-    platform: 'Telegram',
-    group: 't.me/unialpha_v1_test',
-    stats: {
-      messages: '24',
-      users: '5',
-      uptime: '99.1%'
-    },
-    description: 'Monitors Uniswap pools for large trades and potential opportunities.',
-    lastActive: '2 mins ago'
+    name: "AGENTZ test",
+    description: "test test",
+    link: "test.com",
+    status: "maintenance",
+    image: "/agentzaimainmain.png" // Default logo for test bot
   },
   {
-    id: 'bot_2',
-    name: 'Degen Detector',
-    type: 'research',
-    status: 'active',
-    platform: 'Discord',
-    group: 'discord.gg/degen_detect_beta',
-    stats: {
-      messages: '19',
-      users: '4',
-      uptime: '98.7%'
-    },
-    description: 'Analyzes new token launches and provides rugpull risk assessment.',
-    lastActive: '5 mins ago'
+    name: "AGENTZ bake test 🥖🍞",
+    description: "do not bake cat bake agentz",
+    link: "@agenztbakebot",
+    status: "active",
+    image: "/cat.jpg"
   },
   {
-    id: 'bot_3',
-    name: 'Whale Alert',
-    type: 'tracking',
-    status: 'active',
-    platform: 'Twitter',
-    group: '@whale_alerts_beta',
-    stats: {
-      messages: '16',
-      users: '6',
-      uptime: '99.8%'
-    },
-    description: 'Tracks large wallet movements and institutional trading patterns.',
-    lastActive: '1 min ago'
+    name: "BASED TG AGENT(Z)",
+    description: "TG Agent Wallet Test Bot",
+    link: "@basedtgagentbot",
+    status: "active",
+    image: "/basedafegent.png"
   },
   {
-    id: 'bot_4',
-    name: 'MEV Hunter',
-    type: 'arbitrage',
-    status: 'maintenance',
-    platform: 'Telegram',
-    group: 't.me/mev_hunter_test',
-    stats: {
-      messages: '15',
-      users: '3',
-      uptime: '95.5%'
-    },
-    description: 'Identifies MEV opportunities and arbitrage across DEXes.',
-    lastActive: '15 mins ago'
+    name: "Simple Tweet Notifier and Forwarder",
+    description: "Simple Tweet Notifier and Forwarder",
+    link: "@agentztweetforwarderbot",
+    status: "active",
+    image: "/twitteforwarder.png"
   },
   {
-    id: 'bot_5',
-    name: 'test',
-    type: 'experimental',
-    status: 'active',
-    platform: 'Discord',
-    group: 'discord.gg/agentz_test_32',
-    stats: {
-      messages: '5',
-      users: '2',
-      uptime: '87.2%'
-    },
-    description: 'Testing new trading strategies and signal formats.',
-    lastActive: '45 mins ago'
+    name: "Shitcoin Multichain Auto-Slinger",
+    description: "Multichain Shitcoin Slinger by AGENTZ AI",
+    link: "https://agentz.diy\n@agentzshitcoinbot",
+    status: "active",
+    image: "/shitcoinslinger.png"
   },
   {
-    id: 'bot_6',
-    name: 'Would Trump Trade This',
-    type: 'sentiment',
-    status: 'active',
-    platform: 'Twitter',
-    group: '@trump_trades_beta',
-    stats: {
-      messages: '26',
-      users: '8',
-      uptime: '99.1%'
-    },
-    description: 'Analyzes trading opportunities using Trump-style sentiment analysis. "We have the best trades, tremendous trades!"',
-    lastActive: '1 min ago'
-  },
-  {
-    id: 'bot_7',
-    name: 'ELON TWEET AUTO-BUYER',
-    type: 'trading',
-    status: 'active',
-    platform: 'Telegram',
-    group: 't.me/elon_alerts_v1',
-    stats: {
-      messages: '29',
-      users: '11',
-      uptime: '98.5%'
-    },
-    description: 'Instantly detects Elon Musk tweets and executes trades based on mentioned cryptocurrencies or technologies.',
-    lastActive: '3 mins ago'
-  },
-  {
-    id: 'bot_8',
-    name: 'Degen Ape',
-    type: 'meme',
-    status: 'active',
-    platform: 'Discord',
-    group: 'discord.gg/degen_ape_test',
-    stats: {
-      messages: '22',
-      users: '7',
-      uptime: '96.9%'
-    },
-    description: 'FOMO detector and degen play analyzer. "Apes together strong!" Tracks trending meme tokens.',
-    lastActive: '30 secs ago'
-  },
-  {
-    id: 'bot_9',
-    name: 'test_bot_2',
-    type: 'development',
-    status: 'maintenance',
-    platform: 'Telegram',
-    group: 't.me/agentz_dev_test',
-    stats: {
-      messages: '3',
-      users: '1',
-      uptime: '85.5%'
-    },
-    description: 'Development testing for new features. Please ignore.',
-    lastActive: '2 hours ago'
+    name: "AGENTZ AI - Agent Creator Assistant",
+    description: "Agent Creator assistant for AGENTZ AI",
+    link: "https://agentz.diy\n@agentzaihelperbot",
+    status: "active",
+    image: "/agentaiassiatnt.png"
   }
 ];
 
@@ -178,25 +85,79 @@ export default function Dashboard() {
       {/* Main Content */}
       <div className="relative z-10 pt-24 pb-12">
         <div className="container mx-auto px-6">
+          {/* Hot Bots Section */}
+          <div className="mb-12">
+            <h2 className="text-2xl mb-8">HOT AGENTZ 🔥</h2>
+            <div className="border-2 border-[#00ff00] bg-black/50 p-6 hover:bg-black/80 transition-all">
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-full overflow-hidden">
+                    <img 
+                      src="/agentaiassiatnt.png"
+                      alt="AGENTZ AI Assistant"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-xl mb-2">AGENTZ AI - Agent Creator Assistant</h3>
+                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AGENTZ AI</div>
+                    <div className="flex gap-3">
+                      <a 
+                        href="https://agentz.diy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
+                      >
+                        WEBSITE →
+                      </a>
+                      <a 
+                        href="https://t.me/agentzaihelperbot"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
+                      >
+                        TELEGRAM →
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-[#00ff00]/20 px-2 py-1 text-xs">
+                  ACTIVE
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Separator */}
+          <div className="w-full h-px bg-[#00ff00]/20 mb-12"></div>
+
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl">ACTIVE AGENTS</h1>
             <div className="text-sm text-[#00ff00]/70">
-              Total Agents: {exampleBots.length}
+              Total Agents: {agents.length - 1}
             </div>
           </div>
 
           {/* Bots Grid */}
           <div className="grid md:grid-cols-2 gap-6">
-            {exampleBots.map((bot) => (
+            {agents.filter(bot => bot.name !== "AGENTZ AI - Agent Creator Assistant").map((bot) => (
               <div 
-                key={bot.id}
+                key={bot.name}
                 className="border border-[#00ff00] bg-black/50 p-6 hover:bg-black/80 transition-all cursor-pointer"
               >
                 <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-lg mb-2">{bot.name}</h3>
-                    <div className="text-xs text-[#00ff00]/70 mb-1">Platform: {bot.platform}</div>
-                    <div className="text-xs text-[#00ff00]/70">Group: {bot.group}</div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full overflow-hidden">
+                      <img 
+                        src={bot.image} 
+                        alt={bot.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-lg mb-2">{bot.name}</h3>
+                      <div className="text-xs text-[#00ff00]/70 mb-1">{bot.link}</div>
+                    </div>
                   </div>
                   <div className={`px-2 py-1 text-xs ${
                     bot.status === 'active' ? 'bg-[#00ff00]/20' : 'bg-yellow-500/20'
@@ -207,23 +168,18 @@ export default function Dashboard() {
 
                 <p className="text-sm text-[#00ff00]/70 mb-4">{bot.description}</p>
 
-                <div className="grid grid-cols-3 gap-4 text-center text-sm">
-                  <div>
-                    <div className="text-[#00ff00]">{bot.stats.messages}</div>
-                    <div className="text-xs text-[#00ff00]/50">Messages</div>
-                  </div>
-                  <div>
-                    <div className="text-[#00ff00]">{bot.stats.users}</div>
-                    <div className="text-xs text-[#00ff00]/50">Users</div>
-                  </div>
-                  <div>
-                    <div className="text-[#00ff00]">{bot.stats.uptime}</div>
-                    <div className="text-xs text-[#00ff00]/50">Uptime</div>
-                  </div>
-                </div>
-
-                <div className="text-xs text-[#00ff00]/50 mt-4">
-                  Last active: {bot.lastActive}
+                <div className="mt-4">
+                  {bot.link.split('\n').map((link, index) => (
+                    <a 
+                      key={index}
+                      href={link.startsWith('@') ? `https://t.me/${link.substring(1)}` : link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors block mb-1"
+                    >
+                      {link.startsWith('@') ? 'TELEGRAM →' : 'WEBSITE →'}
+                    </a>
+                  ))}
                 </div>
               </div>
             ))}

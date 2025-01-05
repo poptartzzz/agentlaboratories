@@ -179,26 +179,50 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
       return [
         { 
           id: generateUniqueId(),
-          text: "👤 @trader: Show me your analysis style", 
-          timestamp: Date.now() - 3000,
+          text: "👤 @trader: Can you analyze BTC's current market structure?", 
+          timestamp: Date.now() - 12000,
           isUser: true 
         },
         { 
           id: generateUniqueId(),
-          text: "🤖 MARKET ANALYSIS BOT 📊\n\nCurrent Market Structure:\n- Trend: Higher lows forming\n- Volume: Above average, bullish\n- RSI: Oversold on multiple timeframes\n\nKey Patterns:\n- Bull flag on 4H\n- Hidden divergence\n- Volume profile supporting upside\n\nRecommendation: Watch for breakout confirmation. Risk management is priority.", 
-          timestamp: Date.now() - 2000,
+          text: `🤖 TRADING ANALYSIS 📊\n\nBTC Price: $98,472.88\n\nMarket Structure:\n- Strong support: $96,500 (200MA)\n- Key resistance: $99,000 (Previous ATH)\n- Volume: 45% above 20D average\n\nSignals:\n- RSI: 62 (Neutral with bullish divergence)\n- MACD: Golden cross forming\n- OBV: Smart money accumulation\n\nRecommendation: Look for entries near $96.5k support. Strong institutional buying detected.`, 
+          timestamp: Date.now() - 11000,
           isUser: false 
         },
         {
           id: generateUniqueId(),
-          text: "👤 @trader: What indicators do you use?",
-          timestamp: Date.now() - 1000,
+          text: "👤 @trader: What's your take on ETH/BTC ratio for swing trading?",
+          timestamp: Date.now() - 10000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 INDICATOR SUITE 📈\n\nPrimary Indicators:\n- RSI with divergence scanner\n- Volume Profile & CVD\n- Support/Resistance algo\n- Funding rate tracker\n\nSecondary Signals:\n- Whale wallet monitoring\n- Order book imbalance\n- Open Interest changes\n- Social sentiment gauge\n\nAll signals cross-referenced for confirmation.",
-          timestamp: Date.now(),
+          text: `🤖 TRADING ANALYSIS 📊\n\nETH/BTC Ratio: 0.037\n\nTechnical Setup:\n- Breaking 6-month resistance\n- Volume profile showing accumulation\n- Funding rates neutral\n\nKey Levels:\n- Support: 0.035 BTC\n- Target: 0.04 BTC\n- Stop: 0.033 BTC\n\nStrategy: Long with 3:1 risk/reward ratio`,
+          timestamp: Date.now() - 9000,
+          isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: "👤 @trader: Any concerning signals in derivatives market?",
+          timestamp: Date.now() - 8000,
+          isUser: true
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 TRADING ANALYSIS 📊\n\nDerivatives Health:\n- Open Interest: $8.2B (High)\n- Funding Rate: 0.01% (Neutral)\n- Long/Short Ratio: 1.2 (Balanced)\n\nRisk Factors:\n- Large OI could trigger cascade\n- $250M options expiry Friday\n- Whale puts at $92k\n\nRecommendation: Tight stops essential`,
+          timestamp: Date.now() - 7000,
+          isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: "👤 @trader: Give me a complete setup for SOL",
+          timestamp: Date.now() - 6000,
+          isUser: true
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 TRADING ANALYSIS 📊\n\nSOL Complete Setup:\nPrice: $213.71 (+0.4% 24h)\n\nEntry Zones:\n- Strong: $205-208 (0.618 fib)\n- Aggressive: $213-215 (breakout)\n\nTargets:\n1. $225 (1.618 ext)\n2. $240 (ATH retest)\n\nStop Loss: $198 (Daily support)\nPosition Size: Max 2% account\nLeverage: Max 3x`,
+          timestamp: Date.now() - 5000,
           isUser: false
         }
       ];
@@ -340,33 +364,87 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
           text: "🤖 SAFETY PROTOCOLS 🛡️\n\nContract Checks:\n- Honeypot testing\n- Rugpull protection\n- Liquidity analysis\n- Ownership status\n\nRed Flags:\n- Copy/paste code\n- Hidden mint functions\n- Locked liquidity\n- Dev wallet size\n\nMotto: Still probably gonna ape tho 🦍",
           timestamp: Date.now(),
           isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 DEGEN SCAN 🔍\n\nHot Memes:\n- $WOJAK: 1 hour old\n- LP: $50k locked\n- Holders: 85\n- Meme: Viral potential\n\nDegen Score: 8/10\nRisk Level: MAXIMUM`,
+          timestamp: Date.now() - 9000,
+          isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: "👤 @degen: Contract check?",
+          timestamp: Date.now() - 8000,
+          isUser: true
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 DEGEN SCAN 🔍\n\nContract Analysis:\n- Ownership: Renounced\n- Max TX: 1%\n- Tax: 5/5\n- Mint: None\n\nBased Rating: SAFU`,
+          timestamp: Date.now() - 7000,
+          isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: "👤 @degen: Community check?",
+          timestamp: Date.now() - 6000,
+          isUser: true
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 DEGEN SCAN 🔍\n\nVibe Check:\n- TG Members: 850\n- Twitter: Growing\n- Meme Game: Strong\n- Team: Anon but based\n\nDegen Score: 9/10\nAPE POTENTIAL: MAXIMUM`,
+          timestamp: Date.now() - 5000,
+          isUser: false
         }
       ];
 
     case 'defi':
       return [
         {
-        id: generateUniqueId(),
-          text: "👤 @yield_farmer: What yields are you tracking?",
-          timestamp: Date.now() - 3000,
+          id: generateUniqueId(),
+          text: "👤 @yield_farmer: Best ETH yields?",
+          timestamp: Date.now() - 12000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 DEFI OPTIMIZER 📊\n\nTracking Categories:\n- Lending protocols\n- Yield farms\n- LP opportunities\n- Staking pools\n\nMetrics:\n- Real yield vs APR\n- Impermanent loss risk\n- Protocol security\n- TVL trends",
-          timestamp: Date.now() - 2000,
+          text: `🤖 DEFI ANALYZER 📈\n\nTop ETH Yields:\n- Lido: 3.8% APR\n- Rocket Pool: 4.1% APR\n- Frax: 4.5% APR\n\nRisks: Protocol-based\nGas Cost: ~$15\nLiquidity: Deep`,
+          timestamp: Date.now() - 11000,
+          isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: "👤 @yield_farmer: LP opportunities?",
+          timestamp: Date.now() - 10000,
+          isUser: true
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 DEFI ANALYZER 📈\n\nBest LP Pairs:\n- ETH/USDC: 25% APR\n- BTC/ETH: 18% APR\n- ARB/ETH: 45% APR\n\nIL Risk: Medium\nFarm Rewards: Active\nTVL: Growing`,
+          timestamp: Date.now() - 9000,
+          isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: "👤 @yield_farmer: New protocols?",
+          timestamp: Date.now() - 8000,
+          isUser: true
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 DEFI ANALYZER 📈\n\nEmerging Protocols:\n- Protocol A: 120% APR (High risk)\n- Protocol B: 80% APR (Audited)\n- Protocol C: 60% APR (Based team)\n\nDYOR Required!`,
+          timestamp: Date.now() - 7000,
           isUser: false
         },
         {
           id: generateUniqueId(),
           text: "👤 @yield_farmer: Risk assessment?",
-          timestamp: Date.now() - 1000,
+          timestamp: Date.now() - 6000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 RISK ANALYSIS 🔍\n\nSafety Checks:\n- Protocol audits\n- TVL stability\n- Team transparency\n- Smart contract age\n\nRisk Factors:\n- IL exposure\n- Token emissions\n- Governance risks\n- Market correlation\n\nStrategy: Balance yield and safety 🛡️",
-        timestamp: Date.now(),
+          text: `🤖 DEFI ANALYZER 📈\n\nRisk Levels:\n- Smart Contract: Medium\n- IL Risk: High\n- Depeg Risk: Low\n\nRecommendation:\n- Diversify positions\n- Use tested protocols\n- Monitor IL`,
+          timestamp: Date.now() - 5000,
           isUser: false
         }
       ];
@@ -375,45 +453,56 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
       return [
         {
           id: generateUniqueId(),
-          text: "👤 @collector: What metrics do you track?",
-          timestamp: Date.now() - 3000,
+          text: "👤 @user: Hot collections?",
+          timestamp: Date.now() - 12000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 NFT ANALYZER 🎨\n\nKey Metrics:\n- Floor price trends\n- Volume analysis\n- Holder distribution\n- Rarity scores\n\nMarket Signals:\n- Whale movements\n- Listing patterns\n- Wash trading detection\n- Social sentiment",
-          timestamp: Date.now() - 2000,
+          text: `🤖 NFT SCANNER 🎨\n\nTrending:\n1. Collection A\n- Floor: 0.8 ETH\n- Volume: +125%\n- Unique Buyers: 145\n\n2. Collection B\n- Floor: 0.5 ETH\n- Volume: +80%\n- Listings: Decreasing`,
+          timestamp: Date.now() - 11000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @collector: How do you spot trends?",
-          timestamp: Date.now() - 1000,
+          text: "👤 @user: Rare trait analysis?",
+          timestamp: Date.now() - 10000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 TREND DETECTION 📈\n\nSignals Monitored:\n- Influencer mints\n- Discord growth\n- Twitter momentum\n- Artwork quality\n\nBullish Indicators:\n- Strong community\n- Unique utility\n- Team delivery\n- Organic growth\n\nStatus: Scanning for alpha 🔍",
-          timestamp: Date.now(),
+          text: `🤖 NFT SCANNER 🎨\n\nRarity Check:\n- Legendary: 0.1%\n- Epic: 1%\n- Rare: 5%\n\nTop Traits:\n- Golden: 15 ETH floor\n- Mystic: 8 ETH floor\n- Crystal: 5 ETH floor`,
+          timestamp: Date.now() - 9000,
+          isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: "👤 @user: Whale activity?",
+          timestamp: Date.now() - 8000,
+          isUser: true
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 NFT SCANNER 🎨\n\nWhale Moves:\n- 5 ETH floor sweep\n- Rare trait accumulation\n- New wallet buying\n\nBullish Signals:\n- Influencer mints\n- Staking coming\n- Roadmap ahead`,
+          timestamp: Date.now() - 7000,
+          isUser: false
+        },
+        {
+          id: generateUniqueId(),
+          text: "👤 @user: Upcoming mints?",
+          timestamp: Date.now() - 6000,
+          isUser: true
+        },
+        {
+          id: generateUniqueId(),
+          text: `🤖 NFT SCANNER 🎨\n\nHot Mints:\n1. Project X\n- WL: Open\n- Price: 0.5 ETH\n- Team: Doxxed\n\n2. Project Y\n- Allowlist: Active\n- Price: 0.3 ETH\n- Utility: Gaming`,
+          timestamp: Date.now() - 5000,
           isUser: false
         }
       ];
 
     default:
-      return [
-        {
-          id: generateUniqueId(),
-          text: "👤 @user: What can you do?",
-          timestamp: Date.now() - 2000,
-          isUser: true
-        },
-        {
-          id: generateUniqueId(),
-          text: "🤖 AGENT STATUS:\n\nType: Multi-purpose AI Bot\nCapabilities:\n- Market analysis\n- Risk assessment\n- Trend detection\n- Custom alerts\n\nUse /help for commands\nUse /demo for examples",
-          timestamp: Date.now() - 1000,
-          isUser: false
-        }
-      ];
+      return [];
   }
 };
 
@@ -495,7 +584,7 @@ export default function Home() {
     // Add user message
     setDemoMessages(prev => [...prev, {
       id: generateUniqueId(),
-      text: message,
+      text: `👤 @user: ${message}`,
       timestamp: Date.now(),
       isUser: true
     }]);
@@ -504,55 +593,138 @@ export default function Home() {
     const thinkingId = generateUniqueId();
     setDemoMessages(prev => [...prev, {
       id: thinkingId,
-      text: "🤖 Thinking...",
+      text: "🤖 Analyzing...",
       timestamp: Date.now(),
       isUser: false,
       isThinking: true
     }]);
 
     try {
-      const context = `You are an AI Bot Creation Assistant helping users design their perfect custom bot. You guide the conversation to gather requirements and make informed suggestions.
+      let context = "";
+      
+      switch(currentAgentType) {
+        case 'trading':
+          context = `You are a crypto trading analysis bot. Use these current prices:
+BTC: $98,472.88 (24h: +0.2%)
+ETH: $3,644.52 (24h: +0.2%)
+SOL: $213.71 (24h: +0.4%)
+BNB: $707.95 (24h: +0.3%)
 
-Current conversation history:
+Current conversation:
 ${demoMessages.map(msg => msg.text).join('\n')}
 
-User's latest message: ${message}
+User question: ${message}
 
-Your role is to help users create a bot by gathering these key details through natural conversation:
-1. Bot's primary purpose and problem it solves
-2. Bot name (once purpose is clear)
-3. Platform choice (Telegram/Discord)
-4. Key features and functionality
-5. External API integrations needed
-6. Desired personality and interaction style
-7. Security requirements
-8. Monitoring/alerting needs
+Respond in this format:
+🤖 TRADING ANALYSIS 📊
 
-Guidelines:
-- Ask ONE clear question at a time
-- Don't assume the bot type - let the user guide the purpose
-- Make relevant suggestions based on their responses
-- Keep track of what information has been gathered
-- Ask follow-up questions about any mentioned requirements
-- Provide insights about potential features based on their needs
+Market Structure:
+- Support/Resistance levels
+- Volume analysis
+- Key patterns
 
-Response format:
-1. Always start with 🤖
-2. Acknowledge their input (if any)
-3. Provide relevant insight or suggestion (if applicable)
-4. Ask ONE clear question to gather the next piece of information
-5. Keep responses friendly but professional
+Technical Signals:
+- RSI, MACD, etc
+- Volume indicators
+- Pattern formations
 
-Example first message if no context:
-"🤖 Welcome! I'm here to help you create your perfect bot. To get started, could you tell me what problem or task you're looking to solve with this bot?"`;
+Use real current prices and realistic technical analysis. Always start with 🤖.`;
+          break;
+
+        case 'whale':
+          context = `You are a whale wallet tracking bot. Use these current prices:
+BTC: $98,472.88
+ETH: $3,644.52
+SOL: $213.71
+
+Current conversation:
+${demoMessages.map(msg => msg.text).join('\n')}
+
+User question: ${message}
+
+Respond in this format:
+🤖 WHALE ALERT 🐋
+
+Recent Movement:
+- Wallet: (use realistic addresses)
+- Size: (use realistic amounts based on current prices)
+- Direction: (accumulating/distributing)
+- Chain: ETH/BSC/SOL
+
+Impact Analysis:
+- Market effect
+- Wallet history
+- Pattern recognition
+
+Use current prices for realistic transaction values. Always start with 🤖.`;
+          break;
+
+        case 'defi':
+          context = `You are a DeFi yield analysis bot. Use these current prices:
+ETH: $3,644.52
+AAVE: $341.45
+UNI: $15.23
+Current TVL data and yields.
+
+Current conversation:
+${demoMessages.map(msg => msg.text).join('\n')}
+      
+      User question: ${message}
+      
+Respond in this format:
+🤖 DEFI ANALYZER 📈
+
+Top Opportunities:
+- Protocol names
+- Real APY/APR
+- TVL data
+- Risk levels
+
+Strategy Analysis:
+- IL calculations
+- Gas considerations
+- Protocol risks
+
+Use current prices and realistic yield data. Always start with 🤖.`;
+          break;
+
+        case 'shitcoin_hunter':
+          context = `You are a degen token scanner. Reference these meme coins:
+PEPE: $0.00002068 (+15.4% 7d)
+BONK: $0.00003439 (+10.4% 7d)
+FLOKI: $0.000197 (+14.0% 7d)
+
+Current conversation:
+${demoMessages.map(msg => msg.text).join('\n')}
+
+User question: ${message}
+
+Respond in this format:
+🤖 DEGEN SCANNER 🔍
+
+Token Analysis:
+- Contract safety
+- Liquidity analysis
+- Holder distribution
+- Meme potential
+
+Risk Assessment:
+- Rugpull likelihood
+- Team transparency
+- Market sentiment
+
+Use current prices and real token data. Always start with 🤖.`;
+          break;
+
+        // Add similar specialized contexts for other bot types...
+
+        default:
+          context = `You are a specialized crypto analysis bot. Answer questions about market analysis and trading insights.`;
+      }
 
       const response = await generateAgentResponse(context);
 
-      if (!response) {
-        throw new Error('No response received');
-      }
-
-      // Remove thinking message and add AI response
+      // Remove thinking message and add response
       setDemoMessages(prev => 
         prev.filter(msg => msg.id !== thinkingId).concat({
           id: generateUniqueId(),
@@ -567,7 +739,7 @@ Example first message if no context:
       setDemoMessages(prev => 
         prev.filter(msg => msg.id !== thinkingId).concat({
         id: generateUniqueId(),
-          text: "🤖 I apologize for the interruption. Could you please share your thoughts again about the type of bot you'd like to create?",
+          text: "🤖 Error processing request. Please try again.",
         timestamp: Date.now(),
         isUser: false
         })
@@ -743,7 +915,7 @@ Example first message if no context:
             className="absolute inset-0"
           />
         </div>
-
+        
         <div className="container mx-auto px-6 text-center relative z-10">
           <div className="space-y-8 backdrop-blur-md bg-black/30 p-8 rounded-lg border border-[#00ff00]/20">
             <div className="inline-block px-4 py-2 border border-[#00ff00] bg-black/50">
@@ -856,7 +1028,7 @@ Example first message if no context:
                     </div>
 
                 <div className="text-xs text-[#00ff00]/50 pt-2 mt-2 italic">
-                  Note: This is a demo environment. Some responses and data may be simulated for demonstration purposes.
+                  This is a demo environment meant to showcase examples of different types of bots that can be built. Prices may be outdated.
                 </div>
               </div>
             </div>
