@@ -120,17 +120,22 @@ const botSuggestions = [
 // Move the type definition outside
 type ConfigValue = string | string[] | Record<string, string | undefined>;
 
+// Add this type for config updates
+type ConfigUpdates = {
+  [K in keyof AgentConfig]?: AgentConfig[K];
+};
+
 export default function CreateAgent() {
+  const [userInput, setUserInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [chat, setChat] = useState<ChatMessage[]>([
     {
       id: generateUniqueId(),
-      text: "Hi! I'm your agent creation assistant. Tell me about the bot you want to create, and I'll help you set it up. What type of bot are you looking to build?",
+      text: "🤖 Hi! I'm your agent creation assistant. Tell me about the bot you want to create, and I'll help you set it up. What type of bot are you looking to build?",
       timestamp: Date.now(),
       isUser: false
     }
   ]);
-  const [userInput, setUserInput] = useState('');
-  const [isThinking] = useState(false);
   const [agentConfig, setAgentConfig] = useState<AgentConfig>({
     name: '',
     type: '',
@@ -361,152 +366,6 @@ export default function CreateAgent() {
     }
   ];
 
-  const handleUserInput = async (message: string) => {
-    if (!message.trim()) return;
-
-    // Add user message
-    setChat(prev => [...prev, {
-      id: generateUniqueId(),
-      text: message,
-      timestamp: Date.now(),
-      isUser: true
-    }]);
-
-    // Add thinking message
-    const thinkingId = generateUniqueId();
-    setChat(prev => [...prev, {
-      id: thinkingId,
-      text: "🤖 Thinking...",
-      timestamp: Date.now(),
-      isUser: false,
-      isThinking: true
-    }]);
-
-    try {
-      // Define the context for the AI
-      const context = `You are an AI Bot Creation Assistant helping users design custom automation solutions. You're creative and open to any type of bot idea.
-
-Current conversation:
-${chat.map(msg => msg.text).join('\n')}
-
-User's latest message: ${message}
-
-Extract information and provide it in this JSON format:
-{
-  "message": "Your conversational response here (starting with 🤖)",
-  "config_updates": {
-    "name": "extract or suggest bot name if mentioned",
-    "type": "extract or suggest bot type based on conversation",
-    "platform": "extract platform (Discord/Telegram) if mentioned",
-    "description": "create a clear description of the bot's purpose",
-    "features": ["list", "key", "features", "mentioned", "or", "suggested"],
-    "apiKeys": ["list", "required", "API", "integrations"],
-    "triggers": ["list", "event", "triggers", "or", "commands"]
-  }
-}
-
-Focus on extracting these key details from the conversation. If any field is not relevant or not mentioned, omit it from the config_updates object.`;
-
-      const response = await generateAgentResponse(context);
-
-      if (!response) {
-        setChat(prev => 
-          prev.filter(msg => msg.id !== thinkingId).concat({
-            id: generateUniqueId(),
-            text: "🤖 I'm having trouble processing your request. Please try again.",
-            timestamp: Date.now(),
-            isUser: false
-          })
-        );
-        return;
-      }
-
-      try {
-        const parsedResponse = JSON.parse(response);
-        
-        if (parsedResponse.config_updates) {
-          // Track which sections need updating
-          const updates = parsedResponse.config_updates;
-          const sectionsToUpdate = new Set<string>();
-
-          // Update the configuration
-          setAgentConfig(prev => {
-            const newConfig = { ...prev };
-            
-            // Process each update
-            Object.entries(updates).forEach(([key, value]) => {
-              if (value && key in newConfig) {
-                // Update the value
-                if (Array.isArray(value)) {
-                  (newConfig[key as keyof AgentConfig] as string[]) = 
-                    [...new Set([...(newConfig[key as keyof AgentConfig] as string[]), ...value])];
-                } else {
-                  (newConfig[key as keyof AgentConfig] as string) = value as string;
-                }
-
-                // Determine which section this field belongs to
-                const section = configCategories.find(cat => 
-                  cat.fields.some(field => field.key === key)
-                )?.title;
-
-                if (section) {
-                  sectionsToUpdate.add(section);
-                  // Also expand the section
-                  setExpandedCategories(prev => 
-                    prev.includes(section) ? prev : [...prev, section]
-                  );
-                }
-              }
-            });
-
-            return newConfig;
-          });
-
-          // Flash updated sections sequentially
-          Array.from(sectionsToUpdate).forEach((section, index) => {
-            setTimeout(() => {
-              setFlashingSection(section);
-              setTimeout(() => setFlashingSection(null), 2000);
-            }, index * 2500);
-          });
-        }
-
-        // Update chat with AI response
-        setChat(prev => 
-          prev.filter(msg => msg.id !== thinkingId).concat({
-            id: generateUniqueId(),
-            text: parsedResponse.message,
-            timestamp: Date.now(),
-            isUser: false
-          })
-        );
-      } catch (parseError) {
-        console.error('Parse error:', parseError);
-        // Handle raw response if JSON parsing fails
-        setChat(prev => 
-          prev.filter(msg => msg.id !== thinkingId).concat({
-            id: generateUniqueId(),
-            text: response,
-            timestamp: Date.now(),
-            isUser: false
-          })
-        );
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setChat(prev => 
-        prev.filter(msg => msg.id !== thinkingId).concat({
-          id: generateUniqueId(),
-          text: "🤖 I encountered an error. Please try again.",
-          timestamp: Date.now(),
-          isUser: false
-        })
-      );
-    }
-
-    setUserInput('');
-  };
-
   const [isBaking, setIsBaking] = useState(false);
   const [bakingError, setBakingError] = useState<string | null>(null);
   const [bakingProgress, setBakingProgress] = useState<number>(0);
@@ -568,6 +427,123 @@ Focus on extracting these key details from the conversation. If any field is not
     }
   }, [userInput]);
 
+  const handleUserMessage = async (message: string) => {
+    if (!message.trim() || isLoading) return;
+
+    try {
+      setIsLoading(true);
+      setUserInput(''); // Clear input immediately
+
+      // Add user message
+      setChat(prev => [...prev, {
+        id: generateUniqueId(),
+        text: message,
+        timestamp: Date.now(),
+        isUser: true
+      }]);
+
+      const context = `You are an AI Bot Creation Assistant helping users design custom automation solutions. You're creative and open to any type of bot idea.
+
+Current conversation:
+${chat.map(msg => `${msg.isUser ? 'User' : 'Assistant'}: ${msg.text}`).join('\n')}
+
+User's latest message: ${message}
+
+IMPORTANT: Your response must be valid JSON in this exact format:
+{
+  "message": "Your conversational response here (starting with 🤖)",
+  "config_updates": {
+    "name": "extract or suggest bot name if mentioned",
+    "type": "extract or suggest bot type based on conversation",
+    "platform": "extract platform (Discord/Telegram) if mentioned",
+    "description": "create a clear description of the bot's purpose",
+    "features": ["list", "key", "features", "mentioned", "or", "suggested"],
+    "apiKeys": ["list", "required", "API", "integrations"],
+    "triggers": ["list", "event", "triggers", "or", "commands"]
+  }
+}
+
+Do not include any text outside of this JSON structure. All your communication should be in the "message" field.`;
+
+      const response = await generateAgentResponse(context);
+      
+      let parsedResponse;
+      try {
+        parsedResponse = JSON.parse(response.trim());
+      } catch (parseError) {
+        console.error('Failed to parse AI response:', parseError);
+        parsedResponse = {
+          message: `🤖 ${response}`,
+          config_updates: {}
+        };
+      }
+
+      setChat(prev => [...prev, {
+        id: generateUniqueId(),
+        text: parsedResponse.message,
+        timestamp: Date.now(),
+        isUser: false
+      }]);
+
+      if (parsedResponse.config_updates && Object.keys(parsedResponse.config_updates).length > 0) {
+        handleConfigUpdates(parsedResponse.config_updates);
+      }
+
+    } catch (error) {
+      console.error('AI Response Error:', error);
+      setChat(prev => [...prev, {
+        id: generateUniqueId(),
+        text: error instanceof Error 
+          ? `🤖 Error: ${error.message}` 
+          : "🤖 Error: Unable to connect to AI service",
+        timestamp: Date.now(),
+        isUser: false
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleConfigUpdates = (updates: ConfigUpdates) => {
+    const sectionsToUpdate = new Set<string>();
+
+    setAgentConfig(prev => {
+      const newConfig = { ...prev };
+      
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value && key in newConfig) {
+          if (Array.isArray(value)) {
+            (newConfig[key as keyof AgentConfig] as string[]) = 
+              [...new Set([...(newConfig[key as keyof AgentConfig] as string[]), ...value])];
+          } else {
+            (newConfig[key as keyof AgentConfig] as string) = value as string;
+          }
+
+          const section = configCategories.find(cat => 
+            cat.fields.some(field => field.key === key)
+          )?.title;
+
+          if (section) {
+            sectionsToUpdate.add(section);
+            setExpandedCategories(prev => 
+              prev.includes(section) ? prev : [...prev, section]
+            );
+          }
+        }
+      });
+
+      return newConfig;
+    });
+
+    // Flash updated sections
+    Array.from(sectionsToUpdate).forEach((section, index) => {
+      setTimeout(() => {
+        setFlashingSection(section);
+        setTimeout(() => setFlashingSection(null), 1000);
+      }, index * 1500);
+    });
+  };
+
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] ${pressStart.className}`}>
       <style jsx>{flashAnimation}</style>
@@ -599,7 +575,7 @@ Focus on extracting these key details from the conversation. If any field is not
                     {message.text}
                   </div>
                 ))}
-                {isThinking && (
+                {isLoading && (
                   <div className="text-[#00ff00] text-sm animate-pulse">
                     Assistant is thinking...
                   </div>
@@ -612,17 +588,25 @@ Focus on extracting these key details from the conversation. If any field is not
                     type="text"
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleUserInput(userInput)}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter' && userInput.trim()) {
+                        handleUserMessage(userInput);
+                      }
+                    }}
                     placeholder="Describe your bot..."
                     className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-sm focus:outline-none focus:border-white"
-                    disabled={isThinking}
+                    disabled={isLoading}
                   />
                   <button
-                    onClick={() => handleUserInput(userInput)}
-                    disabled={!userInput.trim() || isThinking}
+                    onClick={() => {
+                      if (userInput.trim()) {
+                        handleUserMessage(userInput);
+                      }
+                    }}
+                    disabled={!userInput.trim() || isLoading}
                     className="px-4 py-1 border border-[#00ff00] hover:bg-[#00ff00] hover:text-black transition-all text-sm disabled:opacity-50"
                   >
-                    SEND
+                    {isLoading ? 'SENDING...' : 'SEND'}
                   </button>
                 </div>
 
@@ -633,8 +617,12 @@ Focus on extracting these key details from the conversation. If any field is not
                     {botSuggestions.map((suggestion) => (
                       <button
                         key={suggestion.id}
-                        onClick={() => handleUserInput(suggestion.text)}
-                        className="text-xs border border-[#00ff00]/30 px-3 py-1.5 hover:border-[#00ff00] hover:bg-[#00ff00]/10 transition-all text-[#00ff00]/70 hover:text-[#00ff00] text-left"
+                        onClick={() => {
+                          setUserInput(suggestion.text);
+                          handleUserMessage(suggestion.text);
+                        }}
+                        disabled={isLoading}
+                        className="text-xs border border-[#00ff00]/30 px-3 py-1.5 hover:border-[#00ff00] hover:bg-[#00ff00]/10 transition-all text-[#00ff00]/70 hover:text-[#00ff00] text-left disabled:opacity-50"
                       >
                         {suggestion.text}
                       </button>

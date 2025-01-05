@@ -1,22 +1,32 @@
-export async function generateAgentResponse(prompt: string) {
+export async function generateAgentResponse(context: string) {
   try {
     const response = await fetch('/api/claude', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ context }),
+      cache: 'no-store'
     });
 
     if (!response.ok) {
-      throw new Error('Failed to get response from API');
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
+
+    if (!data.response) {
+      throw new Error('No response received from AI service');
+    }
+
     return data.response;
   } catch (error) {
     console.error('Error generating response:', error);
-    return null;
+    if (error instanceof Error) {
+      throw new Error(`AI Service Error: ${error.message}`);
+    }
+    throw new Error('Failed to generate response. Please check your API configuration.');
   }
 }
 

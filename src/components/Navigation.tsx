@@ -1,53 +1,126 @@
+"use client";
+
+import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faTelegram,
+  faTwitter
+} from '@fortawesome/free-brands-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
+interface SocialLink {
+  icon: IconDefinition;
+  href: string;
+  label: string;
+}
+
+const socialLinks: SocialLink[] = [
+  {
+    icon: faTwitter,
+    href: "https://x.com/agentzaix",
+    label: "Twitter"
+  },
+  {
+    icon: faTelegram,
+    href: "https://t.me/agentzaitg",
+    label: "Telegram"
+  }
+];
 
 export default function Navigation() {
-  return (
-    <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-lg py-4">
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl md:text-2xl">
-            <span className="text-[#00ff00]">AGENTZ A</span>
-            <span className="text-[#00ff00]">I</span>
-          </Link>
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-          <div className="flex items-center gap-6 text-sm">
-            <Link 
-              href="/about" 
-              className="text-[#00ff00]/70 hover:text-[#00ff00] transition-colors"
-            >
-              ABOUT
-            </Link>
-            <Link 
-              href="/app" 
-              className="text-[#00ff00]/70 hover:text-[#00ff00] transition-colors"
-            >
-              AGENTS
-            </Link>
-            <Link 
-              href="/create" 
-              className="text-[#00ff00]/70 hover:text-[#00ff00] transition-colors"
-            >
-              AGENT CREATOR
-            </Link>
-            <a 
-              href="https://twitter.com/agentz" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-[#00ff00]/70 hover:text-[#00ff00] transition-colors"
-            >
-              TWITTER
-            </a>
-            <a 
-              href="https://t.me/agentz" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-[#00ff00]/70 hover:text-[#00ff00] transition-colors"
-            >
-              TELEGRAM
-            </a>
+  return (
+    <div className="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-sm z-50 border-b border-[#00ff00]/20">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-16">
+          <Link href="/" className="flex items-center">
+            <Image 
+              src="/agenbtzaimainlogo.png" 
+              alt="AGENTZ AI" 
+              width={180}
+              height={40}
+              className="h-10 w-auto"
+              priority
+            />
+          </Link>
+          
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center">
+              <Link 
+                href="/about" 
+                className="hover:text-white transition-colors"
+              >
+                HOW TO
+              </Link>
+
+              <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+
+              <Link 
+                href="/create" 
+                className="hover:text-white transition-colors"
+              >
+                CREATE
+              </Link>
+
+              <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+
+              <Link 
+                href="/app" 
+                className="hover:text-white transition-colors"
+              >
+                AGENTS
+              </Link>
+
+              <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+
+              <Link 
+                href="https://docs.agentz.diy" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                LITEPAPER
+              </Link>
+
+              <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+
+              <div className="relative">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-2 hover:text-white transition-colors"
+                >
+                  SOCIALS
+                  <FontAwesomeIcon 
+                    icon={faChevronDown} 
+                    className={`w-3 h-3 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute top-full right-0 mt-2 py-2 w-40 bg-black border border-[#00ff00]/20 backdrop-blur-md">
+                    {socialLinks.map((link) => (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-[#00ff00]/10 transition-colors"
+                      >
+                        <FontAwesomeIcon icon={link.icon} className="w-4 h-4" />
+                        <span className="text-sm">{link.label}</span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </nav>
+    </div>
   );
 } 

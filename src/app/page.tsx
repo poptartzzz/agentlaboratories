@@ -24,7 +24,8 @@ import {
   faGamepad,
   faCrown,
   faMoon,
-  faStar 
+  faStar,
+  faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import { generateAgentResponse } from '@/utils/claude';
 import { 
@@ -72,6 +73,25 @@ interface IconTextProps {
   icon: IconDefinition;
   text: string;
 }
+
+interface SocialLink {
+  icon: IconDefinition;
+  href: string;
+  label: string;
+}
+
+const socialLinks: SocialLink[] = [
+  {
+    icon: faTwitter,
+    href: "https://x.com/agentzaix",
+    label: "Twitter"
+  },
+  {
+    icon: faTelegram,
+    href: "https://t.me/agentzaitg",
+    label: "Telegram"
+  }
+];
 
 const generateUniqueId = (() => {
   let id = 0;
@@ -397,6 +417,28 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
   }
 };
 
+// Update the animation to remove outline and only handle flashing
+const flashAnimation = `
+  @keyframes flash {
+    0%, 95%, 98%, 100% {
+      opacity: 1;
+    }
+    96%, 99% {
+      opacity: 0.5;
+    }
+  }
+
+  .flash {
+    animation: flash 10s infinite;
+  }
+
+  /* Random flash delays */
+  .flash-1 { animation-delay: 1s; }
+  .flash-2 { animation-delay: 4s; }
+  .flash-3 { animation-delay: 7s; }
+  .flash-4 { animation-delay: 10s; }
+`;
+
 export default function Home() {
   const [demoMessages, setDemoMessages] = useState<DemoMessage[]>([]);
   const [currentAgentType, setCurrentAgentType] = useState<AgentType>('trading');
@@ -404,6 +446,7 @@ export default function Home() {
     isOpen: false,
     message: ''
   });
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     // Get initial messages for the current agent type
@@ -596,28 +639,28 @@ Example first message if no context:
 
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] overflow-x-hidden ${pressStart.className}`}>
+      <style jsx>{flashAnimation}</style>
       <div className="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-sm z-50 border-b border-[#00ff00]/20">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center">
               <Image 
-                src="/AGENTZ AI.png" 
+                src="/agenbtzaimainlogo.png" 
                 alt="AGENTZ AI" 
-                width={32}
-                height={32}
-                className="h-8 mr-2"
+                width={180}
+                height={40}
+                className="h-10 w-auto"
                 priority
               />
             </Link>
             
             <div className="flex items-center space-x-4">
-              {/* Navigation Links with Icon Buttons */}
               <div className="flex items-center">
                 <Link 
                   href="/about" 
                   className="hover:text-white transition-colors"
                 >
-                  ABOUT
+                  HOW TO
                 </Link>
 
                 <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
@@ -640,25 +683,43 @@ Example first message if no context:
 
                 <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
 
-                {/* Social Icons */}
-                <div className="flex items-center space-x-4">
-                  <Link 
-                    href="https://twitter.com" 
-                    target="_blank"
-                    className="hover:text-white transition-colors"
-                  >
-                    <FontAwesomeIcon icon={faTwitter} className="w-5 h-5" />
-                  </Link>
+                <Link 
+                  href="/litepaper" 
+                  className="hover:text-white transition-colors"
+                >
+                  LITEPAPER
+                </Link>
 
-                  <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+                <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
 
-                  <Link 
-                    href="https://t.me" 
-                    target="_blank"
-                    className="hover:text-white transition-colors"
+                <div className="relative">
+                  <button
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="flex items-center gap-2 hover:text-white transition-colors"
                   >
-                    <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
-                  </Link>
+                    SOCIALS
+                    <FontAwesomeIcon 
+                      icon={faChevronDown} 
+                      className={`w-3 h-3 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+
+                  {isDropdownOpen && (
+                    <div className="absolute top-full right-0 mt-2 py-2 w-40 bg-black border border-[#00ff00]/20 backdrop-blur-md">
+                      {socialLinks.map((link) => (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-3 px-4 py-2 hover:bg-[#00ff00]/10 transition-colors"
+                        >
+                          <FontAwesomeIcon icon={link.icon} className="w-4 h-4" />
+                          <span className="text-sm">{link.label}</span>
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -672,14 +733,27 @@ Example first message if no context:
       </div>
 
       <section className="relative h-screen flex items-center z-10">
+        <div className="absolute inset-0 z-0">
+          <iframe 
+            src='https://my.spline.design/robots-4b5f71aa4e68f8aff9ac3be5fa98097b/' 
+            frameBorder='0' 
+            width='100%' 
+            height='100%'
+            title="3D Robot Animation"
+            className="absolute inset-0"
+          />
+        </div>
+
         <div className="container mx-auto px-6 text-center relative z-10">
-          <div className="space-y-8 backdrop-blur-sm bg-black/70 p-8 rounded-lg">
-            <div className="inline-block px-4 py-2 border border-[#00ff00] bg-black">
+          <div className="space-y-8 backdrop-blur-md bg-black/30 p-8 rounded-lg border border-[#00ff00]/20">
+            <div className="inline-block px-4 py-2 border border-[#00ff00] bg-black/50">
               <span className="text-[#00ff00] text-xs">AUTOMATE YOUR SUCCESS</span>
             </div>
             <h1 className="text-5xl md:text-7xl leading-relaxed">
-              NEXT-GEN
-              <span className="block mt-2 text-[#00ff00]">
+              <span className="flash flash-1">NEXT</span>
+              <span className="flash flash-2">-</span>
+              <span className="flash flash-3">GEN</span>
+              <span className="block mt-2 text-[#00ff00] flash flash-4">
                 AI AGENTS
               </span>
               <span className="block mt-2 text-sm md:text-xl">
@@ -694,10 +768,18 @@ Example first message if no context:
                 delay={3000}
               />
             </div>
-            <div className="flex justify-center gap-4">
-              <Link href="/app" 
-                className="px-8 py-3 bg-[#00ff00] text-black text-sm hover:bg-[#00ff00]/80 transition-colors">
-                LAUNCH AGENT CREATOR
+            <div className="flex justify-center gap-6">
+              <Link 
+                href="/create" 
+                className="px-8 py-3 bg-[#00ff00] text-black text-sm hover:bg-[#00ff00]/80 transition-colors"
+              >
+                BAKE AGENTZ
+              </Link>
+              <Link 
+                href="/app" 
+                className="px-8 py-3 border border-[#00ff00] text-[#00ff00] text-sm hover:bg-[#00ff00] hover:text-black transition-colors"
+              >
+                LIVE AGENTZ
               </Link>
             </div>
           </div>
@@ -902,13 +984,13 @@ Example first message if no context:
               href="/create" 
               className="px-12 py-4 bg-[#00ff00] text-black text-lg hover:bg-[#00ff00]/80 transition-colors"
             >
-              LAUNCH AGENT CREATOR
+              BAKE AGENTZ
             </Link>
             <Link 
               href="/app" 
               className="px-12 py-4 border border-[#00ff00] text-[#00ff00] text-lg hover:bg-[#00ff00] hover:text-black transition-colors"
             >
-              VIEW AGENTS
+              LIVE AGENTZ
             </Link>
           </div>
         </div>
