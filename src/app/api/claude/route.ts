@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
-
 export async function POST(req: Request) {
   try {
+    const anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
+
     const { prompt } = await req.json();
 
     const message = await anthropic.messages.create({
@@ -35,9 +35,9 @@ export async function POST(req: Request) {
     });
 
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Claude API Error:', error);
     return NextResponse.json(
-      { error: 'Failed to generate response' },
+      { error: 'Failed to get response from Claude' },
       { status: 500 }
     );
   }

@@ -2,7 +2,7 @@
 
 import { Press_Start_2P } from 'next/font/google';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { generateAgentResponse } from '@/utils/claude';
 import Navigation from '@/components/Navigation';
 
@@ -64,7 +64,7 @@ interface ConfigCategory {
 // Add this interface to track editing states
 interface EditingState {
   fieldKey: string | null;
-  tempValue: string | string[];
+  tempValue: string | string[] | Record<string, string> | { [key: string]: string | undefined } | null;
 }
 
 // Add the flash animation
@@ -80,9 +80,29 @@ const flashAnimation = `
   }
 `;
 
+// Add this utility function to generate unique IDs
+const generateUniqueId = (() => {
+  let id = 0;
+  return () => `msg_${Date.now()}_${++id}`;
+})();
+
+// Update the chat state interface to include id and timestamp
+interface ChatMessage {
+  id: string;
+  text: string;
+  timestamp: number;
+  isUser: boolean;
+  isThinking?: boolean;
+}
+
 export default function CreateAgent() {
-  const [chat, setChat] = useState<{ text: string, isUser: boolean }[]>([
-    { text: "Hi! I'm your agent creation assistant. Tell me about the bot you want to create, and I'll help you set it up. What type of bot are you looking to build?", isUser: false }
+  const [chat, setChat] = useState<ChatMessage[]>([
+    {
+      id: generateUniqueId(),
+      text: "Hi! I'm your agent creation assistant. Tell me about the bot you want to create, and I'll help you set it up. What type of bot are you looking to build?",
+      timestamp: Date.now(),
+      isUser: false
+    }
   ]);
   const [userInput, setUserInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
@@ -342,68 +362,36 @@ export default function CreateAgent() {
 
   const [editingState, setEditingState] = useState<EditingState>({
     fieldKey: null,
-    tempValue: ''
+    tempValue: null
   });
 
   const handleUserInput = async (message: string) => {
     if (!message.trim()) return;
 
-    // Check for platform and exchange mentions
-    const lowerMessage = message.toLowerCase();
-    const newRequirements: string[] = [];
-
-    // Platform API requirements
-    if (lowerMessage.includes('telegram')) {
-      newRequirements.push('telegramApiKey');
-      setFlashingSection('Platform Integration');
-    }
-    if (lowerMessage.includes('twitter')) {
-      newRequirements.push('twitterApiKey');
-      setFlashingSection('Platform Integration');
-    }
-    if (lowerMessage.includes('discord')) {
-      newRequirements.push('discordApiKey');
-      setFlashingSection('Platform Integration');
-    }
-
-    // Exchange API requirements
-    const exchanges = ['binance', 'coinbase', 'kucoin', 'kraken', 'ftx'];
-    if (exchanges.some(exchange => lowerMessage.includes(exchange))) {
-      newRequirements.push('exchangeApi');
-      setFlashingSection('APIs & Integrations');
-    }
-
-    // Data provider requirements
-    const dataProviders = ['coingecko', 'cryptocompare', 'tradingview', 'glassnode'];
-    if (dataProviders.some(provider => lowerMessage.includes(provider))) {
-      newRequirements.push('dataApi');
-      setFlashingSection('APIs & Integrations');
-    }
-
-    // Update dynamic requirements
-    if (newRequirements.length > 0) {
-      setDynamicRequirements(prev => [...new Set([...prev, ...newRequirements])]);
-      
-      // Auto-expand the flashing section
-      const sectionToExpand = newRequirements.some(req => ['telegramApiKey', 'twitterApiKey', 'discordApiKey'].includes(req))
-        ? 'Platform Integration'
-        : 'APIs & Integrations';
-
-      setExpandedCategories(prev => 
-        prev.includes(sectionToExpand) ? prev : [...prev, sectionToExpand]
-      );
-
-      // Remove flash after 2 seconds
-      setTimeout(() => {
-        setFlashingSection(null);
-      }, 2000);
-    }
-
-    setChat(prev => [...prev, { text: message, isUser: true }]);
-    setUserInput('');
-    setIsThinking(true);
+    const newMessageId = generateUniqueId();
+    const thinkingId = generateUniqueId();
 
     try {
+      // Add user message
+      setChat(prev => [...prev, {
+        id: newMessageId,
+        text: message,
+        timestamp: Date.now(),
+        isUser: true
+      }]);
+      setUserInput('');
+      setIsThinking(true);
+
+      // Add thinking message
+      setChat(prev => [...prev, {
+        id: thinkingId,
+        text: "Thinking...",
+        timestamp: Date.now(),
+        isUser: false,
+        isThinking: true
+      }]);
+
+      // Define the context for the AI
       const context = `You are an AI agent creator assistant. Help create a crypto trading bot by extracting information from the conversation and suggesting configurations.
 
 Current configuration:
@@ -430,130 +418,106 @@ Response format:
     "commands": ["command 1", "command 2"],
     "triggers": ["trigger 1", "trigger 2"]
   }
-}
-
-Only include fields in "updates" that are relevant to the current conversation. Make intelligent suggestions based on the user's requirements.`;
+}`;
 
       const response = await generateAgentResponse(context);
-      
-      try {
-        // Clean the response and parse JSON
-        const cleanResponse = response.replace('🤖 ', '').trim();
-        const parsedResponse = JSON.parse(cleanResponse);
 
-        // Check AI response for suggested requirements
-        const suggestedReqs: string[] = [];
+      // Remove thinking message and add response
+      setChat(prev => {
+        const filteredChat = prev.filter(msg => msg.id !== thinkingId);
         
-        // Check response content for specific features
-        const responseText = parsedResponse.message.toLowerCase();
-        
-        // Trading related
-        if (responseText.includes('trading') || responseText.includes('position') || responseText.includes('profit')) {
-          suggestedReqs.push('maxPositionSize', 'stopLossDefault', 'takeProfitDefault', 'tradingTimeframe');
-          setFlashingSection('Trading Configuration');
-        }
-
-        // Notification related
-        if (responseText.includes('notify') || responseText.includes('alert') || responseText.includes('message')) {
-          suggestedReqs.push('notificationSettings');
-          setFlashingSection('Notification Settings');
-        }
-
-        // Social monitoring
-        if (responseText.includes('elon') || responseText.includes('tweet') || responseText.includes('social')) {
-          suggestedReqs.push('dataProviders');
-          setFlashingSection('APIs & Integrations');
-        }
-
-        // Security related
-        if (responseText.includes('private') || responseText.includes('access') || responseText.includes('permission')) {
-          suggestedReqs.push('userAccessLevel', 'permissions');
-          setFlashingSection('Security & Access');
-        }
-
-        // Update AI suggested requirements
-        if (suggestedReqs.length > 0) {
-          setAiSuggestedRequirements(prev => [...new Set([...prev, ...suggestedReqs])]);
-          
-          // Auto-expand relevant sections
-          const sectionsToExpand = configCategories
-            .filter(category => 
-              category.fields.some(field => suggestedReqs.includes(field.key))
-            )
-            .map(category => category.title);
-
-          setExpandedCategories(prev => [
-            ...new Set([...prev, ...sectionsToExpand])
-          ]);
-        }
-
-        // Update configuration with any new information
-        if (parsedResponse.updates) {
-          setAgentConfig(prev => {
-            const newConfig = { ...prev };
-            
-            // Update each field if provided in the response
-            Object.entries(parsedResponse.updates).forEach(([key, value]) => {
-              if (value && (
-                // If it's an array, only update if new values provided
-                (Array.isArray(value) && value.length > 0) ||
-                // If it's a string, only update if not empty
-                (typeof value === 'string' && value.trim() !== '')
-              )) {
-                // Type guard to ensure proper assignment
-                if (Array.isArray(value)) {
-                  (newConfig[key as keyof AgentConfig] as string[]) = value;
-                } else if (typeof value === 'string') {
-                  if (key === 'notificationSettings' || key === 'customResponses') {
-                    // Skip these complex objects for now as they're just placeholders
-                    return;
-                  }
-                  (newConfig[key as keyof AgentConfig] as string) = value;
-                }
+        try {
+          if (!response) {
+            return [
+              ...filteredChat,
+              {
+                id: generateUniqueId(),
+                text: "I'm having trouble processing your request. Please try again.",
+                timestamp: Date.now(),
+                isUser: false
               }
-            });
+            ];
+          }
+
+          // First try to parse as JSON
+          try {
+            const parsedResponse = JSON.parse(response);
             
-            return newConfig;
-          });
+            // Process configuration updates if available
+            if (parsedResponse.updates) {
+              setAgentConfig(prev => {
+                const newConfig = { ...prev };
+                Object.entries(parsedResponse.updates).forEach(([key, value]) => {
+                  if (value && key in newConfig) {
+                    if (Array.isArray(value)) {
+                      (newConfig[key as keyof AgentConfig] as string[]) = value;
+                    } else if (typeof value === 'string') {
+                      (newConfig[key as keyof AgentConfig] as string) = value;
+                    }
+                  }
+                });
+                return newConfig;
+              });
+
+              // Update suggested requirements
+              const suggestedReqs = Object.keys(parsedResponse.updates).filter(
+                key => parsedResponse.updates[key]
+              );
+              if (suggestedReqs.length > 0) {
+                setAiSuggestedRequirements(prev => [...new Set([...prev, ...suggestedReqs])]);
+              }
+            }
+
+            // Return chat with the message from parsed response
+            return [
+              ...filteredChat,
+              {
+                id: generateUniqueId(),
+                text: parsedResponse.message || response,
+                timestamp: Date.now(),
+                isUser: false
+              }
+            ];
+          } catch {
+            // If JSON parsing fails, use the raw response
+            return [
+              ...filteredChat,
+              {
+                id: generateUniqueId(),
+                text: response,
+                timestamp: Date.now(),
+                isUser: false
+              }
+            ];
+          }
+        } catch (error) {
+          console.error('Error processing response:', error);
+          return [
+            ...filteredChat,
+            {
+              id: generateUniqueId(),
+              text: "An error occurred while processing the response. Please try again.",
+              timestamp: Date.now(),
+              isUser: false
+            }
+          ];
         }
+      });
 
-        // Collapse sections that get filled
-        if (parsedResponse.updates) {
-          const filledCategories = configCategories.filter(category => 
-            category.fields.some(field => 
-              parsedResponse.updates[field.key] && 
-              parsedResponse.updates[field.key].length > 0
-            )
-          ).map(category => category.title);
-
-          setExpandedCategories(prev => 
-            prev.filter(category => !filledCategories.includes(category))
-          );
-        }
-
-        // Add assistant's message to chat
-        setChat(prev => [...prev, { 
-          text: parsedResponse.message, 
-          isUser: false 
-        }]);
-
-      } catch (e) {
-        console.error('Parse error:', e);
-        // Fallback for non-JSON responses
-        setChat(prev => [...prev, { 
-          text: response, 
-          isUser: false 
-        }]);
-      }
     } catch (error) {
-      console.error('API error:', error);
-      setChat(prev => [...prev, { 
-        text: "I encountered an error. Please try again.", 
-        isUser: false 
-      }]);
+      console.error('Error:', error);
+      setChat(prev => [
+        ...prev.filter(msg => msg.id !== thinkingId),
+        {
+          id: generateUniqueId(),
+          text: "An error occurred. Please try again.",
+          timestamp: Date.now(),
+          isUser: false
+        }
+      ]);
+    } finally {
+      setIsThinking(false);
     }
-
-    setIsThinking(false);
   };
 
   const renderEditableField = (
@@ -585,21 +549,33 @@ Only include fields in "updates" that are relevant to the current conversation. 
     const currentEntries = Array.isArray(displayValue) ? displayValue.length : 0;
 
     const startEditing = () => {
+      let initialValue: typeof editingState.tempValue;
+
+      if (Array.isArray(value)) {
+        initialValue = [...value];
+      } else if (typeof value === 'object' && value !== null) {
+        initialValue = { ...value };
+      } else {
+        initialValue = value as string;
+      }
+
       setEditingState({
         fieldKey: fieldKey,
-        tempValue: value
+        tempValue: initialValue
       });
     };
 
     const handleSave = () => {
-      setAgentConfig(prev => ({
-        ...prev,
-        [fieldKey]: editingState.tempValue
-      }));
-      setEditingState({ fieldKey: null, tempValue: '' });
+      if (editingState.tempValue !== null) {
+        setAgentConfig(prev => ({
+          ...prev,
+          [fieldKey]: editingState.tempValue
+        }));
+      }
+      setEditingState({ fieldKey: null, tempValue: null });
     };
 
-    const handleChange = (newValue: string | string[]) => {
+    const handleChange = (newValue: string | string[] | Record<string, string> | { [key: string]: string | undefined }) => {
       setEditingState(prev => ({
         ...prev,
         tempValue: newValue
@@ -748,6 +724,13 @@ Only include fields in "updates" that are relevant to the current conversation. 
     }, 15000);
   };
 
+  useEffect(() => {
+    if (userInput.toLowerCase().includes('telegram')) {
+      setDynamicRequirements(prev => [...prev, 'telegramApiKey']);
+      setFlashingSection('Platform Integration');
+    }
+  }, [userInput]);
+
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] ${pressStart.className}`}>
       <style jsx>{flashAnimation}</style>
@@ -770,8 +753,10 @@ Only include fields in "updates" that are relevant to the current conversation. 
               <div className="h-96 overflow-y-auto mb-4 space-y-4">
                 {chat.map((message) => (
                   <div
-                    key={message.text}
-                    className={`${message.isUser ? 'text-blue-400' : 'text-[#00ff00]'} text-sm`}
+                    key={message.id}
+                    className={`${message.isUser ? 'text-blue-400' : 'text-[#00ff00]'} text-sm ${
+                      message.isThinking ? 'animate-pulse' : ''
+                    }`}
                   >
                     {message.text}
                   </div>

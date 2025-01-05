@@ -1,4 +1,4 @@
-export const generateAgentResponse = async (prompt: string): Promise<string> => {
+export async function generateAgentResponse(prompt: string) {
   try {
     const response = await fetch('/api/claude', {
       method: 'POST',
@@ -8,13 +8,17 @@ export const generateAgentResponse = async (prompt: string): Promise<string> => 
       body: JSON.stringify({ prompt }),
     });
 
-    const data: { response: string } = await response.json();
+    if (!response.ok) {
+      throw new Error('Failed to get response from API');
+    }
+
+    const data = await response.json();
     return data.response;
-  } catch (error: unknown) {
+  } catch (error) {
     console.error('Error generating response:', error);
-    throw error;
+    return null;
   }
-};
+}
 
 interface PromptContext {
   price?: number;

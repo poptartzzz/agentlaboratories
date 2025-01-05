@@ -3,14 +3,30 @@
 import { useState, useEffect } from "react";
 import { Press_Start_2P } from 'next/font/google';
 import Link from 'next/link';
-import { getCryptoData } from '@/utils/crypto';
-import { generateAgentResponse } from '@/utils/claude';
-import { getTokenInfo } from '@/utils/etherscan';
 import Navigation from '@/components/Navigation';
 import Separator from '@/components/Separator';
 import TypeWriter from '@/components/TypeWriter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { 
+  faRobot, 
+  faPlug, 
+  faGears, 
+  faCode, 
+  faLock, 
+  faMessage,
+  faArrowsRotate,
+  faChartLine,
+  faCrosshairs,
+  faCoins,
+  faRocket,
+  faGem,
+  faPersonRunning,
+  faGamepad,
+  faCrown,
+  faMoon,
+  faStar 
+} from '@fortawesome/free-solid-svg-icons';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -210,16 +226,16 @@ const getPlaceholder = (type: AgentType) => {
 };
 
 // Add error boundary for Spline
-const SplineComponent = () => {
-  return (
-    <div className="absolute inset-0 z-0">
-      <spline-viewer 
-        url="https://prod.spline.design/QowvYLfIkW8q41RE/scene.splinecode"
-        className="w-full h-full"
-      />
-    </div>
-  );
-};
+// const SplineComponent = () => {
+//   return (
+//     <div className="absolute inset-0 z-0">
+//       <spline-viewer 
+//         url="https://prod.spline.design/QowvYLfIkW8q41RE/scene.splinecode"
+//         className="w-full h-full"
+//       />
+//     </div>
+//   );
+// };
 
 // Add this helper function near the top of your component
 interface IconTextProps {
@@ -234,50 +250,39 @@ const IconText = ({ icon, text }: IconTextProps) => (
   </div>
 );
 
-// Fix the any type on line 458
-interface TokenResponse {
-  token: string;
-  data: {
-    usd: number;
-    usd_24h_change: number;
-    usd_24h_vol: number;
-  }
-}
-
-// Update the priceData type
-interface PriceData {
-  price: string;
-  change: string;
-  volume: string;
-}
-
-const currentPriceData: Record<string, PriceData> = {};
-
 export default function Home() {
   const [demoMessages, setDemoMessages] = useState<DemoMessage[]>([]);
-  const [isGenerating, setIsGenerating] = useState(false);
   const [currentAgentType, setCurrentAgentType] = useState<AgentType>('trading');
   const [userInput, setUserInput] = useState<DemoInput>({
     isOpen: false,
     message: ''
   });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Add handleUserMessage function
+  const handleUserMessage = (message: string) => {
+    if (!message.trim()) return;
 
-  // Auto-rotate features
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentFeature((prev) => (prev + 1) % features.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [features.length]);
+    // Add user message
+    setDemoMessages(prev => [...prev, {
+      id: generateUniqueId(),
+      text: `👤 User: ${message}`,
+      timestamp: Date.now(),
+      isUser: true
+    }]);
 
+    // Add bot response
+    setDemoMessages(prev => [...prev, {
+      id: generateUniqueId(),
+      text: `🤖 This is a demo environment. The AI agent responses are simulated for demonstration purposes.`,
+      timestamp: Date.now(),
+      isUser: false
+    }]);
+
+    // Clear input
+    setUserInput({ isOpen: false, message: '' });
+  };
+
+  // Define features array before using it
   const features = [
     {
       title: "Platform Integration",
@@ -311,45 +316,6 @@ export default function Home() {
     }
   ];
 
-  // Function to generate a new random demo
-  // const generateNewDemo = async () => {
-  //   setIsGenerating(true);
-  //   setDemoMessages([]);
-  //   
-  //   let conversation: {text: string, isUser: boolean}[] = [];
-  //   
-  //   switch (currentAgentType) {
-  //     case 'elon_tweet':
-  //       conversation = [
-  //         { text: "👤 @degen_trader: Show me the ELON BOT settings", isUser: true },
-  //         { text: "🤖 ELON TWEET BOT Status:\nMode: DEGEN ACTIVATED 🚀\n\nCurrent Settings:\n- Buy Trigger: Any Elon tweet containing < 3 words\n- Initial Buy: $500 per coin mentioned\n- Stop Loss: -15% (paper hands 📄)\n- Take Profit: +100% (minimum, we only ride moonshots 🌕)\n\nLast Action: Bought $DOGE after '🐕' tweet\nResult: +420% profit (nice)\n\nWaiting for next tweet...", isUser: false }
-  //       ];
-  //       break;
-  //     case 'influencer_trader':
-  //       conversation = [
-  //         { text: "👤 @fomo_master: Check influencer bot status", isUser: true },
-  //         { text: "🤖 INFLUENCER TRACKER v4.20 🎯\n\nMonitoring:\n1. BitBoy (inverse all trades)\n2. CryptoCapo (inverse when too bearish)\n3. Plan B (adjust stock-to-flow for hopium)\n\nCurrent Positions:\n- Short $BTC because BitBoy is bullish\n- Long $ETH because everyone is bearish\n- Avoiding all NFTs shilled in last 24h\n\nProfitability: We're all gonna make it 🚀", isUser: false },
-  //         { text: "👤 @fomo_master: Any active shills now?", isUser: true },
-  //         { text: "🤖 LIVE SHILL DETECTION:\n\n🚨 3 influencers shilling same coin: $PEPE\n⚠️ 5 'Not Financial Advice' disclaimers detected\n💰 2 'Once in a lifetime opportunity' claims\n🎯 7 rocket emojis in one tweet\n\nBot Action:\n- Waiting for synchronized shilling\n- Will short when they say 'fundamentals'\n- Buy signal: When they start blocking critics\n\nTrust level: In memes we trust 🎰", isUser: false }
-  //       ];
-  //       break;
-  //     // ... other cases ...
-  //   }
-  //   
-  //   // Add messages with delays
-  //   for (let i = 0; i < conversation.length; i++) {
-  //     await new Promise(resolve => setTimeout(resolve, 1000));
-  //     setDemoMessages(prev => [...prev, {
-  //       id: generateUniqueId(),
-  //       text: conversation[i].text,
-  //       timestamp: Date.now(),
-  //       isUser: conversation[i].isUser
-  //     }]);
-  //   }
-  //   
-  //   setIsGenerating(false);
-  // };
-
   // Update the initial useEffect
   useEffect(() => {
     // Set initial conversation based on default agent type (trading)
@@ -365,175 +331,6 @@ export default function Home() {
       isUser: msg.isUser
     })));
   }, []); // Empty dependency array means this runs once on mount
-
-  // Add this function to handle user messages
-  const handleUserMessage = async (message: string) => {
-    if (!message.trim()) return;
-    
-    // Immediately show user message
-    const userMessage = `👤 @visitor: ${message}`;
-    setDemoMessages(prev => [...prev, {
-      id: generateUniqueId(),
-      text: userMessage,
-      timestamp: Date.now(),
-      isUser: true
-    }]);
-
-    // Immediately show thinking message
-    const thinkingId = generateUniqueId();
-    setDemoMessages(prev => [...prev, {
-      id: thinkingId,
-      text: "🤖 Agent is thinking...",
-      timestamp: Date.now(),
-      isUser: false,
-      isThinking: true
-    }]);
-
-    setIsGenerating(true);
-    setUserInput({ isOpen: false, message: '' });
-
-    try {
-      // Check if message contains an Ethereum address
-      const addressMatch = message.match(/0x[a-fA-F0-9]{40}/);
-      if (addressMatch) {
-        const address = addressMatch[0];
-        
-        // Show searching message with animation
-        const searchingId = generateUniqueId();
-        setDemoMessages(prev => [...prev, {
-          id: searchingId,
-          text: "🤖 Analyzing smart contract...",
-          timestamp: Date.now(),
-          isUser: false,
-          isThinking: true
-        }]);
-
-        try {
-          const tokenInfo = await getTokenInfo(address);
-
-          if (tokenInfo) {
-            let responseText = `🤖 Contract Analysis for ${address.slice(0, 6)}...${address.slice(-4)}:\n`;
-            
-            if (tokenInfo.isToken) {
-              responseText += `📝 Token Name: ${tokenInfo.name}\n`;
-            } else {
-              responseText += `📝 Contract Name: ${tokenInfo.name}\n`;
-            }
-
-            responseText += `
-✅ Verification: ${tokenInfo.isVerified ? 'Verified' : 'Unverified'} contract
-🔄 Implementation: ${tokenInfo.implementation}
-⚙️ Compiler: ${tokenInfo.compiler}
-📊 Transactions: ${tokenInfo.transactions}
-⏰ Last Activity: ${tokenInfo.lastTx}
-📅 Deployed: ${tokenInfo.deployedAt}
-
-${tokenInfo.isVerified ? '✅ Contract is verified, suggesting legitimate deployment' : '⚠️ Contract is unverified - exercise caution'}
-${tokenInfo.transactions > 1000 ? '📈 High transaction count indicates active usage' : '⚠️ Low transaction count - might be new or inactive'}
-
-Would you like me to analyze the transaction patterns or check for potential security risks?`;
-
-            // Replace thinking message with analysis
-            setDemoMessages(prev => prev.map(msg => 
-              msg.id === searchingId ? {
-                id: generateUniqueId(),
-                text: responseText,
-                timestamp: Date.now(),
-                isUser: false
-              } : msg
-            ));
-          } else {
-            setDemoMessages(prev => prev.map(msg => 
-              msg.id === searchingId ? {
-                id: generateUniqueId(),
-                text: "🤖 I couldn't find detailed information about this contract. It might be very new or not deployed on mainnet. Would you like me to check other networks?",
-                timestamp: Date.now(),
-                isUser: false
-              } : msg
-            ));
-          }
-        } catch (error) {
-          console.error('Error:', error);
-          setDemoMessages(prev => prev.map(msg => 
-            msg.id === searchingId ? {
-              id: generateUniqueId(),
-              text: "🤖 I encountered an error while analyzing this contract. The address might be invalid or the contract might not be deployed yet.",
-              timestamp: Date.now(),
-              isUser: false
-            } : msg
-          ));
-        }
-        return;
-      }
-
-      // Get crypto prices for common tokens mentioned in the message
-      const tokens = {
-        btc: message.toLowerCase().includes('btc') || message.toLowerCase().includes('bitcoin'),
-        eth: message.toLowerCase().includes('eth') || message.toLowerCase().includes('ethereum'),
-        sol: message.toLowerCase().includes('sol') || message.toLowerCase().includes('solana'),
-      };
-
-      // Fetch relevant token data
-      const promises: Promise<{ token: string; data: TokenResponse['data'] }>[] = [];
-      if (tokens.btc) promises.push(getCryptoData('bitcoin').then(data => ({ token: 'btc', data })));
-      if (tokens.eth) promises.push(getCryptoData('ethereum').then(data => ({ token: 'eth', data })));
-      if (tokens.sol) promises.push(getCryptoData('solana').then(data => ({ token: 'sol', data })));
-
-      const results: { token: string; data: TokenResponse['data'] }[] = await Promise.all(promises);
-      
-      // Process results
-      results.forEach(({ token, data }) => {
-        if (data) {
-          currentPriceData[token] = {
-            price: data.usd?.toFixed(2) || 'N/A',
-            change: data.usd_24h_change?.toFixed(2) || 'N/A',
-            volume: (data.usd_24h_vol / 1e9)?.toFixed(2) || 'N/A'
-          };
-        }
-      });
-
-      // Create market data string for prompt
-      const marketDataString = Object.entries(currentPriceData)
-        .map(([token, data]) => 
-          `${token.toUpperCase()}: $${data.price} (${data.change}% 24h) | Vol: $${data.volume}B`
-        )
-        .join('\n');
-
-      // Generate context-aware response with real price data
-      const followUpPrompt = `You are an AI crypto trading agent. Here is the current real market data:
-      ${marketDataString}
-
-      Previous conversation context:
-      ${demoMessages.map(m => m.text).join('\n')}
-      
-      User question: ${message}
-      
-      Provide a detailed analysis using the REAL price data provided above. You can make up additional technical analysis details to support your response, but use the actual prices in your analysis. Keep the response concise and chat-like. Start your response with 🤖.`;
-
-      const response = await generateAgentResponse(followUpPrompt);
-      
-      // Replace thinking message with actual response
-      setDemoMessages(prev => prev.map(msg => 
-        msg.id === thinkingId ? {
-          id: generateUniqueId(),
-          text: response,
-          timestamp: Date.now(),
-          isUser: false
-        } : msg
-      ));
-
-    } catch (error) {
-      console.error('Error:', error);
-      setDemoMessages(prev => [...prev, {
-        id: generateUniqueId(),
-        text: "🤖 I encountered an error while fetching token information. Please verify the address and try again.",
-        timestamp: Date.now(),
-        isUser: false
-      }]);
-    }
-
-    setIsGenerating(false);
-  };
 
   // First, create an array of available agent types for tabs
   const agentTypes: { type: AgentType; label: string }[] = [
@@ -574,8 +371,6 @@ Would you like me to analyze the transaction patterns or check for potential sec
 
       {/* Hero Section with Spline */}
       <section className="relative h-screen flex items-center z-10">
-        <SplineComponent />
-        
         <div className="container mx-auto px-6 text-center relative z-10">
           <div className="space-y-8 backdrop-blur-sm bg-black/70 p-8 rounded-lg">
             <div className="inline-block px-4 py-2 border border-[#00ff00] bg-black">
@@ -727,16 +522,13 @@ Would you like me to analyze the transaction patterns or check for potential sec
 
                 {/* Messages Container - Adjust height to accommodate input */}
                 <div className="font-mono text-sm space-y-2 h-80 overflow-y-auto mb-4 scrollbar-thin scrollbar-thumb-[#00ff00] scrollbar-track-transparent">
-                  {isGenerating && demoMessages.length === 0 ? (
-                    <div className="animate-pulse">Initializing random agent...</div>
+                  {demoMessages.length === 0 ? (
+                    <div className="animate-pulse">Initializing agent...</div>
                   ) : (
                     demoMessages.map((msg) => (
                       <div
                         key={msg.id}
-                        className={`${msg.isThinking ? 'animate-pulse' : 'opacity-0 animate-fade-in'} ${
-                          msg.isUser ? 'text-blue-400' : 'text-[#00ff00]'
-                        }`}
-                        style={{ animationDelay: msg.isThinking ? '0ms' : '1000ms' }}
+                        className={`${msg.isUser ? 'text-blue-400' : 'text-[#00ff00]'} text-sm`}
                       >
                         {msg.text}
                       </div>
@@ -754,12 +546,11 @@ Would you like me to analyze the transaction patterns or check for potential sec
                       onKeyPress={(e) => e.key === 'Enter' && handleUserMessage(userInput.message)}
                       placeholder={getPlaceholder(currentAgentType)}
                       className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-sm focus:outline-none focus:border-white placeholder-[#00ff00]/30"
-                      disabled={isGenerating}
                     />
                     <button
                       onClick={() => handleUserMessage(userInput.message)}
                       className="text-xs border border-[#00ff00] px-2 py-1 hover:bg-[#00ff00] hover:text-black transition-all"
-                      disabled={!userInput.message.trim() || isGenerating}
+                      disabled={!userInput.message.trim()}
                     >
                       SEND
                     </button>
