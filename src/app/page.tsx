@@ -49,89 +49,89 @@ interface DemoInput {
 }
 
 // Utility functions for generating random demo content
-const generateTradingMessage = (): string => {
-  const users = ['trader_123', 'crypto_king', 'hodler99', 'whale_watcher'];
-  const questions = [
-    'Should I enter BTC now?',
-    'What\'s your take on ETH/BTC?',
-    'Is this a good entry for SOL?',
-    'Stop loss recommendation?',
-    'Take profit targets?'
-  ];
-  
-  const pairs = ['BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'AVAX/USDT'];
-  const prices = Array.from({length: 5}, () => (Math.random() * 50000).toFixed(2));
-  const percentages = Array.from({length: 5}, () => (Math.random() * 10).toFixed(2));
-  
-  const responses = [
-    `Based on my analysis, ${pairs[Math.floor(Math.random() * pairs.length)]} shows a bullish divergence. Entry at $${prices[0]} looks optimal.`,
-    `I detect strong support at $${prices[1]}. Risk/reward ratio is favorable for a long position.`,
-    `Market conditions are volatile. Recommend waiting for confirmation above $${prices[2]}.`,
-    `Setting stop loss at $${prices[3]} (${percentages[0]}% below entry) would be prudent.`,
-    `Multiple take profit targets: TP1: $${prices[4]} (+${percentages[1]}%), TP2: $${(parseFloat(prices[4]) * 1.05).toFixed(2)} (+${(parseFloat(percentages[1]) * 1.5).toFixed(2)}%)`
-  ];
-
-  // Randomly decide if this should be a question or answer
-  if (Math.random() > 0.7) {
-    return `👤 @${users[Math.floor(Math.random() * users.length)]}: ${questions[Math.floor(Math.random() * questions.length)]}`;
-  } else {
-    return `🤖 ${responses[Math.floor(Math.random() * responses.length)]}`;
-  }
-};
-
-const generateModeratorMessage = (): string => {
-  const users = ['new_member', 'crypto_fan', 'moon_boy', 'fud_master'];
-  const questions = [
-    'Is this link safe?',
-    'Why was my message deleted?',
-    'Can I share my trading group?',
-    'Why was I warned?',
-    'When moon?'
-  ];
-  
-  const responses = [
-    'That link contains potential phishing attempts. Please only share official links.',
-    'Your message was removed as it violated our no-spam policy. Please review the rules.',
-    'Trading group promotions are only allowed in #promotions channel with mod approval.',
-    'Excessive use of caps and spam triggers automatic moderation.',
-    'Please keep discussion focused on meaningful market analysis.'
-  ];
-
-  if (Math.random() > 0.7) {
-    return `👤 @${users[Math.floor(Math.random() * users.length)]}: ${questions[Math.floor(Math.random() * questions.length)]}`;
-  } else {
-    return `🤖 ${responses[Math.floor(Math.random() * responses.length)]}`;
-  }
-};
-
-const generateResearcherMessage = (): string => {
-  const users = ['analyst_pro', 'research_guru', 'data_wizard', 'trend_hunter'];
-  const questions = [
-    'What\'s the current market sentiment?',
-    'Any notable whale movements?',
-    'How\'s the developer activity?',
-    'Major news impacts?',
-    'Network growth stats?'
-  ];
-  
-  const assets = ['BTC', 'ETH', 'SOL', 'AVAX'];
-  const metrics = ['social sentiment', 'developer activity', 'whale movements', 'network activity'];
-  const percentages = Array.from({length: 5}, () => (Math.random() * 100).toFixed(1));
-  
-  const responses = [
-    `Analysis shows ${metrics[Math.floor(Math.random() * metrics.length)]} for ${assets[Math.floor(Math.random() * assets.length)]} is up ${percentages[0]}% this week.`,
-    `Detected significant whale accumulation: ${Math.floor(Math.random() * 1000)} ${assets[Math.floor(Math.random() * assets.length)]} moved to cold storage.`,
-    `GitHub commits increased by ${percentages[1]}% this month, indicating strong development momentum.`,
-    `Social sentiment analysis: ${percentages[2]}% bullish across major platforms.`,
-    `On-chain metrics show ${percentages[3]}% growth in daily active addresses.`
-  ];
-
-  if (Math.random() > 0.7) {
-    return `👤 @${users[Math.floor(Math.random() * users.length)]}: ${questions[Math.floor(Math.random() * questions.length)]}`;
-  } else {
-    return `🤖 ${responses[Math.floor(Math.random() * responses.length)]}`;
-  }
-};
+// const generateTradingMessage = (): string => {
+//   const users = ['trader_123', 'crypto_king', 'hodler99', 'whale_watcher'];
+//   const questions = [
+//     'Should I enter BTC now?',
+//     'What\'s your take on ETH/BTC?',
+//     'Is this a good entry for SOL?',
+//     'Stop loss recommendation?',
+//     'Take profit targets?'
+//   ];
+//   
+//   const pairs = ['BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'AVAX/USDT'];
+//   const prices = Array.from({length: 5}, () => (Math.random() * 50000).toFixed(2));
+//   const percentages = Array.from({length: 5}, () => (Math.random() * 10).toFixed(2));
+//   
+//   const responses = [
+//     `Based on my analysis, ${pairs[Math.floor(Math.random() * pairs.length)]} shows a bullish divergence. Entry at $${prices[0]} looks optimal.`,
+//     `I detect strong support at $${prices[1]}. Risk/reward ratio is favorable for a long position.`,
+//     `Market conditions are volatile. Recommend waiting for confirmation above $${prices[2]}.`,
+//     `Setting stop loss at $${prices[3]} (${percentages[0]}% below entry) would be prudent.`,
+//     `Multiple take profit targets: TP1: $${prices[4]} (+${percentages[1]}%), TP2: $${(parseFloat(prices[4]) * 1.05).toFixed(2)} (+${(parseFloat(percentages[1]) * 1.5).toFixed(2)}%)`
+//   ];
+//
+//   // Randomly decide if this should be a question or answer
+//   if (Math.random() > 0.7) {
+//     return `👤 @${users[Math.floor(Math.random() * users.length)]}: ${questions[Math.floor(Math.random() * questions.length)]}`;
+//   } else {
+//     return `🤖 ${responses[Math.floor(Math.random() * responses.length)]}`;
+//   }
+// };
+//
+// const generateModeratorMessage = (): string => {
+//   const users = ['new_member', 'crypto_fan', 'moon_boy', 'fud_master'];
+//   const questions = [
+//     'Is this link safe?',
+//     'Why was my message deleted?',
+//     'Can I share my trading group?',
+//     'Why was I warned?',
+//     'When moon?'
+//   ];
+//   
+//   const responses = [
+//     'That link contains potential phishing attempts. Please only share official links.',
+//     'Your message was removed as it violated our no-spam policy. Please review the rules.',
+//     'Trading group promotions are only allowed in #promotions channel with mod approval.',
+//     'Excessive use of caps and spam triggers automatic moderation.',
+//     'Please keep discussion focused on meaningful market analysis.'
+//   ];
+//
+//   if (Math.random() > 0.7) {
+//     return `👤 @${users[Math.floor(Math.random() * users.length)]}: ${questions[Math.floor(Math.random() * questions.length)]}`;
+//   } else {
+//     return `🤖 ${responses[Math.floor(Math.random() * responses.length)]}`;
+//   }
+// };
+//
+// const generateResearcherMessage = (): string => {
+//   const users = ['analyst_pro', 'research_guru', 'data_wizard', 'trend_hunter'];
+//   const questions = [
+//     'What\'s the current market sentiment?',
+//     'Any notable whale movements?',
+//     'How\'s the developer activity?',
+//     'Major news impacts?',
+//     'Network growth stats?'
+//   ];
+//   
+//   const assets = ['BTC', 'ETH', 'SOL', 'AVAX'];
+//   const metrics = ['social sentiment', 'developer activity', 'whale movements', 'network activity'];
+//   const percentages = Array.from({length: 5}, () => (Math.random() * 100).toFixed(1));
+//   
+//   const responses = [
+//     `Analysis shows ${metrics[Math.floor(Math.random() * metrics.length)]} for ${assets[Math.floor(Math.random() * assets.length)]} is up ${percentages[0]}% this week.`,
+//     `Detected significant whale accumulation: ${Math.floor(Math.random() * 1000)} ${assets[Math.floor(Math.random() * assets.length)]} moved to cold storage.`,
+//     `GitHub commits increased by ${percentages[1]}% this month, indicating strong development momentum.`,
+//     `Social sentiment analysis: ${percentages[2]}% bullish across major platforms.`,
+//     `On-chain metrics show ${percentages[3]}% growth in daily active addresses.`
+//   ];
+//
+//   if (Math.random() > 0.7) {
+//     return `👤 @${users[Math.floor(Math.random() * users.length)]}: ${questions[Math.floor(Math.random() * questions.length)]}`;
+//   } else {
+//     return `🤖 ${responses[Math.floor(Math.random() * responses.length)]}`;
+//   }
+// };
 
 // Add this helper function to get the agent title
 const getAgentTitle = (type: AgentType) => {
@@ -235,18 +235,23 @@ const IconText = ({ icon, text }: IconTextProps) => (
 );
 
 // Fix the any type on line 458
-interface TokenData {
+interface TokenResponse {
   token: string;
   data: {
-    price: number;
-    volume: number;
-    change: number;
+    usd: number;
+    usd_24h_change: number;
+    usd_24h_vol: number;
   }
 }
 
-const processResults = (results: TokenData[]) => {
-  // ... rest of function
-};
+// Update the priceData type
+interface PriceData {
+  price: string;
+  change: string;
+  volume: string;
+}
+
+const currentPriceData: Record<string, PriceData> = {};
 
 export default function Home() {
   const [demoMessages, setDemoMessages] = useState<DemoMessage[]>([]);
@@ -307,43 +312,43 @@ export default function Home() {
   ];
 
   // Function to generate a new random demo
-  const generateNewDemo = async () => {
-    setIsGenerating(true);
-    setDemoMessages([]);
-    
-    let conversation: {text: string, isUser: boolean}[] = [];
-    
-    switch (currentAgentType) {
-      case 'elon_tweet':
-        conversation = [
-          { text: "👤 @degen_trader: Show me the ELON BOT settings", isUser: true },
-          { text: "🤖 ELON TWEET BOT Status:\nMode: DEGEN ACTIVATED 🚀\n\nCurrent Settings:\n- Buy Trigger: Any Elon tweet containing < 3 words\n- Initial Buy: $500 per coin mentioned\n- Stop Loss: -15% (paper hands 📄)\n- Take Profit: +100% (minimum, we only ride moonshots 🌕)\n\nLast Action: Bought $DOGE after '🐕' tweet\nResult: +420% profit (nice)\n\nWaiting for next tweet...", isUser: false }
-        ];
-        break;
-      case 'influencer_trader':
-        conversation = [
-          { text: "👤 @fomo_master: Check influencer bot status", isUser: true },
-          { text: "🤖 INFLUENCER TRACKER v4.20 🎯\n\nMonitoring:\n1. BitBoy (inverse all trades)\n2. CryptoCapo (inverse when too bearish)\n3. Plan B (adjust stock-to-flow for hopium)\n\nCurrent Positions:\n- Short $BTC because BitBoy is bullish\n- Long $ETH because everyone is bearish\n- Avoiding all NFTs shilled in last 24h\n\nProfitability: We're all gonna make it 🚀", isUser: false },
-          { text: "👤 @fomo_master: Any active shills now?", isUser: true },
-          { text: "🤖 LIVE SHILL DETECTION:\n\n🚨 3 influencers shilling same coin: $PEPE\n⚠️ 5 'Not Financial Advice' disclaimers detected\n💰 2 'Once in a lifetime opportunity' claims\n🎯 7 rocket emojis in one tweet\n\nBot Action:\n- Waiting for synchronized shilling\n- Will short when they say 'fundamentals'\n- Buy signal: When they start blocking critics\n\nTrust level: In memes we trust 🎰", isUser: false }
-        ];
-        break;
-      // ... other cases ...
-    }
-    
-    // Add messages with delays
-    for (let i = 0; i < conversation.length; i++) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setDemoMessages(prev => [...prev, {
-        id: generateUniqueId(),
-        text: conversation[i].text,
-        timestamp: Date.now(),
-        isUser: conversation[i].isUser
-      }]);
-    }
-    
-    setIsGenerating(false);
-  };
+  // const generateNewDemo = async () => {
+  //   setIsGenerating(true);
+  //   setDemoMessages([]);
+  //   
+  //   let conversation: {text: string, isUser: boolean}[] = [];
+  //   
+  //   switch (currentAgentType) {
+  //     case 'elon_tweet':
+  //       conversation = [
+  //         { text: "👤 @degen_trader: Show me the ELON BOT settings", isUser: true },
+  //         { text: "🤖 ELON TWEET BOT Status:\nMode: DEGEN ACTIVATED 🚀\n\nCurrent Settings:\n- Buy Trigger: Any Elon tweet containing < 3 words\n- Initial Buy: $500 per coin mentioned\n- Stop Loss: -15% (paper hands 📄)\n- Take Profit: +100% (minimum, we only ride moonshots 🌕)\n\nLast Action: Bought $DOGE after '🐕' tweet\nResult: +420% profit (nice)\n\nWaiting for next tweet...", isUser: false }
+  //       ];
+  //       break;
+  //     case 'influencer_trader':
+  //       conversation = [
+  //         { text: "👤 @fomo_master: Check influencer bot status", isUser: true },
+  //         { text: "🤖 INFLUENCER TRACKER v4.20 🎯\n\nMonitoring:\n1. BitBoy (inverse all trades)\n2. CryptoCapo (inverse when too bearish)\n3. Plan B (adjust stock-to-flow for hopium)\n\nCurrent Positions:\n- Short $BTC because BitBoy is bullish\n- Long $ETH because everyone is bearish\n- Avoiding all NFTs shilled in last 24h\n\nProfitability: We're all gonna make it 🚀", isUser: false },
+  //         { text: "👤 @fomo_master: Any active shills now?", isUser: true },
+  //         { text: "🤖 LIVE SHILL DETECTION:\n\n🚨 3 influencers shilling same coin: $PEPE\n⚠️ 5 'Not Financial Advice' disclaimers detected\n💰 2 'Once in a lifetime opportunity' claims\n🎯 7 rocket emojis in one tweet\n\nBot Action:\n- Waiting for synchronized shilling\n- Will short when they say 'fundamentals'\n- Buy signal: When they start blocking critics\n\nTrust level: In memes we trust 🎰", isUser: false }
+  //       ];
+  //       break;
+  //     // ... other cases ...
+  //   }
+  //   
+  //   // Add messages with delays
+  //   for (let i = 0; i < conversation.length; i++) {
+  //     await new Promise(resolve => setTimeout(resolve, 1000));
+  //     setDemoMessages(prev => [...prev, {
+  //       id: generateUniqueId(),
+  //       text: conversation[i].text,
+  //       timestamp: Date.now(),
+  //       isUser: conversation[i].isUser
+  //     }]);
+  //   }
+  //   
+  //   setIsGenerating(false);
+  // };
 
   // Update the initial useEffect
   useEffect(() => {
@@ -469,20 +474,17 @@ Would you like me to analyze the transaction patterns or check for potential sec
       };
 
       // Fetch relevant token data
-      const priceData: Record<string, any> = {};
-      
-      // Fetch prices in parallel
-      const promises = [];
+      const promises: Promise<{ token: string; data: TokenResponse['data'] }>[] = [];
       if (tokens.btc) promises.push(getCryptoData('bitcoin').then(data => ({ token: 'btc', data })));
       if (tokens.eth) promises.push(getCryptoData('ethereum').then(data => ({ token: 'eth', data })));
       if (tokens.sol) promises.push(getCryptoData('solana').then(data => ({ token: 'sol', data })));
 
-      const results = await Promise.all(promises);
+      const results: { token: string; data: TokenResponse['data'] }[] = await Promise.all(promises);
       
       // Process results
       results.forEach(({ token, data }) => {
         if (data) {
-          priceData[token] = {
+          currentPriceData[token] = {
             price: data.usd?.toFixed(2) || 'N/A',
             change: data.usd_24h_change?.toFixed(2) || 'N/A',
             volume: (data.usd_24h_vol / 1e9)?.toFixed(2) || 'N/A'
@@ -491,7 +493,7 @@ Would you like me to analyze the transaction patterns or check for potential sec
       });
 
       // Create market data string for prompt
-      const marketDataString = Object.entries(priceData)
+      const marketDataString = Object.entries(currentPriceData)
         .map(([token, data]) => 
           `${token.toUpperCase()}: $${data.price} (${data.change}% 24h) | Vol: $${data.volume}B`
         )

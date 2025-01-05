@@ -2,7 +2,6 @@
 
 import { Press_Start_2P } from 'next/font/google';
 import Link from 'next/link';
-import { useState } from 'react';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -149,8 +148,6 @@ const exampleBots = [
 ];
 
 export default function Dashboard() {
-  const [selectedBot, setSelectedBot] = useState<string | null>(null);
-
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] ${pressStart.className}`}>
       {/* Matrix Background */}
@@ -194,7 +191,6 @@ export default function Dashboard() {
               <div 
                 key={bot.id}
                 className="border border-[#00ff00] bg-black/50 p-6 hover:bg-black/80 transition-all cursor-pointer"
-                onClick={() => setSelectedBot(bot.id)}
               >
                 <div className="flex justify-between items-start mb-4">
                   <div>

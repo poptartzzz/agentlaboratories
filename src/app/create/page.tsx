@@ -43,6 +43,9 @@ interface AgentConfig {
   backupFrequency: string;
   maxDailyTrades: string;
   userAccessLevel: string;
+  telegramApiKey: string;
+  twitterApiKey: string;
+  discordApiKey: string;
 }
 
 // Add this interface to organize config categories
@@ -114,7 +117,10 @@ export default function CreateAgent() {
     permissions: [],
     backupFrequency: '',
     maxDailyTrades: '',
-    userAccessLevel: ''
+    userAccessLevel: '',
+    telegramApiKey: '',
+    twitterApiKey: '',
+    discordApiKey: ''
   });
 
   // Add this state for managing expanded sections
@@ -182,7 +188,7 @@ export default function CreateAgent() {
           label: 'Exchange APIs (max 5)', 
           type: 'array',
           description: 'Add exchange API keys for automated trading (e.g., Binance, Coinbase, KuCoin)',
-          required: (key) => dynamicRequirements.includes('exchangeApi'),
+          required: () => dynamicRequirements.includes('exchangeApi'),
           maxEntries: 5
         },
         { 
@@ -190,7 +196,7 @@ export default function CreateAgent() {
           label: 'Data Provider APIs (max 5)', 
           type: 'array',
           description: 'Add data provider API keys for market data (e.g., CoinGecko, CryptoCompare)',
-          required: (key) => dynamicRequirements.includes('dataApi'),
+          required: () => dynamicRequirements.includes('dataApi'),
           maxEntries: 5
         }
       ]
@@ -494,7 +500,16 @@ Only include fields in "updates" that are relevant to the current conversation. 
                 // If it's a string, only update if not empty
                 (typeof value === 'string' && value.trim() !== '')
               )) {
-                newConfig[key as keyof AgentConfig] = value;
+                // Type guard to ensure proper assignment
+                if (Array.isArray(value)) {
+                  (newConfig[key as keyof AgentConfig] as string[]) = value;
+                } else if (typeof value === 'string') {
+                  if (key === 'notificationSettings' || key === 'customResponses') {
+                    // Skip these complex objects for now as they're just placeholders
+                    return;
+                  }
+                  (newConfig[key as keyof AgentConfig] as string) = value;
+                }
               }
             });
             
@@ -541,17 +556,37 @@ Only include fields in "updates" that are relevant to the current conversation. 
     setIsThinking(false);
   };
 
-  const renderEditableField = (label: string, value: string) => {
-    const isRequired = typeof field.required === 'function' 
-      ? field.required(field.key)
-      : field.required;
+  const renderEditableField = (
+    label: string, 
+    value: string | string[] | Record<string, string> | { [key: string]: string | undefined },
+    fieldKey: string
+  ) => {
+    const field = configCategories
+      .flatMap(category => category.fields)
+      .find(f => f.key === fieldKey);
 
-    const isCurrentlyEditing = editingState.fieldKey === field.key;
-    const currentEntries = Array.isArray(value) ? value.length : 0;
+    if (!field) return null;
+
+    // Helper function to format value for display
+    const getDisplayValue = (val: typeof value): string | string[] => {
+      if (typeof val === 'string' || Array.isArray(val)) {
+        return val;
+      }
+      // For objects (like notificationSettings and customResponses)
+      return Object.entries(val)
+        .map(([k, v]) => `${k}: ${v || ''}`)
+        .filter(Boolean);
+    };
+
+    // Get the actual value to display
+    const displayValue = getDisplayValue(value);
+
+    const isCurrentlyEditing = editingState.fieldKey === fieldKey;
+    const currentEntries = Array.isArray(displayValue) ? displayValue.length : 0;
 
     const startEditing = () => {
       setEditingState({
-        fieldKey: field.key,
+        fieldKey: fieldKey,
         tempValue: value
       });
     };
@@ -559,7 +594,7 @@ Only include fields in "updates" that are relevant to the current conversation. 
     const handleSave = () => {
       setAgentConfig(prev => ({
         ...prev,
-        [field.key]: editingState.tempValue
+        [fieldKey]: editingState.tempValue
       }));
       setEditingState({ fieldKey: null, tempValue: '' });
     };
@@ -576,7 +611,7 @@ Only include fields in "updates" that are relevant to the current conversation. 
         <div className="flex justify-between text-[#00ff00]/70 mb-1">
           <div>
             {label}
-            {isRequired && <span className="text-red-500 ml-1">*</span>}
+            {field.required && <span className="text-red-500 ml-1">*</span>}
           </div>
           <div className="flex gap-2">
             {field.type === 'array' && (
@@ -620,7 +655,7 @@ Only include fields in "updates" that are relevant to the current conversation. 
               <>
                 <textarea
                   className="w-full bg-black text-[#00ff00] border-none outline-none"
-                  value={Array.isArray(editingState.tempValue) ? editingState.tempValue.join('\n') : ''}
+                  value={Array.isArray(displayValue) ? displayValue.join('\n') : ''}
                   onChange={(e) => {
                     const newValues = e.target.value.split('\n').filter(Boolean);
                     if (!field.maxEntries || newValues.length <= field.maxEntries) {
@@ -639,20 +674,20 @@ Only include fields in "updates" that are relevant to the current conversation. 
             ) : (
               <input
                 className="w-full bg-black text-[#00ff00] border-none outline-none"
-                value={editingState.tempValue as string}
+                value={typeof displayValue === 'string' ? displayValue : ''}
                 onChange={(e) => handleChange(e.target.value)}
               />
             )
           ) : field.type === 'array' ? (
-            (value as string[]).length > 0 ? (
+            Array.isArray(displayValue) && displayValue.length > 0 ? (
               <ul className="list-disc pl-4">
-                {(value as string[]).map((item, index) => (
-                  <li key={index}>{item}</li>
+                {displayValue.map((item) => (
+                  <li key={item}>{item}</li>
                 ))}
               </ul>
             ) : '...'
           ) : (
-            value || '...'
+            (typeof displayValue === 'string' ? displayValue : '...') || '...'
           )}
         </div>
       </div>
@@ -733,9 +768,9 @@ Only include fields in "updates" that are relevant to the current conversation. 
               <h2 className="text-xl mb-4">AGENT CREATOR</h2>
               
               <div className="h-96 overflow-y-auto mb-4 space-y-4">
-                {chat.map((message, index) => (
+                {chat.map((message) => (
                   <div
-                    key={index}
+                    key={message.text}
                     className={`${message.isUser ? 'text-blue-400' : 'text-[#00ff00]'} text-sm`}
                   >
                     {message.text}
@@ -798,11 +833,12 @@ Only include fields in "updates" that are relevant to the current conversation. 
                     
                     {expandedCategories.includes(category.title) && (
                       <div className="p-4 space-y-4">
-                        {category.fields.map((field, index) => (
-                          <div key={`${category.title}-${field.key}-${index}`}>
+                        {category.fields.map((field) => (
+                          <div key={`${category.title}-${field.key}`}>
                             {renderEditableField(
                               field.label,
-                              agentConfig[field.key]
+                              agentConfig[field.key],
+                              field.key
                             )}
                           </div>
                         ))}
@@ -827,9 +863,9 @@ Only include fields in "updates" that are relevant to the current conversation. 
                   
                   {expandedCategories.includes('Custom Responses') && (
                     <div className="p-4 space-y-4">
-                      {renderEditableField('Welcome Message', agentConfig.customResponses.welcome)}
-                      {renderEditableField('Success Message', agentConfig.customResponses.success)}
-                      {renderEditableField('Error Message', agentConfig.customResponses.error)}
+                      {renderEditableField('Welcome Message', agentConfig.customResponses.welcome, 'welcome')}
+                      {renderEditableField('Success Message', agentConfig.customResponses.success, 'success')}
+                      {renderEditableField('Error Message', agentConfig.customResponses.error, 'error')}
                     </div>
                   )}
                 </div>
@@ -850,9 +886,9 @@ Only include fields in "updates" that are relevant to the current conversation. 
                   
                   {expandedCategories.includes('Notifications') && (
                     <div className="p-4 space-y-4">
-                      {renderEditableField('Telegram', agentConfig.notificationSettings.telegram || '')}
-                      {renderEditableField('Discord', agentConfig.notificationSettings.discord || '')}
-                      {renderEditableField('Email', agentConfig.notificationSettings.email || '')}
+                      {renderEditableField('Telegram', agentConfig.notificationSettings.telegram || '', 'telegram')}
+                      {renderEditableField('Discord', agentConfig.notificationSettings.discord || '', 'discord')}
+                      {renderEditableField('Email', agentConfig.notificationSettings.email || '', 'email')}
                     </div>
                   )}
                 </div>
