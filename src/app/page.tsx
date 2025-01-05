@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Press_Start_2P } from 'next/font/google';
 import Link from 'next/link';
-import Navigation from '@/components/Navigation';
 import Separator from '@/components/Separator';
 import TypeWriter from '@/components/TypeWriter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,6 +27,11 @@ import {
   faStar 
 } from '@fortawesome/free-solid-svg-icons';
 import { generateAgentResponse } from '@/utils/claude';
+import { 
+  faTelegram,
+  faTwitter
+} from '@fortawesome/free-brands-svg-icons';
+import Image from 'next/image';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -592,8 +596,76 @@ Example first message if no context:
 
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] overflow-x-hidden ${pressStart.className}`}>
-      <Navigation />
-      
+      <div className="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-sm z-50 border-b border-[#00ff00]/20">
+        <div className="container mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/" className="flex items-center">
+              <Image 
+                src="/AGENTZ AI.png" 
+                alt="AGENTZ AI" 
+                width={32}
+                height={32}
+                className="h-8 mr-2"
+                priority
+              />
+            </Link>
+            
+            <div className="flex items-center space-x-4">
+              {/* Navigation Links with Icon Buttons */}
+              <div className="flex items-center">
+                <Link 
+                  href="/about" 
+                  className="hover:text-white transition-colors"
+                >
+                  ABOUT
+                </Link>
+
+                <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+
+                <Link 
+                  href="/create" 
+                  className="hover:text-white transition-colors"
+                >
+                  CREATE
+                </Link>
+
+                <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+
+                <Link 
+                  href="/app" 
+                  className="hover:text-white transition-colors"
+                >
+                  AGENTS
+                </Link>
+
+                <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+
+                {/* Social Icons */}
+                <div className="flex items-center space-x-4">
+                  <Link 
+                    href="https://twitter.com" 
+                    target="_blank"
+                    className="hover:text-white transition-colors"
+                  >
+                    <FontAwesomeIcon icon={faTwitter} className="w-5 h-5" />
+                  </Link>
+
+                  <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
+
+                  <Link 
+                    href="https://t.me" 
+                    target="_blank"
+                    className="hover:text-white transition-colors"
+                  >
+                    <FontAwesomeIcon icon={faTelegram} className="w-5 h-5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="fixed inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(0deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:100%_2px]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_20%,black_100%)]"></div>
