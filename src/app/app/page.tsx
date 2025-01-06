@@ -13,6 +13,13 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
+    name: "Inverse Cramer Bot",
+    description: "test",
+    link: "",
+    status: "active",
+    image: "/agentzaimainmain.png"
+  },
+  {
     name: "I AM RICH",
     description: "ITS TOO EXPENSIVE TO LAUNCH A BOT BUT IDGAF CAUSE I MADE RACKS. 10 MIL IS PROGRAMMED",
     link: "https://www.rolex.com/\nhttps://www.lamborghini.com/",
