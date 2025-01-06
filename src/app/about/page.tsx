@@ -31,14 +31,14 @@ export default function About() {
                 className="border border-[#00ff00]/30 rounded-sm mb-8"
               />
               <div className="bg-[#00ff00]/5 p-6 border border-[#00ff00]/30">
-                <h3 className="text-xl mb-4">Define Your Bot's Purpose</h3>
-                <p className="mb-4">The first and most crucial step is clearly defining your bot's objectives:</p>
+                <h3 className="text-xl mb-4">Define Your Bot&apos;s Purpose</h3>
+                <p className="mb-4">The first and most crucial step is clearly defining your bot&apos;s objectives:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li>Define your bot's primary function</li>
+                  <li>Define your bot&apos;s primary function</li>
                   <li>Choose your target platform (Discord/Telegram)</li>
                   <li>List desired features and capabilities</li>
                 </ul>
-                <p className="mt-4 text-sm italic">💡 Pro Tip: The more specific your initial description, the more accurate the AI's autofill suggestions will be.</p>
+                <p className="mt-4 text-sm italic">💡 Pro Tip: The more specific your initial description, the more accurate the AI&apos;s autofill suggestions will be.</p>
               </div>
             </div>
           </section>
@@ -57,13 +57,13 @@ export default function About() {
             />
             <div className="bg-[#00ff00]/5 p-6 border border-[#00ff00]/30">
               <h3 className="text-xl mb-4">Essential APIs Configuration</h3>
-              <p className="mb-4">For a trading bot, you'll need:</p>
+              <p className="mb-4">For a trading bot, you&apos;ll need:</p>
               <pre className="bg-black/50 p-4 font-mono text-sm mb-4">
                 1. UNISWAP API (uni-*****-*****-*****-*****){'\n'}
                 2. RPC Endpoint (quick-*****-*****-*****-*****){'\n'}
                 3. Twitter API (twitter-*****-*****-*****-*****)
               </pre>
-              <p className="text-sm italic">🔑 Key Feature: Our "BAKE AGENT" technology automatically corrects API placement if entered in incorrect sections.</p>
+              <p className="text-sm italic">🔑 Key Feature: Our &quot;BAKE AGENT&quot; technology automatically corrects API placement if entered in incorrect sections.</p>
             </div>
           </section>
 
@@ -128,7 +128,7 @@ export default function About() {
           <section className="mb-16">
             <h2 className="text-2xl mb-6">Getting Support</h2>
             <div className="bg-[#00ff00]/5 p-6 border border-[#00ff00]/30">
-              <p className="mb-4">Need help? We're here for you:</p>
+              <p className="mb-4">Need help? We&apos;re here for you:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>24/7 AI Assistant support</li>
                 <li>Community forums</li>
