@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaTwitter, FaTelegram } from 'react-icons/fa';
 import { useState } from 'react';
-import { ethers } from 'ethers';
+import { BrowserProvider, Contract, formatUnits } from 'ethers';
 
 // ABI for ERC20 token balance check
 const ERC20_ABI = [
@@ -60,11 +60,11 @@ export default function Header() {
     try {
       if (!window.ethereum) return;
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const tokenContract = new ethers.Contract(AZI_ADDRESS, ERC20_ABI, provider);
+      const provider = new BrowserProvider(window.ethereum);
+      const tokenContract = new Contract(AZI_ADDRESS, ERC20_ABI, provider);
       const decimals = await tokenContract.decimals();
       const balance = await tokenContract.balanceOf(address);
-      const formattedBalance = ethers.utils.formatUnits(balance, decimals);
+      const formattedBalance = formatUnits(balance, decimals);
       setBalance(Math.floor(parseFloat(formattedBalance)).toString());
     } catch (error) {
       console.error('Error fetching token balance:', error);

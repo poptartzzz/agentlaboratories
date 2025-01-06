@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { BrowserProvider, Contract, parseUnits } from 'ethers';
 
 const AZI_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
 const REQUIRED_AMOUNT = '5000';
@@ -18,22 +18,19 @@ export const handleTokenPayment = async (recipientAddress: string): Promise<bool
   }
 
   try {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const tokenContract = new ethers.Contract(AZI_ADDRESS, ERC20_ABI, signer);
+    const provider = new BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const tokenContract = new Contract(AZI_ADDRESS, ERC20_ABI, signer);
     
-    // Get token decimals
     const decimals = await tokenContract.decimals();
-    const amount = ethers.utils.parseUnits(REQUIRED_AMOUNT, decimals);
+    const amount = parseUnits(REQUIRED_AMOUNT, decimals);
     
-    // Check balance
     const balance = await tokenContract.balanceOf(await signer.getAddress());
     if (balance.lt(amount)) {
       alert('Insufficient AZI balance. You need at least 5000 AZI tokens.');
       return false;
     }
 
-    // Transfer tokens
     const tx = await tokenContract.transfer(recipientAddress, amount);
     await tx.wait();
     
