@@ -39,7 +39,7 @@ export const handleTokenPayment = async (recipientAddress: string): Promise<bool
     const balance = await tokenContract.balanceOf(await signer.getAddress());
     console.log('Current balance:', balance.toString());
     
-    if (balance.lt(amount)) {
+    if (BigInt(balance) < BigInt(amount)) {
       alert(`Insufficient AZI balance. You need at least ${REQUIRED_AMOUNT} AZI tokens. Your balance: ${balance.toString()}`);
       return false;
     }
