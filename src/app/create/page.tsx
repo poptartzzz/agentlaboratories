@@ -6,7 +6,7 @@ import { generateAgentResponse } from '@/utils/claude';
 import Header from '@/components/Header';
 import Separator from '@/components/Separator';
 import Image from 'next/image';
-import { handleTokenPayment, getAZIPrice } from '@/utils/tokenUtils';
+import { handleTokenPayment, calculateRequiredAZI } from '@/utils/tokenUtils';
 import Link from 'next/link';
 
 const pressStart = Press_Start_2P({ 
@@ -601,8 +601,7 @@ Do not include any text outside of this JSON structure. All your communication s
   useEffect(() => {
     async function updatePrice() {
       try {
-        const aziPrice = await getAZIPrice();
-        const amount = (50 / aziPrice).toFixed(0);
+        const amount = await calculateRequiredAZI();
         setRequiredAZI(amount);
       } catch (error) {
         console.error('Error updating price:', error);
@@ -610,7 +609,7 @@ Do not include any text outside of this JSON structure. All your communication s
       }
     }
     updatePrice();
-    const interval = setInterval(updatePrice, 60000); // Update every minute
+    const interval = setInterval(updatePrice, 60000);
     return () => clearInterval(interval);
   }, []);
 
