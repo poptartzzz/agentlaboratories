@@ -17,7 +17,7 @@ interface EthereumError extends Error {
 }
 
 // Function to fetch AZI price from DEX or API
-async function getAZIPrice(): Promise<number> {
+export async function getAZIPrice(): Promise<number> {
   try {
     // Replace this URL with actual price API endpoint
     const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/0xf5FBE542a343c2284f6B9f0B7C59464A92739d80');
@@ -29,7 +29,7 @@ async function getAZIPrice(): Promise<number> {
   }
 }
 
-async function calculateRequiredAZI(): Promise<string> {
+export async function calculateRequiredAZI(): Promise<string> {
   const aziPrice = await getAZIPrice();
   const requiredAZI = REQUIRED_USD_AMOUNT / aziPrice;
   return requiredAZI.toFixed(0); // Round to whole number
