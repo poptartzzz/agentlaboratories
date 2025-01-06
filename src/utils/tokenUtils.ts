@@ -1,7 +1,7 @@
 import { BrowserProvider, Contract, parseUnits } from 'ethers';
 
 const AZI_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
-const REQUIRED_AMOUNT = '1000';
+const REQUIRED_USD_AMOUNT = 50; // $50 USD to create a bot
 
 const ERC20_ABI = [
   "function approve(address spender, uint256 amount) public returns (bool)",
@@ -16,6 +16,25 @@ interface EthereumError extends Error {
   data?: unknown;
 }
 
+// Function to fetch AZI price from DEX or API
+async function getAZIPrice(): Promise<number> {
+  try {
+    // Replace this URL with actual price API endpoint
+    const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/0xf5FBE542a343c2284f6B9f0B7C59464A92739d80');
+    const data = await response.json();
+    return parseFloat(data.pairs[0].priceUsd);
+  } catch (error) {
+    console.error('Error fetching AZI price:', error);
+    throw new Error('Failed to fetch AZI price');
+  }
+}
+
+async function calculateRequiredAZI(): Promise<string> {
+  const aziPrice = await getAZIPrice();
+  const requiredAZI = REQUIRED_USD_AMOUNT / aziPrice;
+  return requiredAZI.toFixed(0); // Round to whole number
+}
+
 export const handleTokenPayment = async (recipientAddress: string): Promise<boolean> => {
   if (!window.ethereum) {
     alert('Please install MetaMask!');
@@ -24,6 +43,9 @@ export const handleTokenPayment = async (recipientAddress: string): Promise<bool
 
   try {
     console.log('Initializing payment process...');
+    const requiredAmount = await calculateRequiredAZI();
+    console.log('Required AZI amount:', requiredAmount);
+    
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     console.log('Connected wallet:', await signer.getAddress());
@@ -33,14 +55,14 @@ export const handleTokenPayment = async (recipientAddress: string): Promise<bool
     
     const decimals = await tokenContract.decimals();
     console.log('Token decimals:', decimals);
-    const amount = parseUnits(REQUIRED_AMOUNT, decimals);
+    const amount = parseUnits(requiredAmount, decimals);
     console.log('Payment amount (with decimals):', amount.toString());
     
     const balance = await tokenContract.balanceOf(await signer.getAddress());
     console.log('Current balance:', balance.toString());
     
     if (BigInt(balance) < BigInt(amount)) {
-      alert(`Insufficient AZI balance. You need at least ${REQUIRED_AMOUNT} AZI tokens. Your balance: ${balance.toString()}`);
+      alert(`Insufficient AZI balance. You need at least ${REQUIRED_USD_AMOUNT} AZI tokens. Your balance: ${balance.toString()}`);
       return false;
     }
 

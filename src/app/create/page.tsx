@@ -6,7 +6,7 @@ import { generateAgentResponse } from '@/utils/claude';
 import Header from '@/components/Header';
 import Separator from '@/components/Separator';
 import Image from 'next/image';
-import { handleTokenPayment } from '@/utils/tokenUtils';
+import { handleTokenPayment, getAZIPrice } from '@/utils/tokenUtils';
 import Link from 'next/link';
 
 const pressStart = Press_Start_2P({ 
@@ -391,6 +391,7 @@ export default function CreateAgent() {
   const [isBaking, setIsBaking] = useState(false);
   const [account, setAccount] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [requiredAZI, setRequiredAZI] = useState<string>('Loading...');
   const [showGuide, setShowGuide] = useState(true);
   const RECIPIENT_ADDRESS = '0x0b8D253cF3b6DcCF51d83C1ec3F4E7e73Ade3557';
 
@@ -596,6 +597,22 @@ Do not include any text outside of this JSON structure. All your communication s
       setIsBaking(false);
     }
   };
+
+  useEffect(() => {
+    async function updatePrice() {
+      try {
+        const aziPrice = await getAZIPrice();
+        const amount = (50 / aziPrice).toFixed(0);
+        setRequiredAZI(amount);
+      } catch (error) {
+        console.error('Error updating price:', error);
+        setRequiredAZI('Error');
+      }
+    }
+    updatePrice();
+    const interval = setInterval(updatePrice, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] ${pressStart.className}`}>
@@ -883,7 +900,7 @@ Do not include any text outside of this JSON structure. All your communication s
                         ? 'CONNECT WALLET TO BAKE' 
                         : isProcessing 
                           ? 'PROCESSING...' 
-                          : 'BAKE AGENT (1000 AZI)'}
+                          : `BAKE AGENT (${requiredAZI} AZI ≈ $50)`}
                     </button>
                     
                     {!areRequiredFieldsFilled() && !isBaking && (
