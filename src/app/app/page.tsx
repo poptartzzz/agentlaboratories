@@ -13,11 +13,18 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
-    name: "AGENTZ test",
-    description: "test test",
+    name: "test",
+    description: "test bot please ignore",
     link: "test.com",
     status: "maintenance",
-    image: "/agentzaimainmain.png" // Default logo for test bot
+    image: "/agentzaimainmain.png"
+  },
+  {
+    name: "moooooner",
+    description: "to the mooooooon",
+    link: "@moonerbot",
+    status: "maintenance",
+    image: "/agentzaimainmain.png"
   },
   {
     name: "AGENTZ bake test 🥖🍞",
