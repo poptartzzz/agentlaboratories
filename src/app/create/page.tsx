@@ -473,22 +473,22 @@ Do not include any text outside of this JSON structure. All your communication s
       } catch (parseError) {
         console.error('Failed to parse AI response:', parseError);
         // If parsing fails, just show the raw response
-        setChat(prev => [...prev, {
+        setChat(prev => [...prev, { 
           id: generateUniqueId(),
           text: `🤖 ${response}`,
           timestamp: Date.now(),
-          isUser: false
+          isUser: false 
         }]);
         return;
       }
 
       // Add the AI response to chat
-      setChat(prev => [...prev, {
+        setChat(prev => [...prev, { 
         id: generateUniqueId(),
         text: parsedResponse.message || response,
         timestamp: Date.now(),
-        isUser: false
-      }]);
+          isUser: false 
+        }]);
 
       // Handle configuration updates if they exist
       if (parsedResponse.config_updates && Object.keys(parsedResponse.config_updates).length > 0) {
@@ -497,13 +497,13 @@ Do not include any text outside of this JSON structure. All your communication s
 
     } catch (error) {
       console.error('AI Response Error:', error);
-      setChat(prev => [...prev, {
+      setChat(prev => [...prev, { 
         id: generateUniqueId(),
         text: error instanceof Error 
           ? `🤖 Error: ${error.message}` 
           : "🤖 Error: Unable to connect to AI service",
         timestamp: Date.now(),
-        isUser: false
+        isUser: false 
       }]);
     } finally {
       setIsLoading(false);
@@ -668,31 +668,31 @@ Do not include any text outside of this JSON structure. All your communication s
               </div>
 
               <div className="border-t border-[#00ff00]/20 pt-4">
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
                     onKeyPress={(e) => {
                       if (e.key === 'Enter' && userInput.trim()) {
                         handleUserMessage(userInput);
                       }
                     }}
-                    placeholder="Describe your bot..."
-                    className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-sm focus:outline-none focus:border-white"
+                  placeholder="Describe your bot..."
+                  className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-sm focus:outline-none focus:border-white"
                     disabled={isLoading}
-                  />
-                  <button
+                />
+                <button
                     onClick={() => {
                       if (userInput.trim()) {
                         handleUserMessage(userInput);
                       }
                     }}
                     disabled={!userInput.trim() || isLoading}
-                    className="px-4 py-1 border border-[#00ff00] hover:bg-[#00ff00] hover:text-black transition-all text-sm disabled:opacity-50"
-                  >
+                  className="px-4 py-1 border border-[#00ff00] hover:bg-[#00ff00] hover:text-black transition-all text-sm disabled:opacity-50"
+                >
                     {isLoading ? 'SENDING...' : 'SEND'}
-                  </button>
+                </button>
                 </div>
 
                 {/* Add suggestion buttons */}
@@ -819,7 +819,7 @@ Do not include any text outside of this JSON structure. All your communication s
                     )}
                   >
                     <div className="flex items-center gap-2">
-                      <span>Custom Responses</span>
+                    <span>Custom Responses</span>
                       <div className="w-2 h-2 rounded-full bg-red-500 spin"></div>
                       <span className="text-xs text-red-500">(Coming Soon)</span>
                     </div>
@@ -846,7 +846,7 @@ Do not include any text outside of this JSON structure. All your communication s
                     )}
                   >
                     <div className="flex items-center gap-2">
-                      <span>Notification Settings</span>
+                    <span>Notification Settings</span>
                       <div className="w-2 h-2 rounded-full bg-red-500 spin"></div>
                       <span className="text-xs text-red-500">(Coming Soon)</span>
                     </div>
@@ -865,7 +865,7 @@ Do not include any text outside of this JSON structure. All your communication s
                 <div className="text-xs text-[#00ff00]/50 mt-4 mb-2">
                   <span className="text-red-500">*</span> Required fields
                 </div>
-
+                
                 <div>
                   <div className="relative">
                     <button
