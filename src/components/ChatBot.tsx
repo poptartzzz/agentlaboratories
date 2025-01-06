@@ -92,44 +92,46 @@ export default function ChatBot() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-[#00ff00] text-black p-4 rounded-full shadow-lg hover:bg-[#00ff00]/80 transition-all"
+        className="relative bg-black p-3 rounded-full shadow-lg border border-[#00ff00] transition-all group"
       >
         <Image 
           src="/agentzaimainmain.png"
           alt="Chat"
           width={32}
           height={32}
-          className="rounded-full"
+          className="rounded-full z-10 relative"
         />
+        <div className="absolute inset-0 bg-[#00ff00] rounded-full opacity-20 group-hover:opacity-30 transition-opacity" />
+        <div className="absolute inset-0 rounded-full shadow-[0_0_15px_rgba(0,255,0,0.5)] animate-pulse" />
       </button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className={`absolute bottom-20 right-0 w-72 h-[400px] bg-black border border-[#00ff00] rounded-lg shadow-xl flex flex-col ${inter.className}`}>
+        <div className={`absolute bottom-20 right-0 w-72 h-[400px] bg-black/95 backdrop-blur-sm border border-[#00ff00] rounded-lg shadow-[0_0_20px_rgba(0,255,0,0.15)] flex flex-col ${inter.className}`}>
           {/* Header */}
-          <div className="p-2 border-b border-[#00ff00]/30 flex items-center gap-2">
+          <div className="p-3 border-b border-[#00ff00]/30 bg-[#00ff00]/10 flex items-center gap-3">
             <Image 
               src="/agentzaimainmain.png"
               alt="AGENTZ Assistant"
-              width={20}
-              height={20}
+              width={24}
+              height={24}
               className="rounded-full"
             />
             <div>
-              <div className="text-xs font-medium">AGENTZ Assistant</div>
-              <div className="text-[10px] text-[#00ff00]/70 -mt-0.5">Setup Guide Helper</div>
+              <div className="text-sm font-medium text-[#00ff00]">AGENTZ Assistant</div>
+              <div className="text-[11px] text-[#00ff00]/80">Setup Guide Helper</div>
             </div>
           </div>
 
           {/* Disclaimer */}
-          <div className="px-2 py-1 bg-[#00ff00]/5 border-b border-[#00ff00]/30">
+          <div className="px-3 py-1.5 bg-black border-b border-[#00ff00]/30">
             <p className="text-[10px] text-[#00ff00]/70 italic">
               ⚡ AI Assistant in training - Responses are being optimized for accuracy
             </p>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-2 space-y-2">
+          <div className="flex-1 overflow-y-auto p-3 space-y-2.5">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -138,8 +140,8 @@ export default function ChatBot() {
                 <div
                   className={`max-w-[85%] p-1.5 rounded-lg text-xs leading-relaxed ${
                     message.role === 'user'
-                      ? 'bg-[#00ff00]/10 text-[#00ff00]'
-                      : 'bg-[#00ff00]/20 text-[#00ff00]'
+                      ? 'bg-[#00ff00]/20 text-[#00ff00] shadow-sm'
+                      : 'bg-[#00ff00]/10 text-[#00ff00] shadow-sm'
                   }`}
                 >
                   {message.content}
