@@ -92,6 +92,9 @@ export default function Header() {
             <Link href="/app" className="hover:text-[#00ff00] transition-colors">
               AGENTS
             </Link>
+            <Link href="/about" className="hover:text-[#00ff00] transition-colors">
+              ABOUT
+            </Link>
             <a 
               href="https://docs.agentz.diy" 
               target="_blank" 
