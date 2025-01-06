@@ -1,7 +1,7 @@
 import { BrowserProvider, Contract, parseUnits } from 'ethers';
 
 const AZI_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
-const REQUIRED_AMOUNT = '5000';
+const REQUIRED_AMOUNT = '1000';
 
 const ERC20_ABI = [
   "function approve(address spender, uint256 amount) public returns (bool)",
