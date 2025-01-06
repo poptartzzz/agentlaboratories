@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Separator from '@/components/Separator';
 import Image from 'next/image';
 import { handleTokenPayment } from '@/utils/tokenUtils';
+import Link from 'next/link';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -390,6 +391,7 @@ export default function CreateAgent() {
   const [isBaking, setIsBaking] = useState(false);
   const [account, setAccount] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showGuide, setShowGuide] = useState(true);
   const RECIPIENT_ADDRESS = '0x0b8D253cF3b6DcCF51d83C1ec3F4E7e73Ade3557';
 
   // Add this function to check if all required fields are filled
@@ -606,6 +608,38 @@ Do not include any text outside of this JSON structure. All your communication s
       </div>
 
       <Header />
+
+      {/* Information Popup */}
+      {showGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-black/90" onClick={() => setShowGuide(false)}></div>
+          <div className="relative bg-black border-2 border-[#00ff00] p-8 max-w-lg w-full">
+            <button 
+              onClick={() => setShowGuide(false)}
+              className="absolute top-4 right-4 text-[#00ff00] hover:text-[#00ff00]/70"
+            >
+              ✕
+            </button>
+            <h2 className="text-xl mb-6">Welcome to AGENTZ Creator!</h2>
+            <p className="text-[#00ff00]/80 mb-6 leading-relaxed">
+              Our comprehensive documentation is currently being enhanced. In the meantime, 
+              please visit our <Link href="/about" className="underline hover:text-[#00ff00]/70">About page</Link> for 
+              an overview, or connect with our AI Assistant <a 
+                href="https://t.me/agentzaihelperbot" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="underline hover:text-[#00ff00]/70"
+              >@agentzaihelperbot</a> on Telegram for guided assistance.
+            </p>
+            <button
+              onClick={() => setShowGuide(false)}
+              className="w-full py-3 bg-[#00ff00]/10 hover:bg-[#00ff00]/20 border border-[#00ff00] transition-all"
+            >
+              GOT IT
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div className="relative z-10 pt-32 pb-12">

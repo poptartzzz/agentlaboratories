@@ -13,6 +13,13 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
+    name: "I AM STAYING UP ALL NIGHT TO WATCH THIS SHIT MOON MOTHERFUCKERS",
+    description: "🌙 🚀 💫",
+    link: "",
+    status: "active",
+    image: "/agentzaimainmain.png"
+  },
+  {
     name: "Mr. Meseeks",
     description: "LOOK AT ME",
     link: "@mrmeseekstestbot",
