@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Press_Start_2P } from 'next/font/google';
 import Link from 'next/link';
+import Header from '@/components/Header';
 import Separator from '@/components/Separator';
 import TypeWriter from '@/components/TypeWriter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,15 +25,9 @@ import {
   faGamepad,
   faCrown,
   faMoon,
-  faStar,
-  faChevronDown
+  faStar
 } from '@fortawesome/free-solid-svg-icons';
 import { generateAgentResponse } from '@/utils/claude';
-import { 
-  faTelegram,
-  faTwitter
-} from '@fortawesome/free-brands-svg-icons';
-import Image from 'next/image';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -73,25 +68,6 @@ interface IconTextProps {
   icon: IconDefinition;
   text: string;
 }
-
-interface SocialLink {
-  icon: IconDefinition;
-  href: string;
-  label: string;
-}
-
-const socialLinks: SocialLink[] = [
-  {
-    icon: faTwitter,
-    href: "https://x.com/agentzaix",
-    label: "Twitter"
-  },
-  {
-    icon: faTelegram,
-    href: "https://t.me/agentzaitg",
-    label: "Telegram"
-  }
-];
 
 const generateUniqueId = (() => {
   let id = 0;
@@ -535,7 +511,6 @@ export default function Home() {
     isOpen: false,
     message: ''
   });
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     // Get initial messages for the current agent type
@@ -812,93 +787,8 @@ Use current prices and real token data. Always start with 🤖.`;
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] overflow-x-hidden ${pressStart.className}`}>
       <style jsx>{flashAnimation}</style>
-      <div className="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-sm z-50 border-b border-[#00ff00]/20">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center">
-              <Image 
-                src="/agenbtzaimainlogo.png" 
-                alt="AGENTZ AI" 
-                width={180}
-                height={40}
-                className="h-10 w-auto"
-                priority
-              />
-            </Link>
-            
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center">
-                <Link 
-                  href="/about" 
-                  className="hover:text-white transition-colors"
-                >
-                  HOW TO
-                </Link>
-
-                <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
-
-                <Link 
-                  href="/create" 
-                  className="hover:text-white transition-colors"
-                >
-                  CREATE
-                </Link>
-
-                <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
-
-                <Link 
-                  href="/app" 
-                  className="hover:text-white transition-colors"
-                >
-                  AGENTS
-                </Link>
-
-                <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
-
-                <Link 
-                  href="/litepaper" 
-                  className="hover:text-white transition-colors"
-                >
-                  LITEPAPER
-                </Link>
-
-                <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
-
-                <div className="relative">
-                  <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center gap-2 hover:text-white transition-colors"
-                  >
-                    SOCIALS
-                    <FontAwesomeIcon 
-                      icon={faChevronDown} 
-                      className={`w-3 h-3 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
-                    />
-                  </button>
-
-                  {isDropdownOpen && (
-                    <div className="absolute top-full right-0 mt-2 py-2 w-40 bg-black border border-[#00ff00]/20 backdrop-blur-md">
-                      {socialLinks.map((link) => (
-                        <a
-                          key={link.label}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-3 px-4 py-2 hover:bg-[#00ff00]/10 transition-colors"
-                        >
-                          <FontAwesomeIcon icon={link.icon} className="w-4 h-4" />
-                          <span className="text-sm">{link.label}</span>
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <Header />
+      
       <div className="fixed inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(0deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:100%_2px]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_20%,black_100%)]"></div>
@@ -918,8 +808,15 @@ Use current prices and real token data. Always start with 🤖.`;
         
         <div className="container mx-auto px-6 text-center relative z-10">
           <div className="space-y-8 backdrop-blur-md bg-black/30 p-8 rounded-lg border border-[#00ff00]/20">
-            <div className="inline-block px-4 py-2 border border-[#00ff00] bg-black/50">
-              <span className="text-[#00ff00] text-xs">AUTOMATE YOUR SUCCESS</span>
+            <div className="inline-block px-4 py-2 border border-[#00ff00] bg-black/50 hover:bg-[#00ff00]/10 transition-all">
+              <a 
+                href="https://app.uniswap.org/#/swap?outputCurrency=0xf5FBE542a343c2284f6B9f0B7C59464A92739d80" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#00ff00] text-xs hover:text-white transition-colors"
+              >
+                AZI - 0xf5FBE542a343c2284f6B9f0B7C59464A92739d80
+              </a>
             </div>
             <h1 className="text-5xl md:text-7xl leading-relaxed">
               <span className="flash flash-1">NEXT</span>

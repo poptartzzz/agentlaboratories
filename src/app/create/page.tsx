@@ -1,11 +1,12 @@
 "use client";
 
 import { Press_Start_2P } from 'next/font/google';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { generateAgentResponse } from '@/utils/claude';
-import Navigation from '@/components/Navigation';
+import Header from '@/components/Header';
 import Separator from '@/components/Separator';
+import Image from 'next/image';
+import { handleTokenPayment } from '@/utils/tokenUtils';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -14,6 +15,8 @@ const pressStart = Press_Start_2P({
 
 interface AgentConfig {
   name: string;
+  botfatherApiKey: string;
+  profileImage: string;
   type: string;
   platform: string;
   description: string;
@@ -55,10 +58,11 @@ interface ConfigCategory {
   fields: {
     key: keyof AgentConfig;
     label: string;
-    type: 'text' | 'array' | 'object';
+    type: 'text' | 'array' | 'object' | 'file';
     description: string;
     required?: boolean | ((key: string) => boolean);
     maxEntries?: number;
+    accept?: string;
   }[];
 }
 
@@ -139,6 +143,8 @@ export default function CreateAgent() {
   ]);
   const [agentConfig, setAgentConfig] = useState<AgentConfig>({
     name: '',
+    botfatherApiKey: '',
+    profileImage: '',
     type: '',
     platform: '',
     description: '',
@@ -175,7 +181,7 @@ export default function CreateAgent() {
   });
 
   // Move handleFieldUpdate inside the component
-  const handleFieldUpdate = (fieldKey: keyof AgentConfig, value: ConfigValue) => {
+  const handleFieldUpdate = (fieldKey: keyof AgentConfig, value: ConfigValue | File) => {
     setAgentConfig(prev => ({
       ...prev,
       [fieldKey]: value
@@ -215,6 +221,20 @@ export default function CreateAgent() {
           type: 'text',
           description: 'The name your bot will display to users',
           required: true
+        },
+        {
+          key: 'botfatherApiKey',
+          label: 'Botfather API Key',
+          type: 'text',
+          description: 'Your Telegram Botfather API key (optional)',
+          required: false
+        },
+        {
+          key: 'profileImage',
+          label: 'Bot Profile Image',
+          type: 'text',
+          description: 'URL to your bot profile image (.png)',
+          required: false,
         },
         { 
           key: 'type', 
@@ -368,8 +388,9 @@ export default function CreateAgent() {
   ];
 
   const [isBaking, setIsBaking] = useState(false);
-  const [bakingError, setBakingError] = useState<string | null>(null);
-  const [bakingProgress, setBakingProgress] = useState<number>(0);
+  const [account, setAccount] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const RECIPIENT_ADDRESS = '0x0b8D253cF3b6DcCF51d83C1ec3F4E7e73Ade3557';
 
   // Add this function to check if all required fields are filled
   const areRequiredFieldsFilled = () => {
@@ -394,31 +415,6 @@ export default function CreateAgent() {
     }
 
     return true;
-  };
-
-  const handleBaking = () => {
-    setIsBaking(true);
-    setBakingError(null);
-    setBakingProgress(0);
-
-    // Simulate progress updates
-    const progressInterval = setInterval(() => {
-      setBakingProgress(prev => {
-        if (prev >= 85) {
-          clearInterval(progressInterval);
-          return prev;
-        }
-        return prev + Math.floor(Math.random() * 15);
-      });
-    }, 1000);
-
-    // Simulate timeout after 15 seconds
-    setTimeout(() => {
-      clearInterval(progressInterval);
-      setIsBaking(false);
-      setBakingError('INITIALIZATION FAILED - PLEASE REFER TO THE DOCUMENTATION AT /about FOR COMPLETE SETUP GUIDE');
-      setBakingProgress(0);
-    }, 15000);
   };
 
   useEffect(() => {
@@ -552,6 +548,53 @@ Do not include any text outside of this JSON structure. All your communication s
     });
   };
 
+  useEffect(() => {
+    // Check if wallet is connected
+    if (typeof window.ethereum !== 'undefined') {
+      window.ethereum.request({ method: 'eth_accounts' })
+        .then((result: unknown) => {
+          const accounts = result as string[];
+          if (accounts.length > 0) {
+            setAccount(accounts[0]);
+          }
+        });
+
+      // Listen for account changes
+      window.ethereum.on('accountsChanged', (accounts: unknown) => {
+        const addressArray = accounts as string[];
+        setAccount(addressArray[0] || '');
+      });
+    }
+  }, []);
+
+  const handleBakeAgent = async () => {
+    if (!account) {
+      alert('Please connect your wallet first');
+      return;
+    }
+
+    setIsProcessing(true);
+    setIsBaking(true);
+    
+    try {
+      const success = await handleTokenPayment(RECIPIENT_ADDRESS);
+      if (success) {
+        // Continue with agent creation
+        // For now, just simulate a delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } else {
+        setIsBaking(false);
+        return;
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error processing your request');
+    } finally {
+      setIsProcessing(false);
+      setIsBaking(false);
+    }
+  };
+
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] ${pressStart.className}`}>
       <style jsx>{flashAnimation}</style>
@@ -562,10 +605,10 @@ Do not include any text outside of this JSON structure. All your communication s
         <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_20%,black_100%)]"></div>
       </div>
 
-      <Navigation />
+      <Header />
 
       {/* Main Content */}
-      <div className="relative z-10 pt-24 pb-12">
+      <div className="relative z-10 pt-32 pb-12">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-8">
             {/* Chat Interface */}
@@ -789,43 +832,24 @@ Do not include any text outside of this JSON structure. All your communication s
                   <span className="text-red-500">*</span> Required fields
                 </div>
 
-                {bakingError && (
-                  <div className="text-red-500 text-sm mb-2 border border-red-500/50 p-2 bg-red-500/10">
-                    <div className="flex items-center justify-between">
-                      <span>ERROR: {bakingError}</span>
-                      <Link 
-                        href="/about" 
-                        className="text-xs underline hover:text-red-400 transition-colors"
-                      >
-                        View Guide
-                      </Link>
-                    </div>
-                  </div>
-                )}
-                
                 <div>
                   <div className="relative">
                     <button
-                      className="w-full mt-2 px-4 py-2 bg-[#00ff00] text-black hover:bg-[#00ff00]/80 transition-all disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden"
-                      disabled={isBaking}
-                      onClick={handleBaking}
+                      onClick={handleBakeAgent}
+                      disabled={!account || isProcessing}
+                      className={`w-full py-3 ${
+                        !account 
+                          ? 'bg-gray-500 cursor-not-allowed' 
+                          : isProcessing
+                            ? 'bg-[#00ff00]/50 cursor-wait'
+                            : 'bg-[#00ff00] hover:bg-[#00ff00]/80'
+                      } text-black transition-all`}
                     >
-                      <div className="relative z-10">
-                        {isBaking ? (
-                          <div className="flex items-center justify-center gap-2">
-                            <span>BAKING AGENT</span>
-                            <span className="text-xs">{bakingProgress}%</span>
-                          </div>
-                        ) : (
-                          'BAKE AGENT'
-                        )}
-                      </div>
-                      {isBaking && (
-                        <div 
-                          className="absolute left-0 top-0 h-full bg-[#00ff00]/30 transition-all duration-1000"
-                          style={{ width: `${bakingProgress}%` }}
-                        />
-                      )}
+                      {!account 
+                        ? 'CONNECT WALLET TO BAKE' 
+                        : isProcessing 
+                          ? 'PROCESSING...' 
+                          : 'BAKE AGENT (5000 AZI)'}
                     </button>
                     
                     {!areRequiredFieldsFilled() && !isBaking && (
@@ -847,9 +871,11 @@ Do not include any text outside of this JSON structure. All your communication s
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 rounded-full overflow-hidden">
-                  <img 
+                  <Image 
                     src="/agentaiassiatnt.png"
                     alt="AGENTZ AI Assistant"
+                    width={48}
+                    height={48}
                     className="w-full h-full object-cover"
                   />
                 </div>

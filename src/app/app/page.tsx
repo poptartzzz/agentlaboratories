@@ -2,6 +2,8 @@
 
 import { Press_Start_2P } from 'next/font/google';
 import Link from 'next/link';
+import Header from '@/components/Header';
+import Image from 'next/image';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -57,33 +59,15 @@ const agents = [
 export default function Dashboard() {
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] ${pressStart.className}`}>
+      <Header />
       {/* Matrix Background */}
       <div className="fixed inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(0deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:100%_2px]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_20%,black_100%)]"></div>
       </div>
 
-      {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-lg py-4">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-xl md:text-2xl">
-              <span className="text-[#00ff00]">AGENTZ</span>
-              <span className="animate-pulse">|</span>
-            </Link>
-            
-            <div className="flex items-center space-x-4">
-              <Link href="/create" 
-                className="px-6 py-2 bg-[#00ff00] text-black hover:bg-[#00ff00]/80 transition-all text-sm">
-                CREATE NEW AGENT
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Main Content */}
-      <div className="relative z-10 pt-24 pb-12">
+      <div className="relative z-10 pt-32 pb-12">
         <div className="container mx-auto px-6">
           {/* Hot Bots Section */}
           <div className="mb-12">
@@ -92,9 +76,11 @@ export default function Dashboard() {
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-start gap-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
-                    <img 
+                    <Image 
                       src="/agentaiassiatnt.png"
                       alt="AGENTZ AI Assistant"
+                      width={64}
+                      height={64}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -148,9 +134,11 @@ export default function Dashboard() {
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
-                      <img 
+                      <Image 
                         src={bot.image} 
                         alt={bot.name}
+                        width={48}
+                        height={48}
                         className="w-full h-full object-cover"
                       />
                     </div>

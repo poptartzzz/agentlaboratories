@@ -1,7 +1,7 @@
 "use client";
 
 import { Press_Start_2P } from 'next/font/google';
-import Navigation from '@/components/Navigation';
+import Header from '@/components/Header';
 import Separator from '@/components/Separator';
 
 const pressStart = Press_Start_2P({ 
@@ -12,9 +12,9 @@ const pressStart = Press_Start_2P({
 export default function About() {
   return (
     <div className={`min-h-screen bg-black text-[#00ff00] ${pressStart.className}`}>
-      <Navigation />
+      <Header />
 
-      <div className="relative z-10 pt-24 pb-12">
+      <div className="relative z-10 pt-32 pb-12">
         <div className="container mx-auto px-6 max-w-4xl">
           <h1 className="text-2xl md:text-3xl mb-8 text-center">BOT CREATOR GUIDE</h1>
 
