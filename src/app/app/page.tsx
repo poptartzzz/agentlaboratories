@@ -13,6 +13,20 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
+    name: "Trump",
+    description: "Fantastic",
+    link: "@trumps_bot",
+    status: "active",
+    image: "/photo_2017-10-03_09-14-38.jpg"
+  },
+  {
+    name: "BUY GSC on PUMP.FUN",
+    description: "GoldenShibaCoin (GSC) - Market Cap: $53,379",
+    link: "https://pump.fun/coin/3jhM8CcXZjxBy4HuyzYycseLgNsGkLuYWsFQwJy1pump",
+    status: "active",
+    image: "/agentzaimainmain.png"
+  },
+  {
     name: "test",
     description: "test bot please ignore",
     link: "test.com",
@@ -81,7 +95,7 @@ export default function Dashboard() {
             <h2 className="text-2xl mb-8">HOT AGENTZ 🔥</h2>
             <div className="border-2 border-[#00ff00] bg-black/50 p-6 hover:bg-black/80 transition-all">
               <div className="flex justify-between items-start mb-4">
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4 flex-1 min-w-0">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
                     <Image 
                       src="/agentaiassiatnt.png"
@@ -139,7 +153,7 @@ export default function Dashboard() {
                 className="border border-[#00ff00] bg-black/50 p-6 hover:bg-black/80 transition-all cursor-pointer"
               >
                 <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 flex-1 min-w-0">
                     <div className="w-12 h-12 rounded-full overflow-hidden">
                       <Image 
                         src={bot.image} 
@@ -149,12 +163,12 @@ export default function Dashboard() {
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <h3 className="text-lg mb-2">{bot.name}</h3>
-                      <div className="text-xs text-[#00ff00]/70 mb-1">{bot.link}</div>
+                      <div className="text-xs text-[#00ff00]/70 mb-1 truncate">{bot.link}</div>
                     </div>
                   </div>
-                  <div className={`px-2 py-1 text-xs ${
+                  <div className={`px-2 py-1 text-xs flex-shrink-0 ml-2 ${
                     bot.status === 'active' ? 'bg-[#00ff00]/20' : 'bg-yellow-500/20'
                   }`}>
                     {bot.status.toUpperCase()}
