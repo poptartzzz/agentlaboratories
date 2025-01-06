@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Press_Start_2P } from 'next/font/google';
 import "./globals.css";
 import Script from 'next/script';
+import ChatBot from '@/components/ChatBot';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -31,6 +32,7 @@ export default function RootLayout({
       </head>
       <body className={pressStart.className}>
         {children}
+        <ChatBot />
       </body>
     </html>
   );
