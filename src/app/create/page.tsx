@@ -606,7 +606,7 @@ Do not include any text outside of this JSON structure. All your communication s
         setRequiredAZI(amount);
       } catch (error) {
         console.error('Error updating price:', error);
-        setRequiredAZI('Error');
+        setRequiredAZI('COST');
       }
     }
     updatePrice();
