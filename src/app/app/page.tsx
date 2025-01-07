@@ -13,6 +13,20 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
+    name: "Ethereum Contract Helper",
+    description: "Made by Mewthree with AGENTZ AI",
+    link: "@ethereumsmartcontractbot",
+    status: "active",
+    image: "/Screenshot 2025-01-06 233619.png"
+  },
+  {
+    name: "Whale Tracker Bot",
+    description: "testing",
+    link: "",
+    status: "active",
+    image: "/agentzaimainmain.png"
+  },
+  {
     name: "Inverse Cramer Bot",
     description: "test",
     link: "",
