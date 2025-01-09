@@ -1,10 +1,8 @@
 "use client";
 
+import Link from 'next/link';
 import { Press_Start_2P } from 'next/font/google';
 import Header from '@/components/Header';
-import Image from 'next/image';
-import Separator from '@/components/Separator';
-import Link from 'next/link';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -53,7 +51,7 @@ export default function About() {
                 <div className="border border-[#00ff00] bg-black/50 p-6">
                   <h3 className="text-lg mb-4">Real-Time Monitoring</h3>
                   <p className="text-sm leading-relaxed">
-                    Track your SIDEKIX bot's performance in real-time with detailed analytics and performance metrics.
+                    Track your SIDEKIX bot&apos;s performance in real-time with detailed analytics and performance metrics.
                   </p>
                 </div>
 
