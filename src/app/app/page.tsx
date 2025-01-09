@@ -13,6 +13,13 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
+    name: "SIDEKIX test",
+    description: "",
+    link: "",
+    status: "active",
+    image: "/agentaiassiatnt.png"
+  },
+  {
     name: "THIS IS A GEM",
     description: "",
     link: "",
