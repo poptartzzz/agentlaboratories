@@ -1,32 +1,23 @@
-export async function generateAgentResponse(context: string) {
+export async function generateAgentResponse(prompt: string): Promise<string> {
   try {
     const response = await fetch('/api/claude', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ context }),
-      cache: 'no-store'
+      body: JSON.stringify({ prompt }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      console.error('Claude API error:', await response.text());
+      return "I apologize, but I'm having trouble connecting to my AI services right now. Please try again in a few moments.";
     }
 
     const data = await response.json();
-
-    if (!data.response) {
-      throw new Error('No response received from AI service');
-    }
-
     return data.response;
   } catch (error) {
     console.error('Error generating response:', error);
-    if (error instanceof Error) {
-      throw new Error(`AI Service Error: ${error.message}`);
-    }
-    throw new Error('Failed to generate response');
+    return "I apologize, but I'm experiencing technical difficulties. Please try again later.";
   }
 }
 
