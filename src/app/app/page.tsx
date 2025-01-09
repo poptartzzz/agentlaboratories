@@ -13,6 +13,13 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
+    name: "Whale Tracker Bot",
+    description: "",
+    link: "",
+    status: "maintenance",
+    image: "/agentaiassiatnt.png"
+  },
+  {
     name: "TWEET FORWARDING AGENT",
     description: "Forward tweets to your Telegram channel",
     link: "@agentztweetforwarderbot",
