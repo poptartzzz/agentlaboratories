@@ -23,7 +23,18 @@ export async function POST(request: Request) {
       messages: [{ role: 'user', content: prompt }],
     });
 
-    return NextResponse.json({ response: message.content[0].text });
+    // Extract text content from the response
+    const content = message.content[0];
+    if ('text' in content) {
+      return NextResponse.json({ response: content.text });
+    } else {
+      console.error('Unexpected content type in Claude response');
+      return NextResponse.json(
+        { error: 'Invalid response format from AI service' },
+        { status: 500 }
+      );
+    }
+
   } catch (error) {
     console.error('Claude API error:', error);
     return NextResponse.json(
