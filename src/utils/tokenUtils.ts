@@ -1,14 +1,33 @@
 import { BrowserProvider, Contract, parseUnits } from 'ethers';
 
-const SXA_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
+const SXA_ADDRESS = '0x61bAFCF2BdA2F870F2c29157E729F30058cF5314';
 const REQUIRED_USD_AMOUNT = 50;
 
 const ERC20_ABI = [
-  "function approve(address spender, uint256 amount) public returns (bool)",
-  "function allowance(address owner, address spender) view returns (uint256)",
-  "function transfer(address to, uint256 amount) public returns (bool)",
-  "function balanceOf(address owner) view returns (uint256)",
-  "function decimals() view returns (uint8)",
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [{"name": "", "type": "uint8"}],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{"name": "_owner", "type": "address"}],
+    "name": "balanceOf",
+    "outputs": [{"name": "balance", "type": "uint256"}],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {"name": "_to", "type": "address"},
+      {"name": "_value", "type": "uint256"}
+    ],
+    "name": "transfer",
+    "outputs": [{"name": "", "type": "bool"}],
+    "type": "function"
+  }
 ];
 
 interface EthereumError extends Error {
@@ -20,7 +39,7 @@ interface EthereumError extends Error {
 export async function getSXAPrice(): Promise<number> {
   try {
     // Replace this URL with actual price API endpoint
-    const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/0xf5FBE542a343c2284f6B9f0B7C59464A92739d80');
+    const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/0x61bAFCF2BdA2F870F2c29157E729F30058cF5314');
     const data = await response.json();
     return parseFloat(data.pairs[0].priceUsd);
   } catch (error) {

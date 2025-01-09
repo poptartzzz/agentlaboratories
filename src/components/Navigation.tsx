@@ -78,7 +78,7 @@ export default function Navigation() {
               <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
 
               <Link 
-                href="https://docs.sidekix.io" 
+                href="https://docs.sidekixai.io" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"

@@ -6,9 +6,26 @@ import { BrowserProvider, Contract, formatUnits } from 'ethers';
 
 // ABI for ERC20 token balance check
 const ERC20_ABI = [
-  "function balanceOf(address owner) view returns (uint256)",
-  "function decimals() view returns (uint8)",
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [{"name": "", "type": "uint8"}],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{"name": "_owner", "type": "address"}],
+    "name": "balanceOf",
+    "outputs": [{"name": "balance", "type": "uint256"}],
+    "type": "function"
+  }
 ];
+
+interface WalletError extends Error {
+  code?: number;
+  data?: unknown;
+}
 
 export default function Header() {
   const [account, setAccount] = useState<string>('');
@@ -16,7 +33,7 @@ export default function Header() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [showWalletMenu, setShowWalletMenu] = useState(false);
 
-  const SXA_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
+  const SXA_ADDRESS = '0x61bAFCF2BdA2F870F2c29157E729F30058cF5314';
 
   const disconnectWallet = () => {
     setAccount('');
@@ -33,6 +50,45 @@ export default function Header() {
     if (typeof window.ethereum !== 'undefined') {
       try {
         setIsConnecting(true);
+        
+        // Request switch to Base Network
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x2105' }], // Base Network chainId
+          });
+        } catch (error: unknown) {
+          const switchError = error as WalletError;
+          console.log('Switch error:', switchError);
+          // If Base Network is not added, add it
+          if (switchError.code === 4902) {
+            try {
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [{
+                  chainId: '0x2105',
+                  chainName: 'Base',
+                  nativeCurrency: {
+                    name: 'ETH',
+                    symbol: 'ETH',
+                    decimals: 18
+                  },
+                  rpcUrls: ['https://mainnet.base.org'],
+                  blockExplorerUrls: ['https://basescan.org']
+                }]
+              });
+            } catch (addError) {
+              console.error('Error adding Base network:', addError);
+              alert('Failed to add Base network. Please add it manually in your wallet.');
+              return;
+            }
+          } else {
+            console.error('Error switching to Base network:', switchError);
+            alert('Failed to switch to Base network. Please try again.');
+            return;
+          }
+        }
+
         const result = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const accounts = result as string[];
         setAccount(accounts[0]);
@@ -60,14 +116,28 @@ export default function Header() {
     try {
       if (!window.ethereum) return;
 
+      console.log('Fetching balance for address:', address);
+      console.log('Token address:', SXA_ADDRESS);
+
       const provider = new BrowserProvider(window.ethereum);
       const tokenContract = new Contract(SXA_ADDRESS, ERC20_ABI, provider);
-      const decimals = await tokenContract.decimals();
-      const balance = await tokenContract.balanceOf(address);
-      const formattedBalance = formatUnits(balance, decimals);
-      setBalance(Math.floor(parseFloat(formattedBalance)).toString());
+
+      // Add error handling for each call
+      try {
+        const decimals = await tokenContract.decimals();
+        console.log('Decimals:', decimals);
+        const balance = await tokenContract.balanceOf(address);
+        console.log('Raw balance:', balance.toString());
+        const formattedBalance = formatUnits(balance, decimals);
+        console.log('Formatted balance:', formattedBalance);
+        setBalance(Math.floor(parseFloat(formattedBalance)).toString());
+      } catch (contractError) {
+        console.error('Contract call error:', contractError);
+        setBalance('Error');
+      }
     } catch (error) {
       console.error('Error fetching token balance:', error);
+      setBalance('Error');
     }
   };
 
@@ -96,7 +166,7 @@ export default function Header() {
               ABOUT
             </Link>
             <a 
-              href="https://docs.sidekix.io" 
+              href="https://docs.sidekixai.io" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hover:text-[#00ff00] transition-colors"

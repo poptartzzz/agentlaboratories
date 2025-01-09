@@ -29,6 +29,7 @@ export default function About() {
                 width={800}
                 height={400}
                 className="border border-[#00ff00]/30 rounded-sm mb-8"
+                priority
               />
               <div className="bg-[#00ff00]/5 p-6 border border-[#00ff00]/30">
                 <h3 className="text-xl mb-4">Define Your Bot&apos;s Purpose</h3>
@@ -54,6 +55,7 @@ export default function About() {
               width={800}
               height={400}
               className="border border-[#00ff00]/30 rounded-sm mb-8"
+              priority
             />
             <div className="bg-[#00ff00]/5 p-6 border border-[#00ff00]/30">
               <h3 className="text-xl mb-4">Essential APIs Configuration</h3>
@@ -78,6 +80,7 @@ export default function About() {
               width={800}
               height={400}
               className="border border-[#00ff00]/30 rounded-sm mb-8"
+              priority
             />
             <div className="bg-[#00ff00]/5 p-6 border border-[#00ff00]/30">
               <h3 className="text-xl mb-4">Configure Core Behaviors</h3>
@@ -108,6 +111,7 @@ export default function About() {
               width={800}
               height={400}
               className="border border-[#00ff00]/30 rounded-sm mb-8"
+              priority
             />
             <div className="bg-[#00ff00]/5 p-6 border border-[#00ff00]/30">
               <h3 className="text-xl mb-4">Custom Triggers Configuration</h3>

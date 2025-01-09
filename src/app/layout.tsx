@@ -10,10 +10,12 @@ const pressStart = Press_Start_2P({
 });
 
 export const metadata: Metadata = {
-  title: "AGENTZ AI",
-  description: "Next-Gen AI Agents - Your 24/7 Crypto Companion",
+  title: "SIDEKIX AI",
+  description: "Next-Gen AI Agents - Your Web3 AI Companion",
   icons: {
-    icon: "/agentzaimainmain.png",
+    icon: "/agentaiassiatnt.png",
+    apple: "/agentaiassiatnt.png",
+    shortcut: "/agentaiassiatnt.png"
   }
 };
 

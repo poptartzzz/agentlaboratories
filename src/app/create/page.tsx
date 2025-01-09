@@ -393,7 +393,7 @@ export default function CreateAgent() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [requiredSXA, setRequiredSXA] = useState<string>('Loading...');
   const [showGuide, setShowGuide] = useState(true);
-  const RECIPIENT_ADDRESS = '0x0b8D253cF3b6DcCF51d83C1ec3F4E7e73Ade3557';
+  const RECIPIENT_ADDRESS = '0x1fC09820ad9371437329Ba7D33ddb5B96c4953e8';
 
   // Add this function to check if all required fields are filled
   const areRequiredFieldsFilled = () => {
@@ -636,16 +636,16 @@ Do not include any text outside of this JSON structure. All your communication s
             >
               ✕
             </button>
-            <h2 className="text-xl mb-6">Welcome to AGENTZ Creator!</h2>
+            <h2 className="text-xl mb-6">Welcome to SIDEKIX AI Creator!</h2>
             <p className="text-[#00ff00]/80 mb-6 leading-relaxed">
               Our comprehensive documentation is currently being enhanced. In the meantime, 
               please visit our <Link href="/about" className="underline hover:text-[#00ff00]/70">About page</Link> for 
               an overview, or connect with our AI Assistant <a 
-                href="https://t.me/agentzaihelperbot" 
+                href="https://t.me/sidekixhelperbot" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="underline hover:text-[#00ff00]/70"
-              >@agentzaihelperbot</a> on Telegram for guided assistance.
+              >@sidekixhelperbot</a> on Telegram for guided assistance.
             </p>
             <button
               onClick={() => setShowGuide(false)}
@@ -923,18 +923,18 @@ Do not include any text outside of this JSON structure. All your communication s
                 <div className="w-16 h-16 rounded-full overflow-hidden">
                   <Image 
                     src="/agentaiassiatnt.png"
-                    alt="AGENTZ AI Assistant"
+                    alt="SIDEKIX AI Assistant"
                     width={48}
                     height={48}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl mb-2">AGENTZ AI - Agent Creator Assistant</h3>
-                  <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AGENTZ AI</div>
+                  <h3 className="text-xl mb-2">SIDEKIX AI - Agent Creator Assistant</h3>
+                  <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for SIDEKIX AI</div>
                   <div className="flex gap-3">
                     <a 
-                      href="https://agentz.diy"
+                      href="https://sidekixai.io"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
@@ -942,7 +942,7 @@ Do not include any text outside of this JSON structure. All your communication s
                       WEBSITE →
                     </a>
                     <a 
-                      href="https://t.me/agentzaihelperbot"
+                      href="https://t.me/sidekixhelperbot"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"

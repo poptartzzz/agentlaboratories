@@ -18,6 +18,27 @@ const agents = [
     link: "https://www.sidekixai.io\n@sidekixai",
     status: "active",
     image: "/agentaiassiatnt.png"
+  },
+  {
+    name: "Shitcoin Multichain Auto-Slinger",
+    description: "Trade volatile shitcoins quickly and make tiny profits consistently.\n\nWorks more often than it doesn't. I think. 💩",
+    link: "https://sidekixai.io/\n@sidekixautoslingerbot",
+    status: "active",
+    image: "/shitcoinslinger.png"
+  },
+  {
+    name: "BASED TG AGENT",
+    description: "The BASED TG AGENT will be fully functional after launch of $SXA token.\nThis bot will be able to moderate chat and function as a buy bot.",
+    link: "https://sidekixai.io/\n@basedtgagentbot",
+    status: "active",
+    image: "/basedtgagent.png"
+  },
+  {
+    name: "SIDEKIX BAKE TEST 🥖",
+    description: "test bake",
+    link: "@baketestsidekixbot",
+    status: "active",
+    image: "/Screenshot 2025-01-08 182529.png"
   }
 ];
 
