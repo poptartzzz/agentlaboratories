@@ -13,6 +13,34 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
+    name: "CramerContrarian",
+    description: "A bot that monitors Jim Cramer's tweets, analyzes the sentiment, and automatically executes trades going against his sentiment on specific stocks or assets.",
+    link: "t.me",
+    status: "active",
+    image: "/agentaiassiatnt.png"
+  },
+  {
+    name: "MOON MISSION",
+    description: "BUY 3BC\n0x3e64cd8fd4d2fae3d7f4710817885b0941838d0b",
+    link: "https://dexscreener.com/base/0xe6ec4c661f0b822ba2851b4a1de9ad64132fbfe3",
+    status: "active",
+    image: "/Screenshot 2025-01-08 210856.png"
+  },
+  {
+    name: "Trump",
+    description: "Fantastic",
+    link: "@trumps_bot",
+    status: "active",
+    image: "/photo_2017-10-03_09-14-38.jpg"
+  },
+  {
+    name: "test",
+    description: "teeeeesting",
+    link: "",
+    status: "active",
+    image: "/agentaiassiatnt.png"
+  },
+  {
     name: "SIDEKIX AI - Agent Creator",
     description: "Agent Creator assistant for SIDEKIX AI",
     link: "https://www.sidekixai.io\n@sidekixai",
@@ -46,27 +74,6 @@ const agents = [
     link: "@baketestsidekixbot",
     status: "active",
     image: "/Screenshot 2025-01-08 182529.png"
-  },
-  {
-    name: "test",
-    description: "teeeeesting",
-    link: "",
-    status: "active",
-    image: "/agentaiassiatnt.png"
-  },
-  {
-    name: "Trump",
-    description: "Fantastic",
-    link: "@trumps_bot",
-    status: "active",
-    image: "/photo_2017-10-03_09-14-38.jpg"
-  },
-  {
-    name: "MOON MISSION",
-    description: "BUY 3BC\n0x3e64cd8fd4d2fae3d7f4710817885b0941838d0b",
-    link: "https://dexscreener.com/base/0xe6ec4c661f0b822ba2851b4a1de9ad64132fbfe3",
-    status: "active",
-    image: "/Screenshot 2025-01-08 210856.png"
   }
 ];
 
