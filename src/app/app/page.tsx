@@ -20,6 +20,13 @@ const agents = [
     image: "/agentaiassiatnt.png"
   },
   {
+    name: "Ethereum Contract Helper",
+    description: "Made by mew w/ sidekix AI",
+    link: "@ethereumsmartcontractbot",
+    status: "active",
+    image: "/Screenshot 2025-01-06 233619.png"
+  },
+  {
     name: "Shitcoin Multichain Auto-Slinger",
     description: "Trade volatile shitcoins quickly and make tiny profits consistently.\n\nWorks more often than it doesn't. I think. 💩",
     link: "https://sidekixai.io/\n@sidekixautoslingerbot",
