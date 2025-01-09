@@ -803,14 +803,14 @@ Use current prices and real token data. Always start with 🤖.`;
             
             <div className="space-y-4 text-sm">
               <p>
-                We've noticed some token scanners are showing "$SXA" as "MULTI owner" - we want to clarify this 
+                We&apos;ve noticed some token scanners are showing &quot;$SXA&quot; as &quot;MULTI owner&quot; - we want to clarify this 
                 is actually a false positive due to our enhanced security implementation.
               </p>
               
               <p>
                 Our contract uses an advanced SecurityBase layer that includes standard ownership mechanisms - 
                 a security best practice used by many successful projects. This sometimes gets flagged by scanners, 
-                but it's actually a security feature, not a vulnerability.
+                but it&apos;s actually a security feature, not a vulnerability.
               </p>
               
               <p>
