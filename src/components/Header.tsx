@@ -16,7 +16,7 @@ export default function Header() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [showWalletMenu, setShowWalletMenu] = useState(false);
 
-  const AZI_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
+  const SXA_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
 
   const disconnectWallet = () => {
     setAccount('');
@@ -61,7 +61,7 @@ export default function Header() {
       if (!window.ethereum) return;
 
       const provider = new BrowserProvider(window.ethereum);
-      const tokenContract = new Contract(AZI_ADDRESS, ERC20_ABI, provider);
+      const tokenContract = new Contract(SXA_ADDRESS, ERC20_ABI, provider);
       const decimals = await tokenContract.decimals();
       const balance = await tokenContract.balanceOf(address);
       const formattedBalance = formatUnits(balance, decimals);
@@ -77,8 +77,8 @@ export default function Header() {
         <div className="flex items-center py-3">
           <Link href="/" className="text-xl md:text-2xl">
             <Image 
-              src="/agenbtzaimainlogo.png"
-              alt="AGENTZ"
+              src="/sidekicxai.png"
+              alt="SIDEKIX"
               width={180}
               height={60}
               className="object-contain h-12"
@@ -96,7 +96,7 @@ export default function Header() {
               ABOUT
             </Link>
             <a 
-              href="https://docs.agentz.diy" 
+              href="https://docs.sidekix.io" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hover:text-[#00ff00] transition-colors"
@@ -105,7 +105,7 @@ export default function Header() {
             </a>
             <div className="flex items-center gap-4 border-l border-[#00ff00]/30 pl-6">
               <a 
-                href="https://x.com/agentzaix"
+                href="https://x.com/SidekixAi"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#00ff00] transition-colors"
@@ -113,7 +113,7 @@ export default function Header() {
                 <FaTwitter size={20} />
               </a>
               <a 
-                href="https://t.me/agentzaitg"
+                href="https://t.me/sidekixai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#00ff00] transition-colors"
@@ -132,7 +132,7 @@ export default function Header() {
                     className="flex items-center gap-2 px-3 py-1.5 bg-[#00ff00]/10 border border-[#00ff00]/30 hover:bg-[#00ff00]/20 transition-all rounded-sm whitespace-nowrap text-sm"
                   >
                     <span className="text-[#00ff00] font-medium">{balance}</span>
-                    <span>AZI</span>
+                    <span>SXA</span>
                     <div className="w-px h-4 bg-[#00ff00]/30" />
                     <span className="ml-2">{account.slice(0, 6)}...{account.slice(-4)}</span>
                   </button>

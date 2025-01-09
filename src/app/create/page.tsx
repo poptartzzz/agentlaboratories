@@ -6,7 +6,7 @@ import { generateAgentResponse } from '@/utils/claude';
 import Header from '@/components/Header';
 import Separator from '@/components/Separator';
 import Image from 'next/image';
-import { handleTokenPayment, calculateRequiredAZI } from '@/utils/tokenUtils';
+import { handleTokenPayment, calculateRequiredSXA } from '@/utils/tokenUtils';
 import Link from 'next/link';
 
 const pressStart = Press_Start_2P({ 
@@ -391,7 +391,7 @@ export default function CreateAgent() {
   const [isBaking, setIsBaking] = useState(false);
   const [account, setAccount] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [requiredAZI, setRequiredAZI] = useState<string>('Loading...');
+  const [requiredSXA, setRequiredSXA] = useState<string>('Loading...');
   const [showGuide, setShowGuide] = useState(true);
   const RECIPIENT_ADDRESS = '0x0b8D253cF3b6DcCF51d83C1ec3F4E7e73Ade3557';
 
@@ -601,11 +601,11 @@ Do not include any text outside of this JSON structure. All your communication s
   useEffect(() => {
     async function updatePrice() {
       try {
-        const amount = await calculateRequiredAZI();
-        setRequiredAZI(amount);
+        const amount = await calculateRequiredSXA();
+        setRequiredSXA(amount);
       } catch (error) {
         console.error('Error updating price:', error);
-        setRequiredAZI('COST');
+        setRequiredSXA('COST');
       }
     }
     updatePrice();
@@ -899,7 +899,7 @@ Do not include any text outside of this JSON structure. All your communication s
                         ? 'CONNECT WALLET TO BAKE' 
                         : isProcessing 
                           ? 'PROCESSING...' 
-                          : `BAKE AGENT (${requiredAZI} AZI ≈ $50)`}
+                          : `BAKE AGENT (${requiredSXA} SXA ≈ $50)`}
                     </button>
                     
                     {!areRequiredFieldsFilled() && !isBaking && (

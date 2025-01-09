@@ -15,7 +15,7 @@ interface Message {
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'I am here to assist with setting up your AGENTZ bot. How can I help?' }
+    { role: 'assistant', content: 'I am here to assist with setting up your SIDEKIX bot. How can I help?' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const context = `You are the AGENTZ AI Assistant, helping users set up their bots. You have access to the following documentation:
+      const context = `You are the SIDEKIX AI Assistant, helping users set up their bots. You have access to the following documentation:
 
         1. Prerequisites: Users need to set up their BotFather API first:
         - Open Telegram and search for "@BotFather"
@@ -65,13 +65,13 @@ export default function ChatBot() {
         - Price movement alerts configurable
 
         5. Payment Information:
-        - Creating a bot requires a payment of $50 worth of AZI tokens
-        - Price is dynamically calculated based on current AZI/USD rate
+        - Creating a bot requires a payment of $50 worth of SXA tokens
+        - Price is dynamically calculated based on current SXA/USD rate
         - Payment must be completed before bot creation
 
         Based on this documentation, please answer the following question: ${userMessage}
 
-        Please provide a concise, accurate answer based solely on the information provided in the documentation. If the question is about something not covered in the documentation, politely indicate that.`;
+        Please provide a concise, accurate answer based solely on the information provided in the documentation. If the question is about something not covered in the documentation, politely indicate that you are a SIDEKIX AI assistant and cannot help with that specific query.`;
       
       const response = await generateAgentResponse(context);
       
@@ -95,7 +95,7 @@ export default function ChatBot() {
         className="relative bg-black p-3 rounded-full shadow-lg border border-[#00ff00] transition-all group"
       >
         <Image 
-          src="/agentzaimainmain.png"
+          src="/agentzmainlogo.png"
           alt="Chat"
           width={32}
           height={32}
@@ -111,14 +111,14 @@ export default function ChatBot() {
           {/* Header */}
           <div className="p-3 border-b border-[#00ff00]/30 bg-[#00ff00]/10 flex items-center gap-3">
             <Image 
-              src="/agentzaimainmain.png"
-              alt="AGENTZ Assistant"
+              src="/agentzmainlogo.png"
+              alt="SIDEKIX Assistant"
               width={24}
               height={24}
               className="rounded-full"
             />
             <div>
-              <div className="text-sm font-medium text-[#00ff00]">AGENTZ Assistant</div>
+              <div className="text-sm font-medium text-[#00ff00]">SIDEKIX Assistant</div>
               <div className="text-[11px] text-[#00ff00]/80">Setup Guide Helper</div>
             </div>
           </div>

@@ -13,121 +13,9 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
-    name: "Ethereum Contract Helper",
-    description: "Made by Mewthree with AGENTZ AI",
-    link: "@ethereumsmartcontractbot",
-    status: "active",
-    image: "/Screenshot 2025-01-06 233619.png"
-  },
-  {
-    name: "Whale Tracker Bot",
-    description: "testing",
-    link: "",
-    status: "active",
-    image: "/agentzaimainmain.png"
-  },
-  {
-    name: "Inverse Cramer Bot",
-    description: "test",
-    link: "",
-    status: "active",
-    image: "/agentzaimainmain.png"
-  },
-  {
-    name: "I AM RICH",
-    description: "ITS TOO EXPENSIVE TO LAUNCH A BOT BUT IDGAF CAUSE I MADE RACKS. 10 MIL IS PROGRAMMED",
-    link: "https://www.rolex.com/\nhttps://www.lamborghini.com/",
-    status: "active",
-    image: "/watches.png"
-  },
-  {
-    name: "I AM STAYING UP ALL NIGHT TO WATCH THIS SHIT MOON MOTHERFUCKERS",
-    description: "🌙 🚀 💫",
-    link: "",
-    status: "active",
-    image: "/agentzaimainmain.png"
-  },
-  {
-    name: "Mr. Meseeks",
-    description: "LOOK AT ME",
-    link: "@mrmeseekstestbot",
-    status: "active",
-    image: "/Screenshot 2025-01-05 210554.png"
-  },
-  {
-    name: "ļ̷̤͕̱̐̅f̴̜́͆̌͗̚ģ̶͇͎̣̮̝̣̼͇̝̌͆̊͂́̈́͒͊͝",
-    description: "...",
-    link: "",
-    status: "active",
-    image: "/agentzaimainmain.png"
-  },
-  {
-    name: "Chart Analyzooooooooor",
-    description: "AGEEEENTZ",
-    link: "@chartanalyzerthebot",
-    status: "active",
-    image: "/image.jpg"
-  },
-  {
-    name: "Trump",
-    description: "Fantastic",
-    link: "@trumps_bot",
-    status: "active",
-    image: "/photo_2017-10-03_09-14-38.jpg"
-  },
-  {
-    name: "BUY GSC on PUMP.FUN",
-    description: "GoldenShibaCoin (GSC) - Market Cap: $53,379",
-    link: "https://pump.fun/coin/3jhM8CcXZjxBy4HuyzYycseLgNsGkLuYWsFQwJy1pump",
-    status: "active",
-    image: "/agentzaimainmain.png"
-  },
-  {
-    name: "test",
-    description: "test bot please ignore",
-    link: "test.com",
-    status: "maintenance",
-    image: "/agentzaimainmain.png"
-  },
-  {
-    name: "moooooner",
-    description: "to the mooooooon",
-    link: "@moonerbot",
-    status: "maintenance",
-    image: "/agentzaimainmain.png"
-  },
-  {
-    name: "AGENTZ bake test 🥖🍞",
-    description: "do not bake cat bake agentz",
-    link: "@agenztbakebot",
-    status: "active",
-    image: "/cat.jpg"
-  },
-  {
-    name: "BASED TG AGENT(Z)",
-    description: "TG Agent Wallet Test Bot",
-    link: "@basedtgagentbot",
-    status: "active",
-    image: "/basedafegent.png"
-  },
-  {
-    name: "Simple Tweet Notifier and Forwarder",
-    description: "Simple Tweet Notifier and Forwarder",
-    link: "@agentztweetforwarderbot",
-    status: "active",
-    image: "/twitteforwarder.png"
-  },
-  {
-    name: "Shitcoin Multichain Auto-Slinger",
-    description: "Multichain Shitcoin Slinger by AGENTZ AI",
-    link: "https://agentz.diy\n@agentzshitcoinbot",
-    status: "active",
-    image: "/shitcoinslinger.png"
-  },
-  {
-    name: "AGENTZ AI - Agent Creator Assistant",
-    description: "Agent Creator assistant for AGENTZ AI",
-    link: "https://agentz.diy\n@agentzaihelperbot",
+    name: "SIDEKIX AI - Agent Creator",
+    description: "Agent Creator assistant for SIDEKIX AI",
+    link: "https://www.sidekixai.io\n@sidekixai",
     status: "active",
     image: "/agentaiassiatnt.png"
   }
@@ -162,11 +50,11 @@ export default function Dashboard() {
                     />
                   </div>
                   <div>
-                    <h3 className="text-xl mb-2">AGENTZ AI - Agent Creator Assistant</h3>
-                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AGENTZ AI</div>
+                    <h3 className="text-xl mb-2">SIDEKIX AI - Agent Creator</h3>
+                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for SIDEKIX AI</div>
                     <div className="flex gap-3">
                       <a 
-                        href="https://agentz.diy"
+                        href="https://www.sidekixai.io"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
@@ -174,7 +62,7 @@ export default function Dashboard() {
                         WEBSITE →
                       </a>
                       <a 
-                        href="https://t.me/agentzaihelperbot"
+                        href="https://t.me/sidekixai"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"

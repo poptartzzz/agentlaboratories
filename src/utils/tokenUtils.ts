@@ -1,6 +1,6 @@
 import { BrowserProvider, Contract, parseUnits } from 'ethers';
 
-const AZI_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
+const SXA_ADDRESS = '0xf5FBE542a343c2284f6B9f0B7C59464A92739d80';
 const REQUIRED_USD_AMOUNT = 50;
 
 const ERC20_ABI = [
@@ -16,23 +16,23 @@ interface EthereumError extends Error {
   data?: unknown;
 }
 
-// Function to fetch AZI price from DEX or API
-export async function getAZIPrice(): Promise<number> {
+// Function to fetch SXA price from DEX or API
+export async function getSXAPrice(): Promise<number> {
   try {
     // Replace this URL with actual price API endpoint
     const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/0xf5FBE542a343c2284f6B9f0B7C59464A92739d80');
     const data = await response.json();
     return parseFloat(data.pairs[0].priceUsd);
   } catch (error) {
-    console.error('Error fetching AZI price:', error);
-    throw new Error('Failed to fetch AZI price');
+    console.error('Error fetching SXA price:', error);
+    throw new Error('Failed to fetch SXA price');
   }
 }
 
-export async function calculateRequiredAZI(): Promise<string> {
-  const aziPrice = await getAZIPrice();
-  const requiredAZI = REQUIRED_USD_AMOUNT / aziPrice;
-  return requiredAZI.toFixed(0); // Round to whole number
+export async function calculateRequiredSXA(): Promise<string> {
+  const sxaPrice = await getSXAPrice();
+  const requiredSXA = REQUIRED_USD_AMOUNT / sxaPrice;
+  return requiredSXA.toFixed(0); // Round to whole number
 }
 
 export const handleTokenPayment = async (recipientAddress: string): Promise<boolean> => {
@@ -43,14 +43,14 @@ export const handleTokenPayment = async (recipientAddress: string): Promise<bool
 
   try {
     console.log('Initializing payment process...');
-    const requiredAmount = await calculateRequiredAZI();
-    console.log('Required AZI amount:', requiredAmount);
+    const requiredAmount = await calculateRequiredSXA();
+    console.log('Required SXA amount:', requiredAmount);
     
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     console.log('Connected wallet:', await signer.getAddress());
 
-    const tokenContract = new Contract(AZI_ADDRESS, ERC20_ABI, signer);
+    const tokenContract = new Contract(SXA_ADDRESS, ERC20_ABI, signer);
     console.log('Token contract initialized');
     
     const decimals = await tokenContract.decimals();
@@ -62,7 +62,7 @@ export const handleTokenPayment = async (recipientAddress: string): Promise<bool
     console.log('Current balance:', balance.toString());
     
     if (BigInt(balance) < BigInt(amount)) {
-      alert(`Insufficient AZI balance. You need at least ${REQUIRED_USD_AMOUNT} AZI tokens. Your balance: ${balance.toString()}`);
+      alert(`Insufficient SXA balance. You need at least ${REQUIRED_USD_AMOUNT} SXA tokens. Your balance: ${balance.toString()}`);
       return false;
     }
 
