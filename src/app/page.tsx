@@ -511,6 +511,11 @@ export default function Home() {
     isOpen: false,
     message: ''
   });
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+
+  useEffect(() => {
+    setShowDisclaimer(true);
+  }, []);
 
   useEffect(() => {
     // Get initial messages for the current agent type
@@ -788,6 +793,59 @@ Use current prices and real token data. Always start with 🤖.`;
     <div className={`min-h-screen bg-black text-[#00ff00] overflow-x-hidden ${pressStart.className}`}>
       <style jsx>{flashAnimation}</style>
       <Header />
+      
+      {/* Security Disclaimer Modal */}
+      {showDisclaimer && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-black/80" onClick={() => setShowDisclaimer(false)} />
+          <div className="relative bg-black border-2 border-[#00ff00] p-6 max-w-2xl w-full space-y-4">
+            <h2 className="text-xl text-[#00ff00] mb-4">Important Security Notice</h2>
+            
+            <div className="space-y-4 text-sm">
+              <p>
+                We've noticed some token scanners are showing "$SXA" as "MULTI owner" - we want to clarify this 
+                is actually a false positive due to our enhanced security implementation.
+              </p>
+              
+              <p>
+                Our contract uses an advanced SecurityBase layer that includes standard ownership mechanisms - 
+                a security best practice used by many successful projects. This sometimes gets flagged by scanners, 
+                but it's actually a security feature, not a vulnerability.
+              </p>
+              
+              <p>
+                The contract implements:
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>Single owner architecture</li>
+                  <li>Standard ownership transfer functions</li>
+                  <li>Secure renounce capabilities</li>
+                  <li>Full require() statement protection</li>
+                </ul>
+              </p>
+              
+              <p>
+                You can verify these security features yourself by checking the contract:
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>owner() function allows only one owner address</li>
+                  <li>Ownership transfers require explicit approval</li>
+                  <li>No backdoors or multi-owner capabilities exist</li>
+                </ul>
+              </p>
+              
+              <p className="text-[#00ff00]/80 italic">
+                Note: As the contract is now renounced, these security implementations are permanent and cannot be modified.
+              </p>
+            </div>
+            
+            <button
+              onClick={() => setShowDisclaimer(false)}
+              className="mt-6 px-4 py-2 border border-[#00ff00] text-[#00ff00] hover:bg-[#00ff00] hover:text-black transition-colors"
+            >
+              I Understand
+            </button>
+          </div>
+        </div>
+      )}
       
       <div className="fixed inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(0deg,rgba(0,255,0,0.1)_1px,transparent_1px)] bg-[size:100%_2px]"></div>
