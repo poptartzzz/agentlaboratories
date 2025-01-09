@@ -39,6 +39,13 @@ const agents = [
     link: "@baketestsidekixbot",
     status: "active",
     image: "/Screenshot 2025-01-08 182529.png"
+  },
+  {
+    name: "test",
+    description: "teeeeesting",
+    link: "",
+    status: "active",
+    image: "/agentaiassiatnt.png"
   }
 ];
 
