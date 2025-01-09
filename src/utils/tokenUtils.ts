@@ -1,7 +1,7 @@
 import { BrowserProvider, Contract, parseUnits } from 'ethers';
 
 const SXA_ADDRESS = '0x61bAFCF2BdA2F870F2c29157E729F30058cF5314';
-const REQUIRED_USD_AMOUNT = 50;
+const REQUIRED_USD_AMOUNT = 10;
 
 const ERC20_ABI = [
   {
