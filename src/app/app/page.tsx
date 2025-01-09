@@ -13,6 +13,13 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
+    name: "TWEET FORWARDING AGENT",
+    description: "Forward tweets to your Telegram channel",
+    link: "@agentztweetforwarderbot",
+    status: "active",
+    image: "/twitteforwarder.png"
+  },
+  {
     name: "CramerContrarian",
     description: "A bot that monitors Jim Cramer's tweets, analyzes the sentiment, and automatically executes trades going against his sentiment on specific stocks or assets.",
     link: "t.me",
