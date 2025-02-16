@@ -4,14 +4,11 @@ import { useState, useEffect } from 'react';
 import { Press_Start_2P } from 'next/font/google';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faKey, 
   faRobot, 
   faGears, 
   faChartLine,
-  faWallet,
   faCode,
   faShieldHalved,
   faBell
@@ -21,20 +18,6 @@ const pressStart = Press_Start_2P({
   weight: '400',
   subsets: ['latin'],
 });
-
-interface ApiKey {
-  name: string;
-  key: string;
-  platform: string;
-  lastUsed: string;
-}
-
-interface ApiForm {
-  isOpen: boolean;
-  name: string;
-  key: string;
-  platform: string;
-}
 
 interface AgentConfig {
   name: string;
@@ -122,8 +105,8 @@ export default function Dashboard() {
             <div className="border border-[#00ff00] bg-black/50 p-6">
               <h2 className="text-xl mb-4">Recent Activity</h2>
               <div className="text-center py-8 text-[#00ff00]/70">
-                <p className="mb-2">No recent activity</p>
-                <p className="text-xs">Your activity will appear here once you start using agents</p>
+                <p className="mb-2">You don&apos;t have any recent activity</p>
+                <p className="text-xs">Your activity will appear here once you&apos;re using agents</p>
               </div>
             </div>
           </div>
@@ -135,7 +118,7 @@ export default function Dashboard() {
             <h2 className="text-2xl mb-6">Settings</h2>
             {agents.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-[#00ff00]/70 mb-4">Deploy an agent to access settings</p>
+                <p className="text-[#00ff00]/70 mb-4">You don&apos;t have access to settings yet</p>
                 <Link 
                   href="/create"
                   className="px-4 py-2 border border-[#00ff00] hover:bg-[#00ff00]/10 transition-colors inline-block"
@@ -367,7 +350,7 @@ export default function Dashboard() {
                 <h3 className="text-lg mb-4">Trading Alerts</h3>
                 <div className="text-center py-6 text-[#00ff00]/70">
                   <p className="text-sm">No trading alerts</p>
-                  <p className="text-xs mt-2">Alerts about your agent's trading activities will appear here</p>
+                  <p className="text-xs mt-2">Alerts about your agent&apos;s trading activities will appear here</p>
                 </div>
               </div>
 
@@ -375,7 +358,7 @@ export default function Dashboard() {
                 <h3 className="text-lg mb-4">System Notifications</h3>
                 <div className="text-center py-6 text-[#00ff00]/70">
                   <p className="text-sm">No system notifications</p>
-                  <p className="text-xs mt-2">Updates about your agent's performance and status will appear here</p>
+                  <p className="text-xs mt-2">Updates about your agent&apos;s performance and status will appear here</p>
                 </div>
               </div>
 
@@ -399,7 +382,7 @@ export default function Dashboard() {
                 <h3 className="text-lg mb-4">Agent Activity</h3>
                 <div className="text-center py-6 text-[#00ff00]/70">
                   <p className="text-sm">No agent activity</p>
-                  <p className="text-xs mt-2">Your agent's actions and decisions will appear here</p>
+                  <p className="text-xs mt-2">Your agent&apos;s actions and decisions will appear here</p>
                 </div>
               </div>
 

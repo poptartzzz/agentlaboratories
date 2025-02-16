@@ -899,7 +899,7 @@ Do not include any text outside of this JSON structure. All your communication s
                         ? 'CONNECT WALLET TO BAKE' 
                         : isProcessing 
                           ? 'PROCESSING...' 
-                          : 'BAKE AGENT (AGL ≈ $20)'}
+                          : `BAKE AGENT (${requiredSXA} AGL ≈ $20)`}
                     </button>
                     
                     {!areRequiredFieldsFilled() && !isBaking && (
