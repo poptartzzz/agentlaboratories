@@ -33,7 +33,7 @@ export default function Header() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [showWalletMenu, setShowWalletMenu] = useState(false);
 
-  const SXA_ADDRESS = '0x61bAFCF2BdA2F870F2c29157E729F30058cF5314';
+  const AGL_ADDRESS = '0x61bAFCF2BdA2F870F2c29157E729F30058cF5314';
 
   const disconnectWallet = () => {
     setAccount('');
@@ -51,40 +51,40 @@ export default function Header() {
       try {
         setIsConnecting(true);
         
-        // Request switch to Base Network
+        // Request switch to BSC Network
         try {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0x2105' }], // Base Network chainId
+            params: [{ chainId: '0x38' }], // BSC Network chainId
           });
         } catch (error: unknown) {
           const switchError = error as WalletError;
           console.log('Switch error:', switchError);
-          // If Base Network is not added, add it
+          // If BSC Network is not added, add it
           if (switchError.code === 4902) {
             try {
               await window.ethereum.request({
                 method: 'wallet_addEthereumChain',
                 params: [{
-                  chainId: '0x2105',
-                  chainName: 'Base',
+                  chainId: '0x38',
+                  chainName: 'Binance Smart Chain',
                   nativeCurrency: {
-                    name: 'ETH',
-                    symbol: 'ETH',
+                    name: 'BNB',
+                    symbol: 'BNB',
                     decimals: 18
                   },
-                  rpcUrls: ['https://mainnet.base.org'],
-                  blockExplorerUrls: ['https://basescan.org']
+                  rpcUrls: ['https://bsc-dataseed.binance.org'],
+                  blockExplorerUrls: ['https://bscscan.com']
                 }]
               });
             } catch (addError) {
-              console.error('Error adding Base network:', addError);
-              alert('Failed to add Base network. Please add it manually in your wallet.');
+              console.error('Error adding BSC network:', addError);
+              alert('Failed to add BSC network. Please add it manually in your wallet.');
               return;
             }
           } else {
-            console.error('Error switching to Base network:', switchError);
-            alert('Failed to switch to Base network. Please try again.');
+            console.error('Error switching to BSC network:', switchError);
+            alert('Failed to switch to BSC network. Please try again.');
             return;
           }
         }
@@ -117,10 +117,10 @@ export default function Header() {
       if (!window.ethereum) return;
 
       console.log('Fetching balance for address:', address);
-      console.log('Token address:', SXA_ADDRESS);
+      console.log('Token address:', AGL_ADDRESS);
 
       const provider = new BrowserProvider(window.ethereum);
-      const tokenContract = new Contract(SXA_ADDRESS, ERC20_ABI, provider);
+      const tokenContract = new Contract(AGL_ADDRESS, ERC20_ABI, provider);
 
       // Add error handling for each call
       try {
@@ -147,8 +147,8 @@ export default function Header() {
         <div className="flex items-center py-3">
           <Link href="/" className="text-xl md:text-2xl">
             <Image 
-              src="/sidekicxai.png"
-              alt="SIDEKIX"
+              src="/agentlablogoweb.png"
+              alt="AgentLab AI"
               width={180}
               height={60}
               className="object-contain h-12"
@@ -162,20 +162,15 @@ export default function Header() {
             <Link href="/app" className="hover:text-[#00ff00] transition-colors">
               AGENTS
             </Link>
+            <Link href="/dashboard" className="hover:text-[#00ff00] transition-colors">
+              DASHBOARD
+            </Link>
             <Link href="/about" className="hover:text-[#00ff00] transition-colors">
               ABOUT
             </Link>
-            <a 
-              href="https://docs.sidekixai.io" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="hover:text-[#00ff00] transition-colors"
-            >
-              LITEPAPER
-            </a>
             <div className="flex items-center gap-4 border-l border-[#00ff00]/30 pl-6">
               <a 
-                href="https://x.com/SidekixAi"
+                href="https://x.com/AgentLabAI"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#00ff00] transition-colors"
@@ -183,7 +178,7 @@ export default function Header() {
                 <FaTwitter size={20} />
               </a>
               <a 
-                href="https://t.me/sidekixai"
+                href="https://t.me/agentlabai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#00ff00] transition-colors"
@@ -202,7 +197,7 @@ export default function Header() {
                     className="flex items-center gap-2 px-3 py-1.5 bg-[#00ff00]/10 border border-[#00ff00]/30 hover:bg-[#00ff00]/20 transition-all rounded-sm whitespace-nowrap text-sm"
                   >
                     <span className="text-[#00ff00] font-medium">{balance}</span>
-                    <span>SXA</span>
+                    <span>AGL</span>
                     <div className="w-px h-4 bg-[#00ff00]/30" />
                     <span className="ml-2">{account.slice(0, 6)}...{account.slice(-4)}</span>
                   </button>

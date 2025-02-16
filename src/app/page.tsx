@@ -28,6 +28,7 @@ import {
   faStar
 } from '@fortawesome/free-solid-svg-icons';
 import { generateAgentResponse } from '@/utils/claude';
+import Image from 'next/image';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -803,7 +804,7 @@ Use current prices and real token data. Always start with 🤖.`;
             
             <div className="space-y-4 text-sm">
               <p>
-                We&apos;ve noticed some token scanners are showing &quot;$SXA&quot; as &quot;MULTI owner&quot; - we want to clarify this 
+                We&apos;ve noticed some token scanners are showing &quot;$AGL&quot; as &quot;MULTI owner&quot; - we want to clarify this 
                 is actually a false positive due to our enhanced security implementation.
               </p>
               
@@ -868,12 +869,19 @@ Use current prices and real token data. Always start with 🤖.`;
           <div className="space-y-8 backdrop-blur-md bg-black/30 p-8 rounded-lg border border-[#00ff00]/20">
             <div className="inline-block px-4 py-2 border border-[#00ff00] bg-black/50 hover:bg-[#00ff00]/10 transition-all">
               <a 
-                href="https://app.uniswap.org/swap?outputCurrency=0x61bAFCF2BdA2F870F2c29157E729F30058cF5314" 
+                href="https://pancakeswap.finance/" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#00ff00] text-xs hover:text-white transition-colors"
+                className="text-[#00ff00] text-xs hover:text-white transition-colors flex items-center gap-2"
               >
-                SXA - 0x61bAFCF2BdA2F870F2c29157E729F30058cF5314
+                <Image
+                  src="/bnb-chain-binance-smart-chain-logo-300x300.webp"
+                  alt="BNB Chain"
+                  width={16}
+                  height={16}
+                  className="rounded-full"
+                />
+                AGL - Coming Soon
               </a>
             </div>
             <h1 className="text-5xl md:text-7xl leading-relaxed">
@@ -900,13 +908,13 @@ Use current prices and real token data. Always start with 🤖.`;
                 href="/create" 
                 className="px-8 py-3 bg-[#00ff00] text-black text-sm hover:bg-[#00ff00]/80 transition-colors"
               >
-                BAKE SIDEKIX
+                BAKE AGENT
               </Link>
               <Link 
                 href="/app" 
                 className="px-8 py-3 border border-[#00ff00] text-[#00ff00] text-sm hover:bg-[#00ff00] hover:text-black transition-colors"
               >
-                LIVE SIDEKIX
+                LIVE AGENTS
               </Link>
             </div>
           </div>
@@ -1111,13 +1119,13 @@ Use current prices and real token data. Always start with 🤖.`;
               href="/create" 
               className="px-12 py-4 bg-[#00ff00] text-black text-lg hover:bg-[#00ff00]/80 transition-colors"
             >
-              BAKE SIDEKIX
+              BAKE AGENT
             </Link>
             <Link 
               href="/app" 
               className="px-12 py-4 border border-[#00ff00] text-[#00ff00] text-lg hover:bg-[#00ff00] hover:text-black transition-colors"
             >
-              LIVE SIDEKIX
+              LIVE AGENTS
             </Link>
           </div>
         </div>

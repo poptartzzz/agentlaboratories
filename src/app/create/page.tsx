@@ -636,16 +636,16 @@ Do not include any text outside of this JSON structure. All your communication s
             >
               ✕
             </button>
-            <h2 className="text-xl mb-6">Welcome to SIDEKIX AI Creator!</h2>
+            <h2 className="text-xl mb-6">Welcome to AgentLab AI Creator!</h2>
             <p className="text-[#00ff00]/80 mb-6 leading-relaxed">
               Our comprehensive documentation is currently being enhanced. In the meantime, 
               please visit our <Link href="/about" className="underline hover:text-[#00ff00]/70">About page</Link> for 
               an overview, or connect with our AI Assistant <a 
-                href="https://t.me/sidekixhelperbot" 
+                href="https://t.me/agentlabhelperbot" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="underline hover:text-[#00ff00]/70"
-              >@sidekixhelperbot</a> on Telegram for guided assistance.
+              >@agentlabhelperbot</a> on Telegram for guided assistance.
             </p>
             <button
               onClick={() => setShowGuide(false)}
@@ -899,7 +899,7 @@ Do not include any text outside of this JSON structure. All your communication s
                         ? 'CONNECT WALLET TO BAKE' 
                         : isProcessing 
                           ? 'PROCESSING...' 
-                          : `BAKE AGENT (${requiredSXA} SXA ≈ $10)`}
+                          : 'BAKE AGENT (AGL ≈ $20)'}
                     </button>
                     
                     {!areRequiredFieldsFilled() && !isBaking && (
@@ -922,19 +922,19 @@ Do not include any text outside of this JSON structure. All your communication s
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 rounded-full overflow-hidden">
                   <Image 
-                    src="/agentaiassiatnt.png"
-                    alt="SIDEKIX AI Assistant"
+                    src="/agentlogowebsitemini.png"
+                    alt="AgentLab AI Assistant"
                     width={48}
                     height={48}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl mb-2">SIDEKIX AI - Agent Creator Assistant</h3>
-                  <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for SIDEKIX AI</div>
+                  <h3 className="text-xl mb-2">AgentLab AI - Agent Creator Assistant</h3>
+                  <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AgentLab AI</div>
                   <div className="flex gap-3">
                     <a 
-                      href="https://sidekixai.io"
+                      href="https://agentlabai.io"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
@@ -942,7 +942,7 @@ Do not include any text outside of this JSON structure. All your communication s
                       WEBSITE →
                     </a>
                     <a 
-                      href="https://t.me/sidekixhelperbot"
+                      href="https://t.me/agentlabhelperbot"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"

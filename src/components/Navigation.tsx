@@ -20,12 +20,12 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   {
     icon: faTwitter,
-    href: "https://x.com/SidekixAi",
+    href: "https://x.com/AgentLabAi",
     label: "Twitter"
   },
   {
     icon: faTelegram,
-    href: "https://t.me/sidekixai",
+    href: "https://t.me/agentlabai",
     label: "Telegram"
   }
 ];
@@ -39,8 +39,8 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center">
             <Image 
-              src="/sidekicxai.png"
-              alt="SIDEKIX AI" 
+              src="/agentlablogoweb.png"
+              alt="AgentLab AI" 
               width={180}
               height={40}
               className="h-10 w-auto"
@@ -78,7 +78,7 @@ export default function Navigation() {
               <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
 
               <Link 
-                href="https://docs.sidekixai.io" 
+                href="https://docs.agentlabai.io" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"

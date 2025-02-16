@@ -10,12 +10,12 @@ const pressStart = Press_Start_2P({
 });
 
 export const metadata: Metadata = {
-  title: "SIDEKIX AI",
+  title: "AgentLab AI",
   description: "Next-Gen AI Agents - Your Web3 AI Companion",
   icons: {
-    icon: "/agentaiassiatnt.png",
-    apple: "/agentaiassiatnt.png",
-    shortcut: "/agentaiassiatnt.png"
+    icon: "/agentlablogoweb.png",
+    apple: "/agentlablogoweb.png",
+    shortcut: "/agentlablogoweb.png"
   }
 };
 

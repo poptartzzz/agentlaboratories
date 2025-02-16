@@ -13,25 +13,50 @@ const pressStart = Press_Start_2P({
 // Example bots data
 const agents = [
   {
-    name: "SIDEKIX test",
+    id: 1,
+    name: "AGENT LAB test",
     description: "",
     link: "",
     status: "active",
-    image: "/agentaiassiatnt.png"
+    image: "/agentlogowebsitemini.png"
+  },
+  {
+    id: 2,
+    name: "AGENT LAB 🤖",
+    description: "Your personal AI assistant",
+    link: "@agentlabbot",
+    status: "active",
+    image: "/agentlogowebsitemini.png"
+  },
+  {
+    id: 3,
+    name: "AGENT LAB AI - Agent Creator",
+    description: "Made by mew w/ AGENT LAB AI",
+    link: "https://agentlabai.io/\n@agentlabautoslingerbot",
+    status: "active",
+    image: "/agentlogowebsitemini.png"
+  },
+  {
+    id: 4,
+    name: "AGENT LAB BAKE TEST 🥖",
+    description: "Test your baking skills",
+    link: "@baketestagentlabbot",
+    status: "active",
+    image: "/Screenshot 2025-01-08 182529.png"
   },
   {
     name: "THIS IS A GEM",
     description: "",
     link: "",
     status: "active",
-    image: "/agentaiassiatnt.png"
+    image: "/agentlogowebsitemini.png"
   },
   {
     name: "SIDEKIX 🤖",
     description: "Just a dev testing some stuff",
     link: "@sidekixbot",
     status: "active",
-    image: "/agentaiassiatnt.png"
+    image: "/agentlogowebsitemini.png"
   },
   {
     name: "Chart Analyzooooooooor",
@@ -45,7 +70,7 @@ const agents = [
     description: "",
     link: "",
     status: "maintenance",
-    image: "/agentaiassiatnt.png"
+    image: "/agentlogowebsitemini.png"
   },
   {
     name: "TWEET FORWARDING AGENT",
@@ -59,7 +84,7 @@ const agents = [
     description: "A bot that monitors Jim Cramer's tweets, analyzes the sentiment, and automatically executes trades going against his sentiment on specific stocks or assets.",
     link: "t.me",
     status: "active",
-    image: "/agentaiassiatnt.png"
+    image: "/agentlogowebsitemini.png"
   },
   {
     name: "MOON MISSION",
@@ -80,21 +105,7 @@ const agents = [
     description: "teeeeesting",
     link: "",
     status: "active",
-    image: "/agentaiassiatnt.png"
-  },
-  {
-    name: "SIDEKIX AI - Agent Creator",
-    description: "Agent Creator assistant for SIDEKIX AI",
-    link: "https://www.sidekixai.io\n@sidekixai",
-    status: "active",
-    image: "/agentaiassiatnt.png"
-  },
-  {
-    name: "Ethereum Contract Helper",
-    description: "Made by mew w/ sidekix AI",
-    link: "@ethereumsmartcontractbot",
-    status: "active",
-    image: "/Screenshot 2025-01-06 233619.png"
+    image: "/agentlogowebsitemini.png"
   },
   {
     name: "Shitcoin Multichain Auto-Slinger",
@@ -104,19 +115,13 @@ const agents = [
     image: "/shitcoinslinger.png"
   },
   {
+    id: 5,
     name: "BASED TG AGENT",
     description: "The BASED TG AGENT will be fully functional after launch of $SXA token.\nThis bot will be able to moderate chat and function as a buy bot.",
-    link: "https://sidekixai.io/\n@basedtgagentbot",
+    link: "https://agentlabai.io/\n@basedtgagentbot",
     status: "active",
     image: "/basedtgagent.png"
   },
-  {
-    name: "SIDEKIX BAKE TEST 🥖",
-    description: "test bake",
-    link: "@baketestsidekixbot",
-    status: "active",
-    image: "/Screenshot 2025-01-08 182529.png"
-  }
 ];
 
 export default function Dashboard() {
@@ -140,19 +145,19 @@ export default function Dashboard() {
                 <div className="flex items-start gap-4 flex-1 min-w-0">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
                     <Image 
-                      src="/agentaiassiatnt.png"
-                      alt="AGENTZ AI Assistant"
+                      src="/agentlogowebsitemini.png"
+                      alt="AgentLab AI Assistant"
                       width={64}
                       height={64}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
-                    <h3 className="text-xl mb-2">SIDEKIX AI - Agent Creator</h3>
-                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for SIDEKIX AI</div>
+                    <h3 className="text-xl mb-2">AgentLab AI - Agent Creator</h3>
+                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AgentLab AI</div>
                     <div className="flex gap-3">
                       <a 
-                        href="https://www.sidekixai.io"
+                        href="https://agentlabai.io"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
@@ -160,7 +165,7 @@ export default function Dashboard() {
                         WEBSITE →
                       </a>
                       <a 
-                        href="https://t.me/sidekixai"
+                        href="https://t.me/agentlabhelperbot"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
@@ -189,7 +194,7 @@ export default function Dashboard() {
 
           {/* Bots Grid */}
           <div className="grid md:grid-cols-2 gap-6">
-            {agents.filter(bot => bot.name !== "AGENTZ AI - Agent Creator Assistant").map((bot) => (
+            {agents.filter(bot => bot.name !== "AGENT LAB AI - Agent Creator").map((bot) => (
               <div 
                 key={bot.name}
                 className="border border-[#00ff00] bg-black/50 p-6 hover:bg-black/80 transition-all cursor-pointer"

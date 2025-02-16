@@ -17,7 +17,7 @@ export default function About() {
 
       <div className="relative z-10 pt-32 pb-12">
         <div className="container mx-auto px-6 max-w-4xl">
-          <h1 className="text-3xl mb-12">SIDEKIX Setup Guide</h1>
+          <h1 className="text-3xl mb-12">AgentLab Setup Guide</h1>
 
           {/* Step 1: Getting Started */}
           <section className="mb-16">
