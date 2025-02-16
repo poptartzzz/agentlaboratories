@@ -3,17 +3,17 @@ import Anthropic from '@anthropic-ai/sdk';
 
 export async function POST(request: Request) {
   try {
-    const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
-    });
-
     if (!process.env.ANTHROPIC_API_KEY) {
-      console.error('ANTHROPIC_API_KEY is not configured');
+      console.error('ANTHROPIC_API_KEY is not configured in environment variables');
       return NextResponse.json(
-        { error: 'AI service is not properly configured' },
+        { error: 'AI service configuration error: Missing API key' },
         { status: 500 }
       );
     }
+
+    const anthropic = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
 
     const { prompt } = await request.json();
 
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Claude API error:', error);
     return NextResponse.json(
-      { error: 'Failed to generate response' },
+      { error: 'Failed to generate response. Please check server logs for details.' },
       { status: 500 }
     );
   }
