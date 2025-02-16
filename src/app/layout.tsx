@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   title: "AgentLab AI",
   description: "Next-Gen AI Agents - Your Web3 AI Companion",
   icons: {
-    icon: "/agentlablogoweb.png",
-    apple: "/agentlablogoweb.png",
-    shortcut: "/agentlablogoweb.png"
+    icon: "/agentlogowebsitemini.png",
+    apple: "/agentlogowebsitemini.png",
+    shortcut: "/agentlogowebsitemini.png"
   }
 };
 
