@@ -1,5 +1,5 @@
-import { Connection, PublicKey, clusterApiUrl } from '@solana/web3.js';
-import { getMint, getTokenSupply } from '@solana/spl-token';
+import { Connection, PublicKey } from '@solana/web3.js';
+import { getMint } from '@solana/spl-token';
 
 const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
 
@@ -10,8 +10,8 @@ export async function getTokenInfo(mintAddress: string) {
     // Get mint information
     const mintInfo = await getMint(connection, mintPublicKey);
     
-    // Get token supply
-    const supplyInfo = await getTokenSupply(connection, mintPublicKey);
+    // Get token supply (using mint info)
+    const supplyInfo = { value: mintInfo.supply };
     
     // Get recent transactions (signatures)
     const signatures = await connection.getSignaturesForAddress(mintPublicKey, { limit: 100 });
@@ -25,7 +25,7 @@ export async function getTokenInfo(mintAddress: string) {
       // For now, we'll use basic info from the mint
       tokenName = `SPL Token`;
       tokenSymbol = 'SPL';
-    } catch (metadataError) {
+    } catch {
       console.log('No metadata found for token');
     }
 
@@ -34,7 +34,7 @@ export async function getTokenInfo(mintAddress: string) {
       symbol: tokenSymbol,
       mintAddress: mintAddress,
       decimals: mintInfo.decimals,
-      supply: supplyInfo.value.uiAmountString || '0',
+      supply: supplyInfo.value.toString(),
       isInitialized: mintInfo.isInitialized,
       freezeAuthority: mintInfo.freezeAuthority?.toString() || 'None',
       mintAuthority: mintInfo.mintAuthority?.toString() || 'None',
@@ -52,7 +52,7 @@ export async function getTokenInfo(mintAddress: string) {
 
 export async function getTokenHolders(mintAddress: string) {
   try {
-    const mintPublicKey = new PublicKey(mintAddress);
+    new PublicKey(mintAddress);
     
     // Note: Getting all token holders on Solana requires scanning all token accounts
     // This is computationally expensive and typically done by indexing services

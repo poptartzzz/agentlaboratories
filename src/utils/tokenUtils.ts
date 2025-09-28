@@ -1,10 +1,7 @@
 import { 
   Connection, 
   PublicKey, 
-  Transaction, 
-  SystemProgram, 
-  LAMPORTS_PER_SOL,
-  clusterApiUrl 
+  Transaction
 } from '@solana/web3.js';
 import { 
   getAssociatedTokenAddress, 
@@ -53,7 +50,7 @@ export async function calculateRequiredALABS(): Promise<number> {
 
 export const handleTokenPayment = async (
   recipientAddress: string, 
-  walletAdapter: any
+  walletAdapter: unknown
 ): Promise<boolean> => {
   if (!walletAdapter?.connected || !walletAdapter?.publicKey) {
     alert('Please connect a Solana wallet!');
@@ -99,7 +96,7 @@ export const handleTokenPayment = async (
         alert(`Insufficient ALABS balance. You need at least ${requiredAmount} ALABS tokens. Your balance: ${balance}`);
         return false;
       }
-    } catch (error) {
+    } catch {
       alert('You don\'t have an ALABS token account. Please acquire ALABS tokens first.');
       return false;
     }

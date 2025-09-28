@@ -2,8 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaTwitter, FaTelegram, FaBars, FaTimes } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { Connection, PublicKey, LAMPORTS_PER_SOL, clusterApiUrl } from '@solana/web3.js';
-import { getAssociatedTokenAddress, getAccount } from '@solana/spl-token';
+import { PublicKey } from '@solana/web3.js';
 
 interface SolanaWalletError extends Error {
   code?: number;
@@ -18,18 +17,6 @@ export default function Header() {
   const [showWalletMenu, setShowWalletMenu] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // ALABS token mint address on Solana (replace with actual address)
-  const ALABS_TOKEN_MINT = 'YOUR_SOLANA_TOKEN_MINT_ADDRESS_HERE';
-  // Use a more reliable RPC endpoint with fallback
-  const getConnection = () => {
-    const endpoints = [
-      'https://api.mainnet-beta.solana.com',
-      'https://solana-api.projectserum.com',
-      'https://solana-mainnet.g.alchemy.com/v2/demo'
-    ];
-    return new Connection(endpoints[0], 'confirmed');
-  };
-  const connection = getConnection();
 
   const disconnectWallet = async () => {
     try {
@@ -50,7 +37,7 @@ export default function Header() {
     await connectWallet();
   };
 
-  const fetchBalances = async (publicKey: PublicKey) => {
+  const fetchBalances = async () => {
     // Temporarily disable balance fetching to prevent RPC errors
     // Set placeholder values
     setSolBalance('--');
@@ -73,7 +60,7 @@ export default function Header() {
           const publicKey = new PublicKey(response.publicKey.toString());
           
           setAccount(publicKey.toString());
-          await fetchBalances(publicKey);
+          await fetchBalances();
           
           console.log('Phantom wallet connected successfully!');
         } catch (error) {
@@ -103,7 +90,7 @@ export default function Header() {
         if (window.solana?.isPhantom && window.solana.publicKey) {
           const publicKey = new PublicKey(window.solana.publicKey.toString());
           setAccount(publicKey.toString());
-          await fetchBalances(publicKey);
+          await fetchBalances();
         }
       } catch (error) {
         console.log('Initial wallet check failed:', error);

@@ -580,7 +580,12 @@ Do not include any text outside of this JSON structure. All your communication s
     setIsBaking(true);
     
     try {
-      const success = await handleTokenPayment(RECIPIENT_ADDRESS);
+      // Mock wallet adapter for Solana payment
+      const mockWalletAdapter = {
+        connected: !!account,
+        publicKey: account ? { toString: () => account } : null
+      };
+      const success = await handleTokenPayment(RECIPIENT_ADDRESS, mockWalletAdapter);
       if (success) {
         // Continue with agent creation
         // For now, just simulate a delay
@@ -602,7 +607,7 @@ Do not include any text outside of this JSON structure. All your communication s
     async function updatePrice() {
       try {
         const amount = await calculateRequiredALABS();
-        setRequiredALABS(amount);
+        setRequiredALABS(amount.toString());
       } catch (error) {
         console.error('Error updating price:', error);
         setRequiredALABS('COST');

@@ -6,8 +6,8 @@ declare global {
       isPhantom?: boolean;
       connect: () => Promise<{ publicKey: { toString(): string } }>;
       disconnect: () => Promise<void>;
-      signTransaction: (transaction: any) => Promise<any>;
-      signAllTransactions: (transactions: any[]) => Promise<any[]>;
+      signTransaction: (transaction: unknown) => Promise<unknown>;
+      signAllTransactions: (transactions: unknown[]) => Promise<unknown[]>;
       publicKey?: { toString(): string };
       isConnected?: boolean;
     };
