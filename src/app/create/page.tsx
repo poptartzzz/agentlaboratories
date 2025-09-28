@@ -6,7 +6,7 @@ import { generateAgentResponse } from '@/utils/claude';
 import Header from '@/components/Header';
 import Separator from '@/components/Separator';
 import Image from 'next/image';
-import { handleTokenPayment, calculateRequiredSXA } from '@/utils/tokenUtils';
+import { handleTokenPayment, calculateRequiredALABS } from '@/utils/tokenUtils';
 import Link from 'next/link';
 
 const pressStart = Press_Start_2P({ 
@@ -110,16 +110,16 @@ interface ChatMessage {
 // Add these example suggestions
 const botSuggestions = [
   {
-    id: 'inverse-cramer',
-    text: "Make me a bot that buys/sells the opposite of @jimcramer sentiment on Twitter",
+    id: 'pump-fun-tracker',
+    text: "Create a bot that tracks pump.fun tokens with high volume and auto-buys on dips, selling at 50% gains",
   },
   {
-    id: 'github-monitor',
-    text: "Create a bot that monitors GitHub repositories for security vulnerabilities and sends alerts to Discord",
+    id: 'pump-fun-security',
+    text: "Build a bot that scans pump.fun tokens for security issues and alerts about rugpull risks",
   },
   {
-    id: 'content-curator',
-    text: "Build a bot that curates and summarizes crypto news from multiple sources and posts daily reports to Telegram",
+    id: 'pump-fun-whale',
+    text: "Make me a bot that monitors pump.fun whale movements and copies smart money trades automatically",
   }
 ];
 
@@ -391,7 +391,7 @@ export default function CreateAgent() {
   const [isBaking, setIsBaking] = useState(false);
   const [account, setAccount] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [requiredSXA, setRequiredSXA] = useState<string>('Loading...');
+  const [requiredALABS, setRequiredALABS] = useState<string>('Loading...');
   const [showGuide, setShowGuide] = useState(true);
   const RECIPIENT_ADDRESS = '0x1fC09820ad9371437329Ba7D33ddb5B96c4953e8';
 
@@ -601,11 +601,11 @@ Do not include any text outside of this JSON structure. All your communication s
   useEffect(() => {
     async function updatePrice() {
       try {
-        const amount = await calculateRequiredSXA();
-        setRequiredSXA(amount);
+        const amount = await calculateRequiredALABS();
+        setRequiredALABS(amount);
       } catch (error) {
         console.error('Error updating price:', error);
-        setRequiredSXA('COST');
+        setRequiredALABS('COST');
       }
     }
     updatePrice();
@@ -636,7 +636,7 @@ Do not include any text outside of this JSON structure. All your communication s
             >
               ✕
             </button>
-            <h2 className="text-xl mb-6">Welcome to AgentLab AI Creator!</h2>
+            <h2 className="text-xl mb-6">Welcome to Agent Laboratories Creator!</h2>
             <p className="text-[#00ff00]/80 mb-6 leading-relaxed">
               Our comprehensive documentation is currently being enhanced. In the meantime, 
               please visit our <Link href="/about" className="underline hover:text-[#00ff00]/70">About page</Link> for 
@@ -658,18 +658,18 @@ Do not include any text outside of this JSON structure. All your communication s
       )}
 
       {/* Main Content */}
-      <div className="relative z-10 pt-32 pb-12">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-8">
+      <div className="relative z-10 pt-24 sm:pt-32 pb-8 sm:pb-12">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8">
             {/* Chat Interface */}
-            <div className="border border-[#00ff00] bg-black/50 p-6">
-              <h2 className="text-xl mb-4">AGENT CREATOR</h2>
+            <div className="border border-[#00ff00] bg-black/50 p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl mb-3 sm:mb-4">AGENT CREATOR</h2>
               
-              <div className="h-96 overflow-y-auto mb-4 space-y-4">
+              <div className="h-80 sm:h-96 overflow-y-auto mb-3 sm:mb-4 space-y-3 sm:space-y-4">
                 {chat.map((message) => (
                   <div
                     key={message.id}
-                    className={`${message.isUser ? 'text-blue-400' : 'text-[#00ff00]'} text-sm ${
+                    className={`${message.isUser ? 'text-blue-400' : 'text-[#00ff00]'} text-xs sm:text-sm ${
                       message.isThinking ? 'animate-pulse' : ''
                     }`}
                   >
@@ -677,13 +677,13 @@ Do not include any text outside of this JSON structure. All your communication s
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="text-[#00ff00] text-sm animate-pulse">
+                  <div className="text-[#00ff00] text-xs sm:text-sm animate-pulse">
                     Assistant is thinking...
                   </div>
                 )}
               </div>
 
-              <div className="border-t border-[#00ff00]/20 pt-4">
+              <div className="border-t border-[#00ff00]/20 pt-3 sm:pt-4">
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -695,7 +695,7 @@ Do not include any text outside of this JSON structure. All your communication s
                       }
                     }}
                   placeholder="Describe your bot..."
-                  className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-sm focus:outline-none focus:border-white"
+                  className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:border-white"
                     disabled={isLoading}
                 />
                 <button
@@ -899,7 +899,7 @@ Do not include any text outside of this JSON structure. All your communication s
                         ? 'CONNECT WALLET TO BAKE' 
                         : isProcessing 
                           ? 'PROCESSING...' 
-                          : `BAKE AGENT (${requiredSXA} AGL ≈ $20)`}
+                          : `BAKE AGENT (${requiredALABS} ALABS ≈ $20)`}
                     </button>
                     
                     {!areRequiredFieldsFilled() && !isBaking && (
@@ -923,18 +923,18 @@ Do not include any text outside of this JSON structure. All your communication s
                 <div className="w-16 h-16 rounded-full overflow-hidden">
                   <Image 
                     src="/agentlogowebsitemini.png"
-                    alt="AgentLab AI Assistant"
+                    alt="Agent Laboratories AI Assistant"
                     width={48}
                     height={48}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl mb-2">AgentLab AI - Agent Creator Assistant</h3>
-                  <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AgentLab AI</div>
+                  <h3 className="text-xl mb-2">Agent Laboratories - Agent Creator Assistant</h3>
+                  <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for Agent Laboratories</div>
                   <div className="flex gap-3">
                     <a 
-                      href="https://agentlabai.io"
+                      href="https://launchlab.one"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"

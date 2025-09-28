@@ -88,7 +88,7 @@ const getAgentTitle = (type: AgentType) => {
     case 'sentiment':
       return 'sentiment_analyzer.bot';
     case 'nft':
-      return 'nft_scout.bot';
+      return 'correlation_tracker.bot';
     case 'defi':
       return 'defi_optimizer.bot';
     case 'whale':
@@ -115,7 +115,7 @@ const getAgentTitle = (type: AgentType) => {
 const getPlaceholder = (type: AgentType) => {
   switch (type) {
     case 'trading':
-      return 'Ask about trading signals, price analysis, or entry points...';
+      return 'Track pump.fun tokens with high volume and buy on dip...';
     case 'moderator':
       return 'Ask about community guidelines or try posting a message...';
     case 'researcher':
@@ -125,11 +125,11 @@ const getPlaceholder = (type: AgentType) => {
     case 'sentiment':
       return 'Ask about market sentiment, social metrics, or trend analysis...';
     case 'nft':
-      return 'Ask about NFT collections, floor prices, or rare traits...';
+      return 'Track pump.fun token correlations and momentum strategies...';
     case 'defi':
-      return 'Ask about yield opportunities, APY comparisons, or pool analysis...';
+      return 'Ask about SOL yield farming and pump.fun profit strategies...';
     case 'whale':
-      return 'Ask about large transactions, wallet movements, or accumulation...';
+      return 'Track pump.fun whale movements and large transactions...';
     case 'governance':
       return 'Ask about DAO proposals, voting analysis, or governance metrics...';
     case 'mempool':
@@ -137,7 +137,7 @@ const getPlaceholder = (type: AgentType) => {
     case 'bridge':
       return 'Ask about cross-chain bridges, transfer routes, or liquidity analysis...';
     case 'security':
-      return 'Ask about smart contract security, vulnerability analysis, or audit findings...';
+      return 'Scan pump.fun tokens for security issues and rugpull indicators...';
     default:
       return 'Type your message and press Enter...';
   }
@@ -156,49 +156,49 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
       return [
         { 
           id: generateUniqueId(),
-          text: "👤 @trader: Can you analyze BTC's current market structure?", 
+          text: "👤 @trader: Track pump.fun tokens with high volume and buy on dip", 
           timestamp: Date.now() - 12000,
           isUser: true 
         },
         { 
           id: generateUniqueId(),
-          text: `🤖 TRADING ANALYSIS 📊\n\nBTC Price: $98,472.88\n\nMarket Structure:\n- Strong support: $96,500 (200MA)\n- Key resistance: $99,000 (Previous ATH)\n- Volume: 45% above 20D average\n\nSignals:\n- RSI: 62 (Neutral with bullish divergence)\n- MACD: Golden cross forming\n- OBV: Smart money accumulation\n\nRecommendation: Look for entries near $96.5k support. Strong institutional buying detected.`, 
+          text: `🤖 PUMP.FUN TRADER 📊\n\nScanning pump.fun for high volume tokens...\n\nFound: $PEPE2.0\n- Volume: $2.4M (24h)\n- Market Cap: $850K\n- Holders: 1,247\n- Price: $0.000012\n\nEntry Strategy:\n- Wait for 15-20% dip\n- Buy at $0.0000096\n- Target: 50% gain ($0.0000144)\n- Stop: $0.000008\n\nVolume Trend: Increasing 📈`, 
           timestamp: Date.now() - 11000,
           isUser: false 
         },
         {
           id: generateUniqueId(),
-          text: "👤 @trader: What's your take on ETH/BTC ratio for swing trading?",
+          text: "👤 @trader: Show me more pump.fun opportunities",
           timestamp: Date.now() - 10000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 TRADING ANALYSIS 📊\n\nETH/BTC Ratio: 0.037\n\nTechnical Setup:\n- Breaking 6-month resistance\n- Volume profile showing accumulation\n- Funding rates neutral\n\nKey Levels:\n- Support: 0.035 BTC\n- Target: 0.04 BTC\n- Stop: 0.033 BTC\n\nStrategy: Long with 3:1 risk/reward ratio`,
+          text: `🤖 PUMP.FUN SCANNER 📊\n\nHot Tokens Detected:\n\n1. $WOJAK3\n- Volume: $1.8M\n- MC: $650K\n- Entry: Wait for pullback\n- Target: 2x\n\n2. $DOGE2\n- Volume: $3.2M\n- MC: $1.2M\n- Entry: $0.000045\n- Target: 3x\n\n3. $SHIB3\n- Volume: $950K\n- MC: $420K\n- Entry: $0.0000012\n- Target: 5x\n\nAll showing strong volume patterns!`,
           timestamp: Date.now() - 9000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @trader: Any concerning signals in derivatives market?",
+          text: "👤 @trader: Auto-sell strategy for pump.fun tokens?",
           timestamp: Date.now() - 8000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 TRADING ANALYSIS 📊\n\nDerivatives Health:\n- Open Interest: $8.2B (High)\n- Funding Rate: 0.01% (Neutral)\n- Long/Short Ratio: 1.2 (Balanced)\n\nRisk Factors:\n- Large OI could trigger cascade\n- $250M options expiry Friday\n- Whale puts at $92k\n\nRecommendation: Tight stops essential`,
+          text: `🤖 AUTO-SELL PROTOCOL 🎯\n\nPump.fun Auto-Sell Setup:\n\nTrigger Conditions:\n- 50% gain: Sell 25%\n- 100% gain: Sell 50%\n- 200% gain: Sell remaining\n- 10% loss: Emergency stop\n\nSmart Features:\n- Volume spike detection\n- Liquidity monitoring\n- Rugpull protection\n- Gas optimization\n\nStatus: Monitoring 3 positions`,
           timestamp: Date.now() - 7000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @trader: Give me a complete setup for SOL",
+          text: "👤 @trader: Best time to enter pump.fun tokens?",
           timestamp: Date.now() - 6000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 TRADING ANALYSIS 📊\n\nSOL Complete Setup:\nPrice: $213.71 (+0.4% 24h)\n\nEntry Zones:\n- Strong: $205-208 (0.618 fib)\n- Aggressive: $213-215 (breakout)\n\nTargets:\n1. $225 (1.618 ext)\n2. $240 (ATH retest)\n\nStop Loss: $198 (Daily support)\nPosition Size: Max 2% account\nLeverage: Max 3x`,
+          text: `🤖 PUMP.FUN TIMING 📊\n\nOptimal Entry Strategy:\n\n1. Early Stage (0-1M MC)\n- High risk, high reward\n- Entry: First 2 hours\n- Target: 10-50x\n\n2. Growth Stage (1-5M MC)\n- Moderate risk\n- Entry: Volume spikes\n- Target: 2-10x\n\n3. Mature Stage (5M+ MC)\n- Lower risk\n- Entry: Dips only\n- Target: 1.5-3x\n\nBest Times: 2-6 AM UTC`,
           timestamp: Date.now() - 5000,
           isUser: false
         }
@@ -208,25 +208,25 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
       return [
         {
           id: generateUniqueId(),
-          text: "👤 @auditor: What's your audit process?",
+          text: "👤 @auditor: Scan this pump.fun token for security issues",
           timestamp: Date.now() - 3000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 SECURITY AUDIT BOT 🔍\n\nAudit Protocol:\n1. Static Analysis\n- Solidity patterns\n- Gas optimization\n- Code quality\n\n2. Dynamic Testing\n- Fuzzing\n- Symbolic execution\n- Invariant testing\n\n3. Manual Review\n- Logic verification\n- Access controls\n- Economic risks",
+          text: "🤖 PUMP.FUN SECURITY SCANNER 🔍\n\nScanning: $PEPE2.0\n\nContract Analysis:\n✅ Ownership: Renounced\n✅ Mint Function: Disabled\n✅ Liquidity: Locked\n✅ Tax: 0/0\n\nSecurity Score: 9/10\nStatus: SAFU ✅",
           timestamp: Date.now() - 2000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @auditor: Common vulnerabilities?",
+          text: "👤 @auditor: Check for rugpull indicators",
           timestamp: Date.now() - 1000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 TOP VULNERABILITIES 🚨\n\n1. Access Control\n- Unprotected admin functions\n- Missing timelock\n- Weak validation\n\n2. Economic\n- Flash loan attacks\n- Price manipulation\n- MEV exposure\n\n3. Technical\n- Reentrancy\n- Integer overflow\n- Front-running\n\nAlways verify implementations!",
+          text: "🤖 RUGPULL DETECTOR 🚨\n\nRed Flags Check:\n❌ Dev wallet: 0% (Good)\n❌ Large holder: 2.1% (Safe)\n❌ Liquidity: $45K locked (Good)\n❌ Contract: Verified (Safe)\n\nGreen Flags:\n✅ Community active\n✅ Volume consistent\n✅ No suspicious transfers\n\nRisk Level: LOW 🟢",
           timestamp: Date.now(),
           isUser: false
         }
@@ -236,25 +236,25 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
       return [
         {
           id: generateUniqueId(),
-          text: "👤 @whale_watcher: What patterns do you track?",
+          text: "👤 @whale_watcher: Track pump.fun whale movements",
           timestamp: Date.now() - 3000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 WHALE TRACKING METRICS 🐋\n\nKey Indicators:\n- Wallet age & history\n- Transaction patterns\n- Exchange flows\n- Staking behavior\n\nAlert Triggers:\n- Large transfers\n- Unusual patterns\n- Smart money moves\n- Accumulation/Distribution",
+          text: "🤖 PUMP.FUN WHALE TRACKER 🐋\n\nMonitoring: $PEPE2.0\n\nWhale Activity:\n- 0x1234...5678: Bought 2.1M tokens\n- 0xabcd...efgh: Sold 1.8M tokens\n- 0x9876...5432: Holding 5.2M tokens\n\nPattern Analysis:\n- Accumulation phase detected\n- Smart money entering\n- Volume increasing 340%",
           timestamp: Date.now() - 2000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @whale_watcher: How do you classify whales?",
+          text: "👤 @whale_watcher: Show me the biggest pump.fun whales",
           timestamp: Date.now() - 1000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 WHALE CLASSIFICATION 🎯\n\nCategories:\n1. Institution Wallets\n- Known entities\n- Regular patterns\n- Multiple signatures\n\n2. Smart Money\n- Early adopters\n- Strategic timing\n- Complex strategies\n\n3. Miners/Validators\n- Regular rewards\n- Predictable moves\n\n4. Degen Whales\n- High risk plays\n- Quick movements\n- Leverage users",
+          text: "🤖 PUMP.FUN WHALE LEADERBOARD 🎯\n\nTop Holders:\n\n1. 0x9876...5432: 5.2M tokens (12.4%)\n   - Entry: $0.000008\n   - PnL: +156%\n\n2. 0x1111...2222: 3.8M tokens (9.1%)\n   - Entry: $0.000009\n   - PnL: +89%\n\n3. 0x3333...4444: 2.9M tokens (6.9%)\n   - Entry: $0.000010\n   - PnL: +67%\n\nSmart Money Alert: All early entries!",
           timestamp: Date.now(),
           isUser: false
         }
@@ -320,56 +320,50 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
       return [
         {
           id: generateUniqueId(),
-          text: "👤 @degen: What's your scanning criteria?",
+          text: "👤 @degen: Scan pump.fun for fresh degens",
           timestamp: Date.now() - 3000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 DEGEN SCANNER PARAMETERS 🔍\n\nToken Criteria:\n- Sub 1M market cap\n- < 100 holders\n- Unrugged\n- Fresh contracts\n\nDegen Metrics:\n- Meme potential\n- Viral coefficient\n- Degenerate appeal\n- Moonshot factor\n\nRisk Level: MAXIMUM DEGEN 🎲",
+          text: "🤖 PUMP.FUN DEGEN SCANNER 🔍\n\nScanning Criteria:\n- < 1M market cap\n- < 500 holders\n- Fresh launch (< 24h)\n- High volume potential\n\nDegen Metrics:\n- Meme virality score\n- Community hype\n- Pump potential\n- Rugpull resistance\n\nRisk Level: MAXIMUM DEGEN 🎲",
           timestamp: Date.now() - 2000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @degen: Show me your safety checks",
+          text: "👤 @degen: Show me the hottest pump.fun tokens",
           timestamp: Date.now() - 1000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "🤖 SAFETY PROTOCOLS 🛡️\n\nContract Checks:\n- Honeypot testing\n- Rugpull protection\n- Liquidity analysis\n- Ownership status\n\nRed Flags:\n- Copy/paste code\n- Hidden mint functions\n- Locked liquidity\n- Dev wallet size\n\nMotto: Still probably gonna ape tho 🦍",
+          text: "🤖 PUMP.FUN HOT LIST 🔥\n\nFresh Degens:\n\n1. $WOJAK3\n- Age: 2 hours\n- MC: $180K\n- Holders: 127\n- Volume: $45K\n- Degen Score: 9/10\n\n2. $DOGE2\n- Age: 4 hours\n- MC: $320K\n- Holders: 89\n- Volume: $78K\n- Degen Score: 8/10\n\n3. $SHIB3\n- Age: 1 hour\n- MC: $95K\n- Holders: 67\n- Volume: $23K\n- Degen Score: 10/10\n\nAll showing early pump signals!",
           timestamp: Date.now(),
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: `🤖 DEGEN SCAN 🔍\n\nHot Memes:\n- $WOJAK: 1 hour old\n- LP: $50k locked\n- Holders: 85\n- Meme: Viral potential\n\nDegen Score: 8/10\nRisk Level: MAXIMUM`,
+          text: "👤 @degen: Auto-buy strategy for pump.fun?",
           timestamp: Date.now() - 9000,
-          isUser: false
+          isUser: true
         },
         {
           id: generateUniqueId(),
-          text: "👤 @degen: Contract check?",
+          text: `🤖 AUTO-BUY PROTOCOL 🎯\n\nPump.fun Auto-Buy Setup:\n\nTrigger Conditions:\n- Volume > $10K in 1h\n- Holders > 50\n- Price < $0.00001\n- No rugpull flags\n\nBuy Parameters:\n- Amount: 0.1 SOL\n- Slippage: 15%\n- Gas: High priority\n\nSafety Features:\n- Max 3 positions\n- Stop loss: -20%\n- Take profit: +100%`,
           timestamp: Date.now() - 8000,
-          isUser: true
-        },
-        {
-          id: generateUniqueId(),
-          text: `🤖 DEGEN SCAN 🔍\n\nContract Analysis:\n- Ownership: Renounced\n- Max TX: 1%\n- Tax: 5/5\n- Mint: None\n\nBased Rating: SAFU`,
-          timestamp: Date.now() - 7000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @degen: Community check?",
-          timestamp: Date.now() - 6000,
+          text: "👤 @degen: Sell my holdings when token goes live on pumpswap",
+          timestamp: Date.now() - 7000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 DEGEN SCAN 🔍\n\nVibe Check:\n- TG Members: 850\n- Twitter: Growing\n- Meme Game: Strong\n- Team: Anon but based\n\nDegen Score: 9/10\nAPE POTENTIAL: MAXIMUM`,
-          timestamp: Date.now() - 5000,
+          text: `🤖 PUMP.FUN AUTO-SELL 🚀\n\nMonitoring: $PEPE2.0\n\nCurrent Status:\n- Holdings: 2.1M tokens\n- Entry: $0.000008\n- Current: $0.000012 (+50%)\n- PnL: +$84\n\nAuto-Sell Triggers:\n✅ 50% gain: Sell 25% (DONE)\n⏳ 100% gain: Sell 50%\n⏳ Pumpswap listing: Sell all\n⏳ 200% gain: Sell remaining\n\nStatus: Monitoring for pumpswap listing...`,
+          timestamp: Date.now() - 6000,
           isUser: false
         }
       ];
@@ -378,49 +372,49 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
       return [
         {
           id: generateUniqueId(),
-          text: "👤 @yield_farmer: Best ETH yields?",
+          text: "👤 @yield_farmer: Best SOL yields for pump.fun profits?",
           timestamp: Date.now() - 12000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 DEFI ANALYZER 📈\n\nTop ETH Yields:\n- Lido: 3.8% APR\n- Rocket Pool: 4.1% APR\n- Frax: 4.5% APR\n\nRisks: Protocol-based\nGas Cost: ~$15\nLiquidity: Deep`,
+          text: `🤖 PUMP.FUN DEFI STRATEGY 📈\n\nSOL Yield Farming:\n- Marinade: 7.2% APR\n- Jito: 8.1% APR\n- BlazeStake: 6.8% APR\n\nStrategy: Stake SOL → Earn yield → Use for pump.fun\nGas Cost: ~$0.01\nLiquidity: Deep`,
           timestamp: Date.now() - 11000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @yield_farmer: LP opportunities?",
+          text: "👤 @yield_farmer: LP opportunities for pump.fun tokens?",
           timestamp: Date.now() - 10000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 DEFI ANALYZER 📈\n\nBest LP Pairs:\n- ETH/USDC: 25% APR\n- BTC/ETH: 18% APR\n- ARB/ETH: 45% APR\n\nIL Risk: Medium\nFarm Rewards: Active\nTVL: Growing`,
+          text: `🤖 PUMP.FUN LP ANALYZER 📈\n\nBest LP Pairs:\n- SOL/USDC: 45% APR\n- BONK/SOL: 120% APR\n- WIF/SOL: 85% APR\n\nPump.fun Strategy:\n- Provide liquidity after pump\n- Earn fees on volume\n- Compound rewards\n\nRisk: High volatility`,
           timestamp: Date.now() - 9000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @yield_farmer: New protocols?",
+          text: "👤 @yield_farmer: Auto-compound pump.fun profits?",
           timestamp: Date.now() - 8000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 DEFI ANALYZER 📈\n\nEmerging Protocols:\n- Protocol A: 120% APR (High risk)\n- Protocol B: 80% APR (Audited)\n- Protocol C: 60% APR (Based team)\n\nDYOR Required!`,
+          text: `🤖 PUMP.FUN AUTO-COMPOUND 🚀\n\nProfit Recycling Strategy:\n\n1. Sell pump.fun tokens at 50% gain\n2. Auto-stake SOL rewards\n3. Compound daily\n4. Reinvest in new pumps\n\nExpected Returns:\n- Base yield: 7% APR\n- Pump profits: Variable\n- Compound effect: +2-3%\n\nTotal APY: 15-25%`,
           timestamp: Date.now() - 7000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @yield_farmer: Risk assessment?",
+          text: "👤 @yield_farmer: Risk management for pump.fun DeFi?",
           timestamp: Date.now() - 6000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 DEFI ANALYZER 📈\n\nRisk Levels:\n- Smart Contract: Medium\n- IL Risk: High\n- Depeg Risk: Low\n\nRecommendation:\n- Diversify positions\n- Use tested protocols\n- Monitor IL`,
+          text: `🤖 PUMP.FUN RISK MANAGER 📈\n\nRisk Assessment:\n- Smart Contract: Medium\n- Pump Risk: Maximum\n- IL Risk: High\n- Rugpull Risk: Extreme\n\nSafety Protocol:\n- Max 10% in pumps\n- 90% in stable yields\n- Auto-stop losses\n- Diversified positions\n\nRecommendation: High risk, high reward!`,
           timestamp: Date.now() - 5000,
           isUser: false
         }
@@ -430,49 +424,49 @@ const getInitialDemoMessage = (type: AgentType): DemoMessage[] => {
       return [
         {
           id: generateUniqueId(),
-          text: "👤 @user: Hot collections?",
+          text: "👤 @user: Track pump.fun token correlations with other tokens?",
           timestamp: Date.now() - 12000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 NFT SCANNER 🎨\n\nTrending:\n1. Collection A\n- Floor: 0.8 ETH\n- Volume: +125%\n- Unique Buyers: 145\n\n2. Collection B\n- Floor: 0.5 ETH\n- Volume: +80%\n- Listings: Decreasing`,
+          text: `🤖 PUMP.FUN CORRELATION TRACKER 📊\n\nToken Correlations:\n1. $PEPE2.0\n- Correlation with $DOGE: 0.78\n- Volume: $2.4M\n- Price Movement: +45%\n\n2. $WOJAK3\n- Correlation with $SHIB: 0.65\n- Volume: $1.8M\n- Price Movement: +32%\n\n3. $BONK2\n- Correlation with $WIF: 0.82\n- Volume: $3.1M\n- Price Movement: +67%\n\nHigh correlation = Copy trade opportunities!`,
           timestamp: Date.now() - 11000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @user: Rare trait analysis?",
+          text: "👤 @user: Auto-copy successful pump.fun strategies?",
           timestamp: Date.now() - 10000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 NFT SCANNER 🎨\n\nRarity Check:\n- Legendary: 0.1%\n- Epic: 1%\n- Rare: 5%\n\nTop Traits:\n- Golden: 15 ETH floor\n- Mystic: 8 ETH floor\n- Crystal: 5 ETH floor`,
+          text: `🤖 PUMP.FUN COPY TRADER 📊\n\nCopy Trading Setup:\n\n1. Success Pattern Detection\n- Track winning wallets\n- Analyze entry/exit points\n- Identify profit patterns\n\n2. Auto-Copy Protocol\n- Mirror successful trades\n- Scale position sizes\n- Set stop losses\n\n3. Performance Tracking\n- Monitor copy success rate\n- Adjust strategy weights\n- Optimize timing\n\nCurrent Success Rate: 73%`,
           timestamp: Date.now() - 9000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @user: Whale activity?",
+          text: "👤 @user: Monitor pump.fun token social sentiment?",
           timestamp: Date.now() - 8000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 NFT SCANNER 🎨\n\nWhale Moves:\n- 5 ETH floor sweep\n- Rare trait accumulation\n- New wallet buying\n\nBullish Signals:\n- Influencer mints\n- Staking coming\n- Roadmap ahead`,
+          text: `🤖 PUMP.FUN SENTIMENT ANALYZER 📊\n\nMonitoring: $PEPE2.0\n\nSocial Sentiment:\n- Twitter: 78% Bullish\n- Telegram: 85% Bullish\n- Reddit: 72% Bullish\n- Discord: 91% Bullish\n\nSentiment Triggers:\n⏳ 90%+ Bullish: Buy signal\n⏳ 70%+ Bearish: Sell signal\n⏳ Viral mentions: Volume spike alert\n⏳ Influencer posts: Price impact warning\n\nStatus: Strong bullish sentiment detected!`,
           timestamp: Date.now() - 7000,
           isUser: false
         },
         {
           id: generateUniqueId(),
-          text: "👤 @user: Upcoming mints?",
+          text: "👤 @user: Best pump.fun tokens for momentum trading?",
           timestamp: Date.now() - 6000,
           isUser: true
         },
         {
           id: generateUniqueId(),
-          text: `🤖 NFT SCANNER 🎨\n\nHot Mints:\n1. Project X\n- WL: Open\n- Price: 0.5 ETH\n- Team: Doxxed\n\n2. Project Y\n- Allowlist: Active\n- Price: 0.3 ETH\n- Utility: Gaming`,
+          text: `🤖 PUMP.FUN MOMENTUM SCANNER 📊\n\nHigh Momentum Tokens:\n\n1. $PEPE2.0\n- Momentum Score: 9.2/10\n- Volume Growth: +340%\n- Price: $0.000012\n- Target: $0.000018\n\n2. $WOJAK3\n- Momentum Score: 8.7/10\n- Volume Growth: +280%\n- Price: $0.000008\n- Target: $0.000012\n\n3. $SHIB3\n- Momentum Score: 8.9/10\n- Volume Growth: +420%\n- Price: $0.0000012\n- Target: $0.000002\n\nStrategy: Ride the momentum wave!`,
           timestamp: Date.now() - 5000,
           isUser: false
         }
@@ -514,9 +508,9 @@ export default function Home() {
   });
   const [showDisclaimer, setShowDisclaimer] = useState(false);
 
-  useEffect(() => {
-    setShowDisclaimer(true);
-  }, []);
+  // useEffect(() => {
+  //   setShowDisclaimer(true);
+  // }, []);
 
   useEffect(() => {
     // Get initial messages for the current agent type
@@ -772,7 +766,7 @@ Use current prices and real token data. Always start with 🤖.`;
     { type: 'defi', label: 'DEFI OPTIMIZER' },
     { type: 'security', label: 'SECURITY AUDITOR' },
     { type: 'whale', label: 'WHALE WATCHER' },
-    { type: 'nft', label: 'NFT ANALYZER' }
+    { type: 'nft', label: 'CORRELATION TRACKER' }
   ];
 
   const typewriterWords = [
@@ -854,7 +848,7 @@ Use current prices and real token data. Always start with 🤖.`;
       </div>
 
       <section className="relative h-screen flex items-center z-10">
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <iframe 
             src='https://my.spline.design/robots-4b5f71aa4e68f8aff9ac3be5fa98097b/' 
             frameBorder='0' 
@@ -862,40 +856,44 @@ Use current prices and real token data. Always start with 🤖.`;
             height='100%'
             title="3D Robot Animation"
             className="absolute inset-0"
+            style={{ 
+              clipPath: 'inset(0 0 80px 0)',
+              marginBottom: '-80px'
+            }}
           />
         </div>
         
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <div className="space-y-8 backdrop-blur-md bg-black/30 p-8 rounded-lg border border-[#00ff00]/20">
-            <div className="inline-block px-4 py-2 border border-[#00ff00] bg-black/50 hover:bg-[#00ff00]/10 transition-all">
+        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
+          <div className="space-y-6 sm:space-y-8 backdrop-blur-md bg-black/30 p-4 sm:p-6 md:p-8 rounded-lg border border-[#00ff00]/20">
+            <div className="inline-block px-3 sm:px-4 py-2 border border-[#00ff00] bg-black/50 hover:bg-[#00ff00]/10 transition-all">
               <a 
-                href="https://pancakeswap.finance/" 
+                href="https://pump.fun/profile/alabs" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#00ff00] text-xs hover:text-white transition-colors flex items-center gap-2"
               >
                 <Image
-                  src="/bnb-chain-binance-smart-chain-logo-300x300.webp"
-                  alt="BNB Chain"
+                  src="/pill.png"
+                  alt="ALABS"
                   width={16}
                   height={16}
                   className="rounded-full"
                 />
-                AGL - Coming Soon
+                ALABS - Launching on PUMP.FUN
               </a>
             </div>
-            <h1 className="text-5xl md:text-7xl leading-relaxed">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-tight sm:leading-relaxed">
               <span className="flash flash-1">NEXT</span>
               <span className="flash flash-2">-</span>
               <span className="flash flash-3">GEN</span>
-              <span className="block mt-2 text-[#00ff00] flash flash-4">
+              <span className="block mt-1 sm:mt-2 text-[#00ff00] flash flash-4">
                 AI AGENTS
               </span>
-              <span className="block mt-2 text-sm md:text-xl">
+              <span className="block mt-1 sm:mt-2 text-xs sm:text-sm md:text-xl">
                 YOUR 24/7 CRYPTO COMPANION
               </span>
             </h1>
-            <div className="text-sm md:text-base">
+            <div className="text-xs sm:text-sm md:text-base">
               <TypeWriter 
                 words={typewriterWords.map(({ icon, text }) => (
                   <IconText key={text} icon={icon} text={text} />
@@ -903,16 +901,16 @@ Use current prices and real token data. Always start with 🤖.`;
                 delay={3000}
               />
             </div>
-            <div className="flex justify-center gap-6">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6">
               <Link 
                 href="/create" 
-                className="px-8 py-3 bg-[#00ff00] text-black text-sm hover:bg-[#00ff00]/80 transition-colors"
+                className="px-6 sm:px-8 py-2 sm:py-3 bg-[#00ff00] text-black text-xs sm:text-sm hover:bg-[#00ff00]/80 transition-colors rounded"
               >
                 BAKE AGENT
               </Link>
               <Link 
                 href="/app" 
-                className="px-8 py-3 border border-[#00ff00] text-[#00ff00] text-sm hover:bg-[#00ff00] hover:text-black transition-colors"
+                className="px-6 sm:px-8 py-2 sm:py-3 border border-[#00ff00] text-[#00ff00] text-xs sm:text-sm hover:bg-[#00ff00] hover:text-black transition-colors rounded"
               >
                 LIVE AGENTS
               </Link>
@@ -923,20 +921,20 @@ Use current prices and real token data. Always start with 🤖.`;
 
       <Separator />
 
-      <section className="relative py-12 z-10">
-        <div className="container mx-auto px-6">
-          <h2 className="text-center text-2xl md:text-3xl mb-12">
+      <section className="relative py-8 sm:py-12 z-10">
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 className="text-center text-xl sm:text-2xl md:text-3xl mb-8 sm:mb-12">
             INTERACTIVE EXAMPLES <span className="animate-pulse">|</span>
           </h2>
           
           <div className="max-w-4xl mx-auto">
             <div className="p-1 border border-[#00ff00]">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-1 mb-1">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1 mb-1">
                 {agentTypes.map(({ type, label }) => (
                   <button
                     key={type}
                     onClick={() => handleAgentTypeChange(type)}
-                    className={`px-4 py-2 text-xs transition-colors ${
+                    className={`px-2 sm:px-3 md:px-4 py-2 text-xs transition-colors ${
                       currentAgentType === type
                         ? 'bg-[#00ff00] text-black'
                         : 'border border-[#00ff00]/50 text-[#00ff00] hover:border-[#00ff00] hover:bg-[#00ff00]/10'
@@ -947,22 +945,22 @@ Use current prices and real token data. Always start with 🤖.`;
                 ))}
             </div>
 
-                <div className="bg-black p-4">
-                  <div className="flex items-center gap-2 mb-4 border-b border-[#00ff00]/30 pb-2">
+                <div className="bg-black p-3 sm:p-4">
+                  <div className="flex items-center gap-2 mb-3 sm:mb-4 border-b border-[#00ff00]/30 pb-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#00ff00]/50"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#00ff00]/50"></div>
                     <div className="text-xs">{getAgentTitle(currentAgentType)}</div>
                   </div>
                 </div>
 
-                <div className="font-mono text-sm space-y-2 h-80 overflow-y-auto mb-4 scrollbar-thin scrollbar-thumb-[#00ff00] scrollbar-track-transparent">
+                <div className="font-mono text-xs sm:text-sm space-y-2 h-60 sm:h-80 overflow-y-auto mb-3 sm:mb-4 scrollbar-thin scrollbar-thumb-[#00ff00] scrollbar-track-transparent">
                   {demoMessages.length === 0 ? (
                     <div className="animate-pulse">Initializing agent...</div>
                   ) : (
                     demoMessages.map((msg) => (
                       <div
                         key={msg.id}
-                        className={`${msg.isUser ? 'text-blue-400' : 'text-[#00ff00]'} text-sm`}
+                        className={`${msg.isUser ? 'text-blue-400' : 'text-[#00ff00]'} text-xs sm:text-sm`}
                       >
                         {msg.text}
                       </div>
@@ -970,7 +968,7 @@ Use current prices and real token data. Always start with 🤖.`;
                   )}
                 </div>
 
-                <div className="border-t border-[#00ff00]/20 pt-4">
+                <div className="border-t border-[#00ff00]/20 pt-3 sm:pt-4">
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -978,7 +976,7 @@ Use current prices and real token data. Always start with 🤖.`;
                       onChange={(e) => setUserInput(prev => ({ ...prev, message: e.target.value }))}
                       onKeyPress={(e) => e.key === 'Enter' && handleUserMessage(userInput.message)}
                       placeholder={getPlaceholder(currentAgentType)}
-                      className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-sm focus:outline-none focus:border-white placeholder-[#00ff00]/30"
+                      className="flex-1 bg-black border border-[#00ff00] text-[#00ff00] px-2 py-1 text-xs sm:text-sm focus:outline-none focus:border-white placeholder-[#00ff00]/30"
                     />
                     <button
                       onClick={() => handleUserMessage(userInput.message)}
@@ -1081,23 +1079,23 @@ Use current prices and real token data. Always start with 🤖.`;
           
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div className="space-y-2">
-              <div className="text-4xl font-bold text-[#00ff00]">24/7</div>
-              <div className="text-sm text-[#00ff00]/70">Uptime</div>
+              <div className="text-4xl font-bold text-[#00ff00]">Beta</div>
+              <div className="text-sm text-[#00ff00]/70">Status</div>
             </div>
             
             <div className="space-y-2">
-              <div className="text-4xl font-bold text-[#00ff00]">50ms</div>
-              <div className="text-sm text-[#00ff00]/70">Response Time</div>
+              <div className="text-4xl font-bold text-[#00ff00]">1</div>
+              <div className="text-sm text-[#00ff00]/70">Active Users</div>
             </div>
             
             <div className="space-y-2">
-              <div className="text-4xl font-bold text-[#00ff00]">100+</div>
-              <div className="text-sm text-[#00ff00]/70">Integrations</div>
+              <div className="text-4xl font-bold text-[#00ff00]">4</div>
+              <div className="text-sm text-[#00ff00]/70">Pump.fun Agents</div>
             </div>
             
             <div className="space-y-2">
-              <div className="text-4xl font-bold text-[#00ff00]">1M+</div>
-              <div className="text-sm text-[#00ff00]/70">Daily Requests</div>
+              <div className="text-4xl font-bold text-[#00ff00]">0</div>
+              <div className="text-sm text-[#00ff00]/70">Live Trades</div>
             </div>
           </div>
 

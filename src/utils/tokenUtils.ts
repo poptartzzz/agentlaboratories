@@ -1,114 +1,160 @@
-import { BrowserProvider, Contract, parseUnits } from 'ethers';
+import { 
+  Connection, 
+  PublicKey, 
+  Transaction, 
+  SystemProgram, 
+  LAMPORTS_PER_SOL,
+  clusterApiUrl 
+} from '@solana/web3.js';
+import { 
+  getAssociatedTokenAddress, 
+  createTransferInstruction, 
+  TOKEN_PROGRAM_ID,
+  getAccount
+} from '@solana/spl-token';
 
-const SXA_ADDRESS = '0x61bAFCF2BdA2F870F2c29157E729F30058cF5314';
+// ALABS token on Solana (replace with actual token mint address)
+const ALABS_TOKEN_MINT_ADDRESS = 'YOUR_SOLANA_TOKEN_MINT_ADDRESS_HERE';
 const REQUIRED_USD_AMOUNT = 10;
 
-const ERC20_ABI = [
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [{"name": "", "type": "uint8"}],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [{"name": "_owner", "type": "address"}],
-    "name": "balanceOf",
-    "outputs": [{"name": "balance", "type": "uint256"}],
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {"name": "_to", "type": "address"},
-      {"name": "_value", "type": "uint256"}
-    ],
-    "name": "transfer",
-    "outputs": [{"name": "", "type": "bool"}],
-    "type": "function"
-  }
-];
+// Solana RPC connection
+const connection = new Connection('https://api.mainnet-beta.solana.com', 'confirmed');
 
-interface EthereumError extends Error {
-  code?: string;
+interface SolanaError extends Error {
+  code?: string | number;
   data?: unknown;
 }
 
-// Function to fetch SXA price from DEX or API
-export async function getSXAPrice(): Promise<number> {
+// Function to fetch ALABS token price from Jupiter or CoinGecko
+export async function getALABSPrice(): Promise<number> {
   try {
-    // Replace this URL with actual price API endpoint
-    const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/0x61bAFCF2BdA2F870F2c29157E729F30058cF5314');
+    // Check if token mint address is configured
+    if (!ALABS_TOKEN_MINT_ADDRESS || ALABS_TOKEN_MINT_ADDRESS === 'YOUR_SOLANA_TOKEN_MINT_ADDRESS_HERE') {
+      console.log('ALABS token mint address not configured, using fallback price');
+      return 0.01;
+    }
+    
+    // Using Jupiter API for Solana token prices
+    const response = await fetch(`https://price.jup.ag/v4/price?ids=${ALABS_TOKEN_MINT_ADDRESS}`);
     const data = await response.json();
-    return parseFloat(data.pairs[0].priceUsd);
+    return parseFloat(data.data[ALABS_TOKEN_MINT_ADDRESS]?.price || '0.01');
   } catch (error) {
-    console.error('Error fetching SXA price:', error);
-    throw new Error('Failed to fetch SXA price');
+    console.error('Error fetching ALABS price:', error);
+    // Fallback price
+    return 0.01;
   }
 }
 
-export async function calculateRequiredSXA(): Promise<string> {
-  const sxaPrice = await getSXAPrice();
-  const requiredSXA = REQUIRED_USD_AMOUNT / sxaPrice;
-  return requiredSXA.toFixed(0); // Round to whole number
+export async function calculateRequiredALABS(): Promise<number> {
+  const alabsPrice = await getALABSPrice();
+  const requiredALABS = REQUIRED_USD_AMOUNT / alabsPrice;
+  return Math.ceil(requiredALABS); // Round up to whole number
 }
 
-export const handleTokenPayment = async (recipientAddress: string): Promise<boolean> => {
-  if (!window.ethereum) {
-    alert('Please install MetaMask!');
+export const handleTokenPayment = async (
+  recipientAddress: string, 
+  walletAdapter: any
+): Promise<boolean> => {
+  if (!walletAdapter?.connected || !walletAdapter?.publicKey) {
+    alert('Please connect a Solana wallet!');
+    return false;
+  }
+
+  // Check if token mint address is configured
+  if (!ALABS_TOKEN_MINT_ADDRESS || ALABS_TOKEN_MINT_ADDRESS === 'YOUR_SOLANA_TOKEN_MINT_ADDRESS_HERE') {
+    alert('ALABS token is not yet configured. Please wait for token deployment.');
     return false;
   }
 
   try {
-    console.log('Initializing payment process...');
-    const requiredAmount = await calculateRequiredSXA();
-    console.log('Required SXA amount:', requiredAmount);
+    console.log('Initializing Solana payment process...');
+    const requiredAmount = await calculateRequiredALABS();
+    console.log('Required ALABS amount:', requiredAmount);
     
-    const provider = new BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    console.log('Connected wallet:', await signer.getAddress());
+    const senderPublicKey = walletAdapter.publicKey;
+    const recipientPublicKey = new PublicKey(recipientAddress);
+    const alabsTokenMint = new PublicKey(ALABS_TOKEN_MINT_ADDRESS);
+    
+    console.log('Sender wallet:', senderPublicKey.toString());
+    console.log('Recipient wallet:', recipientPublicKey.toString());
 
-    const tokenContract = new Contract(SXA_ADDRESS, ERC20_ABI, signer);
-    console.log('Token contract initialized');
+    // Get associated token accounts
+    const senderTokenAccount = await getAssociatedTokenAddress(
+      alabsTokenMint,
+      senderPublicKey
+    );
     
-    const decimals = await tokenContract.decimals();
-    console.log('Token decimals:', decimals);
-    const amount = parseUnits(requiredAmount, decimals);
-    console.log('Payment amount (with decimals):', amount.toString());
-    
-    const balance = await tokenContract.balanceOf(await signer.getAddress());
-    console.log('Current balance:', balance.toString());
-    
-    if (BigInt(balance) < BigInt(amount)) {
-      alert(`Insufficient SXA balance. You need at least ${REQUIRED_USD_AMOUNT} SXA tokens. Your balance: ${balance.toString()}`);
+    const recipientTokenAccount = await getAssociatedTokenAddress(
+      alabsTokenMint,
+      recipientPublicKey
+    );
+
+    // Check sender's token balance
+    try {
+      const senderAccount = await getAccount(connection, senderTokenAccount);
+      const balance = Number(senderAccount.amount);
+      console.log('Current ALABS balance:', balance);
+      
+      if (balance < requiredAmount) {
+        alert(`Insufficient ALABS balance. You need at least ${requiredAmount} ALABS tokens. Your balance: ${balance}`);
+        return false;
+      }
+    } catch (error) {
+      alert('You don\'t have an ALABS token account. Please acquire ALABS tokens first.');
       return false;
     }
 
-    console.log('Initiating transfer to:', recipientAddress);
-    const tx = await tokenContract.transfer(recipientAddress, amount);
-    console.log('Transaction sent:', tx.hash);
-    console.log('Waiting for confirmation...');
+    // Create transfer instruction
+    const transferInstruction = createTransferInstruction(
+      senderTokenAccount,
+      recipientTokenAccount,
+      senderPublicKey,
+      requiredAmount,
+      [],
+      TOKEN_PROGRAM_ID
+    );
+
+    // Create transaction
+    const transaction = new Transaction().add(transferInstruction);
     
-    const receipt = await tx.wait();
-    console.log('Transaction confirmed:', receipt.hash);
+    // Get recent blockhash
+    const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+    transaction.recentBlockhash = blockhash;
+    transaction.feePayer = senderPublicKey;
+
+    console.log('Sending transaction...');
+    const signature = await walletAdapter.sendTransaction(transaction, connection);
+    console.log('Transaction signature:', signature);
     
+    // Confirm transaction
+    const confirmation = await connection.confirmTransaction({
+      signature,
+      blockhash,
+      lastValidBlockHeight
+    });
+    
+    if (confirmation.value.err) {
+      throw new Error('Transaction failed: ' + confirmation.value.err);
+    }
+    
+    console.log('Transaction confirmed!');
     return true;
+    
   } catch (error) {
-    const ethError = error as EthereumError;
+    const solError = error as SolanaError;
     console.error('Detailed payment error:', {
-      message: ethError.message,
-      code: ethError.code,
-      data: ethError.data,
-      stack: ethError.stack
+      message: solError.message,
+      code: solError.code,
+      data: solError.data,
+      stack: solError.stack
     });
 
-    if (ethError.code === 'ACTION_REJECTED') {
+    if (solError.code === 4001) {
       alert('Transaction was rejected by user.');
-    } else if (ethError.code === 'INSUFFICIENT_FUNDS') {
-      alert('Insufficient ETH for gas fees.');
+    } else if (solError.message?.includes('insufficient funds')) {
+      alert('Insufficient SOL for transaction fees.');
     } else {
-      alert(`Payment error: ${ethError.message || 'Unknown error occurred'}`);
+      alert(`Payment error: ${solError.message || 'Unknown error occurred'}`);
     }
     
     return false;

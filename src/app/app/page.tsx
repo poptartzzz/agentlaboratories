@@ -30,9 +30,9 @@ const agents = [
   },
   {
     id: 3,
-    name: "AGENT LAB AI - Agent Creator",
-    description: "Made by mew w/ AGENT LAB AI",
-    link: "https://agentlabai.io/\n@agentlabautoslingerbot",
+    name: "AGENT LABORATORIES - Agent Creator",
+    description: "Made by mew w/ AGENT LABORATORIES",
+    link: "https://launchlab.one/\n@launchlab_tg",
     status: "active",
     image: "/agentlogowebsitemini.png"
   },
@@ -52,75 +52,32 @@ const agents = [
     image: "/agentlogowebsitemini.png"
   },
   {
-    name: "SIDEKIX 🤖",
-    description: "Just a dev testing some stuff",
-    link: "@sidekixbot",
+    name: "PUMP.FUN SCANNER",
+    description: "Automatically scans pump.fun for high volume tokens and alerts on potential opportunities",
+    link: "@pumpfunscanner",
     status: "active",
-    image: "/agentlogowebsitemini.png"
+    image: "/pill.png"
   },
   {
-    name: "Chart Analyzooooooooor",
-    description: "I want to create a bot",
-    link: "@chartanalyzerthebot",
+    name: "PUMP.FUN AUTO-BUY",
+    description: "Automatically buys pump.fun tokens on volume spikes and sells at 50% gains",
+    link: "@pumpfunautobuy",
     status: "active",
-    image: "/image.jpg"
+    image: "/pill.png"
   },
   {
-    name: "Whale Tracker Bot",
-    description: "",
-    link: "",
-    status: "maintenance",
-    image: "/agentlogowebsitemini.png"
+    name: "PUMP.FUN WHALE TRACKER",
+    description: "Tracks pump.fun whale movements and copies successful trades automatically",
+    link: "@pumpfunwhale",
+    status: "active",
+    image: "/pill.png"
   },
   {
-    name: "TWEET FORWARDING AGENT",
-    description: "Forward tweets to your Telegram channel",
-    link: "@agentztweetforwarderbot",
+    name: "PUMP.FUN SECURITY SCANNER",
+    description: "Scans pump.fun tokens for security issues and rugpull indicators",
+    link: "@pumpfunsecurity",
     status: "active",
-    image: "/twitteforwarder.png"
-  },
-  {
-    name: "CramerContrarian",
-    description: "A bot that monitors Jim Cramer's tweets, analyzes the sentiment, and automatically executes trades going against his sentiment on specific stocks or assets.",
-    link: "t.me",
-    status: "active",
-    image: "/agentlogowebsitemini.png"
-  },
-  {
-    name: "MOON MISSION",
-    description: "BUY 3BC\n0x3e64cd8fd4d2fae3d7f4710817885b0941838d0b",
-    link: "https://dexscreener.com/base/0xe6ec4c661f0b822ba2851b4a1de9ad64132fbfe3",
-    status: "active",
-    image: "/Screenshot 2025-01-08 210856.png"
-  },
-  {
-    name: "Trump",
-    description: "Fantastic",
-    link: "@trumps_bot",
-    status: "active",
-    image: "/photo_2017-10-03_09-14-38.jpg"
-  },
-  {
-    name: "test",
-    description: "teeeeesting",
-    link: "",
-    status: "active",
-    image: "/agentlogowebsitemini.png"
-  },
-  {
-    name: "Shitcoin Multichain Auto-Slinger",
-    description: "Trade volatile shitcoins quickly and make tiny profits consistently.\n\nWorks more often than it doesn't. I think. 💩",
-    link: "https://sidekixai.io/\n@sidekixautoslingerbot",
-    status: "active",
-    image: "/shitcoinslinger.png"
-  },
-  {
-    id: 5,
-    name: "BASED TG AGENT",
-    description: "The BASED TG AGENT will be fully functional after launch of $SXA token.\nThis bot will be able to moderate chat and function as a buy bot.",
-    link: "https://agentlabai.io/\n@basedtgagentbot",
-    status: "active",
-    image: "/basedtgagent.png"
+    image: "/pill.png"
   },
 ];
 
@@ -146,18 +103,18 @@ export default function Dashboard() {
                   <div className="w-16 h-16 rounded-full overflow-hidden">
                     <Image 
                       src="/agentlogowebsitemini.png"
-                      alt="AgentLab AI Assistant"
+                      alt="Agent Laboratories AI Assistant"
                       width={64}
                       height={64}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
-                    <h3 className="text-xl mb-2">AgentLab AI - Agent Creator</h3>
-                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AgentLab AI</div>
+                    <h3 className="text-xl mb-2">Agent Laboratories - Agent Creator</h3>
+                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for Agent Laboratories</div>
                     <div className="flex gap-3">
                       <a 
-                        href="https://agentlabai.io"
+                        href="https://launchlab.one"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
@@ -185,23 +142,23 @@ export default function Dashboard() {
           {/* Separator */}
           <div className="w-full h-px bg-[#00ff00]/20 mb-12"></div>
 
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-2xl">ACTIVE AGENTS</h1>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-2">
+            <h1 className="text-xl sm:text-2xl">ACTIVE AGENTS</h1>
             <div className="text-sm text-[#00ff00]/70">
               Total Agents: {agents.length - 1}
             </div>
           </div>
 
           {/* Bots Grid */}
-          <div className="grid md:grid-cols-2 gap-6">
-            {agents.filter(bot => bot.name !== "AGENT LAB AI - Agent Creator").map((bot) => (
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+            {agents.filter(bot => bot.name !== "AGENT LABORATORIES - Agent Creator").map((bot) => (
               <div 
                 key={bot.name}
-                className="border border-[#00ff00] bg-black/50 p-6 hover:bg-black/80 transition-all cursor-pointer"
+                className="border border-[#00ff00] bg-black/50 p-4 sm:p-6 hover:bg-black/80 transition-all cursor-pointer"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-start gap-4 flex-1 min-w-0">
-                    <div className="w-12 h-12 rounded-full overflow-hidden">
+                <div className="flex justify-between items-start mb-3 sm:mb-4">
+                  <div className="flex items-start gap-3 sm:gap-4 flex-1 min-w-0">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden flex-shrink-0">
                       <Image 
                         src={bot.image} 
                         alt={bot.name}
@@ -211,7 +168,7 @@ export default function Dashboard() {
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-lg mb-2">{bot.name}</h3>
+                      <h3 className="text-sm sm:text-lg mb-1 sm:mb-2">{bot.name}</h3>
                       <div className="text-xs text-[#00ff00]/70 mb-1 truncate">{bot.link}</div>
                     </div>
                   </div>
@@ -222,7 +179,7 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <p className="text-sm text-[#00ff00]/70 mb-4">{bot.description}</p>
+                <p className="text-xs sm:text-sm text-[#00ff00]/70 mb-3 sm:mb-4">{bot.description}</p>
 
                 <div className="mt-4">
                   {bot.link.split('\n').map((link, index) => (

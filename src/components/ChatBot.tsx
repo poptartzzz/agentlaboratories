@@ -15,7 +15,7 @@ interface Message {
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'I am here to assist with setting up your AGENT LAB bot. How can I help?' }
+    { role: 'assistant', content: 'I am here to assist with setting up your AGENT LABORATORIES bot. How can I help?' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const context = `You are the AGENT LAB AI Assistant, helping users set up their bots. You have access to the following documentation:
+      const context = `You are the AGENT LABORATORIES AI Assistant, helping users set up their bots. You have access to the following documentation:
 
         1. Prerequisites: Users need to set up their BotFather API first:
         - Open Telegram and search for "@BotFather"
@@ -71,7 +71,7 @@ export default function ChatBot() {
 
         Based on this documentation, please answer the following question: ${userMessage}
 
-        Please provide a concise, accurate answer based solely on the information provided in the documentation. If the question is about something not covered in the documentation, politely indicate that you are an AGENT LAB AI assistant and cannot help with that specific query.`;
+        Please provide a concise, accurate answer based solely on the information provided in the documentation. If the question is about something not covered in the documentation, politely indicate that you are an AGENT LABORATORIES AI assistant and cannot help with that specific query.`;
       
       const response = await generateAgentResponse(context);
       
@@ -112,13 +112,13 @@ export default function ChatBot() {
           <div className="p-3 border-b border-[#00ff00]/30 bg-[#00ff00]/10 flex items-center gap-3">
             <Image 
               src="/agentlabcreation.png"
-              alt="AgentLab Assistant"
+              alt="Agent Laboratories Assistant"
               width={24}
               height={24}
               className="rounded-full"
             />
             <div>
-              <div className="text-sm font-medium text-[#00ff00]">AgentLab Assistant</div>
+              <div className="text-sm font-medium text-[#00ff00]">Agent Laboratories Assistant</div>
               <div className="text-[11px] text-[#00ff00]/80">Setup Guide Helper</div>
             </div>
           </div>

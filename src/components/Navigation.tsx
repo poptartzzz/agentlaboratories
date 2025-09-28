@@ -20,12 +20,12 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   {
     icon: faTwitter,
-    href: "https://x.com/AgentLabAi",
+    href: "https://x.com/launchlab_x",
     label: "Twitter"
   },
   {
     icon: faTelegram,
-    href: "https://t.me/agentlabai",
+    href: "https://t.me/launchlab_tg",
     label: "Telegram"
   }
 ];
@@ -40,7 +40,7 @@ export default function Navigation() {
           <Link href="/" className="flex items-center">
             <Image 
               src="/agentlablogoweb.png"
-              alt="AgentLab AI" 
+              alt="Agent Laboratories" 
               width={180}
               height={40}
               className="h-10 w-auto"
@@ -78,7 +78,7 @@ export default function Navigation() {
               <div className="mx-3 w-1.5 h-1.5 rounded-full bg-[#00ff00]/30" />
 
               <Link 
-                href="https://docs.agentlabai.io" 
+                href="https://docs.launchlab.one" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors"

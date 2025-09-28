@@ -10,7 +10,7 @@ const pressStart = Press_Start_2P({
 });
 
 export const metadata: Metadata = {
-  title: "AgentLab AI",
+  title: "Agent Laboratories",
   description: "Next-Gen AI Agents - Your Web3 AI Companion",
   icons: {
     icon: "/agentlogowebsitemini.png",

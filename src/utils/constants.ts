@@ -15,22 +15,22 @@ interface SocialLink {
 export const socialLinks: SocialLink[] = [
   {
     label: 'Twitter',
-    href: 'https://twitter.com/agentz_ai',
+    href: 'https://x.com/launchlab_x',
     icon: faTwitter
   },
   {
     label: 'Telegram',
-    href: 'https://t.me/agentz_ai',
+    href: 'https://t.me/launchlab_tg',
     icon: faTelegram
   },
   {
     label: 'Discord',
-    href: 'https://discord.gg/agentz',
+    href: 'https://discord.gg/launchlab',
     icon: faDiscord
   },
   {
     label: 'GitHub',
-    href: 'https://github.com/agentz-ai',
+    href: 'https://github.com/launchlab-ai',
     icon: faGithub
   }
 ]; 
