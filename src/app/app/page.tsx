@@ -32,7 +32,7 @@ const agents = [
     id: 3,
     name: "AGENT LABORATORIES - Agent Creator",
     description: "Made by mew w/ AGENT LABORATORIES",
-    link: "https://launchlab.one/\n@launchlab_tg",
+    link: "https://agentlaboratories.fun/\n@agentlaboratories",
     status: "active",
     image: "/agentlogowebsitemini.png"
   },
@@ -114,7 +114,7 @@ export default function Dashboard() {
                     <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for Agent Laboratories</div>
                     <div className="flex gap-3">
                       <a 
-                        href="https://launchlab.one"
+                        href="https://agentlaboratories.fun"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
@@ -122,7 +122,7 @@ export default function Dashboard() {
                         WEBSITE →
                       </a>
                       <a 
-                        href="https://t.me/agentlabhelperbot"
+                        href="https://t.me/agentlaboratories"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"

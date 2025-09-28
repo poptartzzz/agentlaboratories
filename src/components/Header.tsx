@@ -11,8 +11,8 @@ interface SolanaWalletError extends Error {
 
 export default function Header() {
   const [account, setAccount] = useState<string>('');
-  const [solBalance, setSolBalance] = useState<string>('0');
-  const [alabsBalance, setAlabsBalance] = useState<string>('0');
+  const [solBalance, setSolBalance] = useState<string>('Loading...');
+  const [alabsBalance, setAlabsBalance] = useState<string>('Loading...');
   const [isConnecting, setIsConnecting] = useState(false);
   const [showWalletMenu, setShowWalletMenu] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,15 +38,14 @@ export default function Header() {
   };
 
   const fetchBalances = async () => {
-    // Temporarily disable balance fetching to prevent RPC errors
-    // Set placeholder values
-    setSolBalance('--');
-    setAlabsBalance('--');
+    // Set waiting state for balance display
+    setSolBalance('Loading...');
+    setAlabsBalance('Loading...');
     
-    console.log('Wallet connected successfully. Balance fetching temporarily disabled due to RPC issues.');
+    console.log('Wallet connected successfully. Waiting for contract address to display ALABS balance.');
     
-    // TODO: Implement proper balance fetching when RPC endpoints are stable
-    // For now, users can check their balance directly in Phantom wallet
+    // TODO: Implement proper balance fetching when ALABS token contract is deployed
+    // For now, show loading state to indicate we're waiting for token deployment
   };
 
   const connectWallet = async () => {
@@ -134,7 +133,7 @@ export default function Header() {
               </Link>
               <div className="flex items-center gap-4 border-l border-[#00ff00]/30 pl-6">
                 <a 
-                  href="https://x.com/launchlab_x"
+                  href="https://x.com/agentlaboratories"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#00ff00] transition-colors"
@@ -142,7 +141,7 @@ export default function Header() {
                   <FaTwitter size={18} />
                 </a>
                 <a 
-                  href="https://t.me/launchlab_tg"
+                  href="https://t.me/agentlaboratories"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#00ff00] transition-colors"
@@ -176,12 +175,13 @@ export default function Header() {
                       <div className="px-4 py-2 border-b border-[#00ff00]/20">
                         <div className="text-xs text-[#00ff00]/70 mb-1">Balances</div>
                         <div className="flex justify-between items-center">
-                          <span className="text-[#00ff00] font-medium">{solBalance === '--' ? 'Check Phantom' : `${solBalance} SOL`}</span>
-                          <span className="text-[#00ff00] font-medium">{alabsBalance === '--' ? 'Check Phantom' : `${alabsBalance} ALABS`}</span>
+                          <span className="text-[#00ff00] font-medium">{solBalance === 'Loading...' ? 'Loading...' : `${solBalance} SOL`}</span>
+                          <span className="text-[#00ff00] font-medium">{alabsBalance === 'Loading...' ? 'Loading...' : `${alabsBalance} ALABS`}</span>
                         </div>
-                        {solBalance === '--' && (
-                          <div className="text-xs text-[#00ff00]/50 mt-1 italic">
-                            RPC temporarily unavailable
+                        {solBalance === 'Loading...' && (
+                          <div className="text-xs text-[#00ff00]/50 mt-1 italic flex items-center gap-1">
+                            <div className="w-3 h-3 border border-[#00ff00]/50 border-t-[#00ff00] rounded-full animate-spin"></div>
+                            Waiting for contract address to display ALABS balance
                           </div>
                         )}
                       </div>
@@ -318,7 +318,7 @@ export default function Header() {
                 <h3 className="text-sm text-[#00ff00]/70 mb-4">Follow Us</h3>
                 <div className="flex gap-4">
                   <a 
-                    href="https://x.com/launchlab_x"
+                    href="https://x.com/agentlaboratories"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-10 h-10 bg-[#00ff00]/10 border border-[#00ff00]/30 hover:bg-[#00ff00]/20 transition-colors rounded"
@@ -326,7 +326,7 @@ export default function Header() {
                     <FaTwitter size={18} />
                   </a>
                   <a 
-                    href="https://t.me/launchlab_tg"
+                    href="https://t.me/agentlaboratories"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-10 h-10 bg-[#00ff00]/10 border border-[#00ff00]/30 hover:bg-[#00ff00]/20 transition-colors rounded"
@@ -389,12 +389,13 @@ export default function Header() {
             <div className="px-4 py-2 border-b border-[#00ff00]/20">
               <div className="text-xs text-[#00ff00]/70 mb-1">Balances</div>
               <div className="flex justify-between items-center">
-                <span className="text-[#00ff00] font-medium">{solBalance === '--' ? 'Check Phantom' : `${solBalance} SOL`}</span>
-                <span className="text-[#00ff00] font-medium">{alabsBalance === '--' ? 'Check Phantom' : `${alabsBalance} ALABS`}</span>
+                <span className="text-[#00ff00] font-medium">{solBalance === 'Loading...' ? 'Loading...' : `${solBalance} SOL`}</span>
+                <span className="text-[#00ff00] font-medium">{alabsBalance === 'Loading...' ? 'Loading...' : `${alabsBalance} ALABS`}</span>
               </div>
-              {solBalance === '--' && (
-                <div className="text-xs text-[#00ff00]/50 mt-1 italic">
-                  RPC temporarily unavailable
+              {solBalance === 'Loading...' && (
+                <div className="text-xs text-[#00ff00]/50 mt-1 italic flex items-center gap-1">
+                  <div className="w-3 h-3 border border-[#00ff00]/50 border-t-[#00ff00] rounded-full animate-spin"></div>
+                  Waiting for contract address to display ALABS balance
                 </div>
               )}
             </div>
