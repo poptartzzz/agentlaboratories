@@ -52,7 +52,12 @@ export const handleTokenPayment = async (
   recipientAddress: string, 
   walletAdapter: unknown
 ): Promise<boolean> => {
-  if (!walletAdapter?.connected || !walletAdapter?.publicKey) {
+  const adapter = walletAdapter as { 
+    connected?: boolean; 
+    publicKey?: { toString(): string };
+    sendTransaction?: (transaction: unknown, connection: unknown) => Promise<string>;
+  };
+  if (!adapter?.connected || !adapter?.publicKey) {
     alert('Please connect a Solana wallet!');
     return false;
   }
@@ -68,7 +73,7 @@ export const handleTokenPayment = async (
     const requiredAmount = await calculateRequiredALABS();
     console.log('Required ALABS amount:', requiredAmount);
     
-    const senderPublicKey = walletAdapter.publicKey;
+    const senderPublicKey = new PublicKey(adapter.publicKey.toString());
     const recipientPublicKey = new PublicKey(recipientAddress);
     const alabsTokenMint = new PublicKey(ALABS_TOKEN_MINT_ADDRESS);
     
@@ -120,7 +125,7 @@ export const handleTokenPayment = async (
     transaction.feePayer = senderPublicKey;
 
     console.log('Sending transaction...');
-    const signature = await walletAdapter.sendTransaction(transaction, connection);
+    const signature = await adapter.sendTransaction!(transaction, connection);
     console.log('Transaction signature:', signature);
     
     // Confirm transaction
