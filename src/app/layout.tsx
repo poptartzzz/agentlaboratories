@@ -10,12 +10,38 @@ const pressStart = Press_Start_2P({
 });
 
 export const metadata: Metadata = {
-  title: "Agent Laboratories",
-  description: "Next-Gen AI Agents - Your Web3 AI Companion",
+  metadataBase: new URL('https://agentlaboratories.fun'),
+  title: "Agent Laboratories - AI-Powered Pump.fun Trading Agents",
+  description: "Create and deploy AI trading agents for pump.fun tokens. Automated trading, security scanning, and whale tracking with Agent Laboratories.",
+  keywords: "AI agents, pump.fun, Solana trading, automated trading, crypto bots, DeFi agents",
+  authors: [{ name: "Agent Laboratories" }],
+  openGraph: {
+    title: "Agent Laboratories - AI-Powered Pump.fun Trading Agents",
+    description: "Create and deploy AI trading agents for pump.fun tokens. Automated trading, security scanning, and whale tracking.",
+    url: "https://agentlaboratories.fun",
+    siteName: "Agent Laboratories",
+    images: [
+      {
+        url: "/pill.png",
+        width: 1200,
+        height: 630,
+        alt: "Agent Laboratories - AI Trading Agents for Pump.fun",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Agent Laboratories - AI-Powered Pump.fun Trading Agents",
+    description: "Create and deploy AI trading agents for pump.fun tokens. Automated trading, security scanning, and whale tracking.",
+    images: ["/pill.png"],
+    creator: "@agentlab_x",
+  },
   icons: {
-    icon: "/agentlogowebsitemini.png",
-    apple: "/agentlogowebsitemini.png",
-    shortcut: "/agentlogowebsitemini.png"
+    icon: "/pill.png",
+    apple: "/pill.png",
+    shortcut: "/pill.png"
   }
 };
 
