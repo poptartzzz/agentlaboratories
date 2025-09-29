@@ -3,10 +3,24 @@ import Anthropic from '@anthropic-ai/sdk';
 
 export async function POST(request: Request) {
   try {
+    // Debug logging
+    console.log('Environment check:', {
+      hasApiKey: !!process.env.ANTHROPIC_API_KEY,
+      keyLength: process.env.ANTHROPIC_API_KEY?.length || 0,
+      nodeEnv: process.env.NODE_ENV
+    });
+
     if (!process.env.ANTHROPIC_API_KEY) {
       console.error('ANTHROPIC_API_KEY is not configured in environment variables');
       return NextResponse.json(
-        { error: 'AI service configuration error: Missing API key' },
+        { 
+          error: 'AI service configuration error: Missing API key',
+          debug: {
+            hasApiKey: false,
+            nodeEnv: process.env.NODE_ENV,
+            allEnvKeys: Object.keys(process.env).filter(key => key.includes('ANTHROPIC'))
+          }
+        },
         { status: 500 }
       );
     }
