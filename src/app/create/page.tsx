@@ -468,6 +468,17 @@ Do not include any text outside of this JSON structure. All your communication s
 
       const response = await generateAgentResponse(context);
       
+      // Check if response is an error message (starts with "I apologize")
+      if (response.startsWith("I apologize")) {
+        setChat(prev => [...prev, { 
+          id: generateUniqueId(),
+          text: `🤖 ${response}`,
+          timestamp: Date.now(),
+          isUser: false 
+        }]);
+        return;
+      }
+      
       let parsedResponse;
       try {
         parsedResponse = JSON.parse(response.trim());

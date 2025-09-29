@@ -9,12 +9,20 @@ export async function generateAgentResponse(prompt: string): Promise<string> {
     });
 
     if (!response.ok) {
-      console.error('Claude API error:', await response.text());
+      const errorText = await response.text();
+      console.error('Claude API error:', errorText);
       return "I apologize, but I'm having trouble connecting to my AI services right now. Please try again in a few moments.";
     }
 
     const data = await response.json();
-    return data.response;
+    
+    // Check if the response contains an error
+    if (data.error) {
+      console.error('Claude API returned error:', data.error);
+      return "I apologize, but I'm experiencing technical difficulties. Please try again later.";
+    }
+    
+    return data.response || "I apologize, but I couldn't generate a response. Please try again.";
   } catch (error) {
     console.error('Error generating response:', error);
     return "I apologize, but I'm experiencing technical difficulties. Please try again later.";
