@@ -42,10 +42,10 @@ export default function Header() {
     setSolBalance('Loading...');
     setAlabsBalance('Loading...');
     
-    console.log('Wallet connected successfully. Waiting for contract address to display ALABS balance.');
+    console.log('Wallet connected successfully. ALABS contract address configured.');
     
-    // TODO: Implement proper balance fetching when ALABS token contract is deployed
-    // For now, show loading state to indicate we're waiting for token deployment
+    // TODO: Implement proper balance fetching with the configured contract address
+    // For now, show loading state while balance fetching is being implemented
   };
 
   const connectWallet = async () => {
@@ -181,7 +181,7 @@ export default function Header() {
                         {solBalance === 'Loading...' && (
                           <div className="text-xs text-[#00ff00]/50 mt-1 italic flex items-center gap-1">
                             <div className="w-3 h-3 border border-[#00ff00]/50 border-t-[#00ff00] rounded-full animate-spin"></div>
-                            Waiting for contract address to display ALABS balance
+                            ALABS contract configured - balance fetching in progress
                           </div>
                         )}
                       </div>

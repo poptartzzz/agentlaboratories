@@ -11,7 +11,7 @@ import {
 } from '@solana/spl-token';
 
 // ALABS token on Solana (replace with actual token mint address)
-const ALABS_TOKEN_MINT_ADDRESS = 'YOUR_SOLANA_TOKEN_MINT_ADDRESS_HERE';
+const ALABS_TOKEN_MINT_ADDRESS = '3iGNK6twbuoCScUmTubywPUU6zbQFve6Gcuq63n1pump';
 const REQUIRED_USD_AMOUNT = 10;
 
 // Solana RPC connection
@@ -26,7 +26,7 @@ interface SolanaError extends Error {
 export async function getALABSPrice(): Promise<number> {
   try {
     // Check if token mint address is configured
-    if (!ALABS_TOKEN_MINT_ADDRESS || ALABS_TOKEN_MINT_ADDRESS === 'YOUR_SOLANA_TOKEN_MINT_ADDRESS_HERE') {
+    if (!ALABS_TOKEN_MINT_ADDRESS) {
       console.log('ALABS token mint address not configured, using fallback price');
       return 0.01;
     }
@@ -63,7 +63,7 @@ export const handleTokenPayment = async (
   }
 
   // Check if token mint address is configured
-  if (!ALABS_TOKEN_MINT_ADDRESS || ALABS_TOKEN_MINT_ADDRESS === 'YOUR_SOLANA_TOKEN_MINT_ADDRESS_HERE') {
+  if (!ALABS_TOKEN_MINT_ADDRESS) {
     alert('ALABS token is not yet configured. Please wait for token deployment.');
     return false;
   }
