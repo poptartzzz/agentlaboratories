@@ -186,11 +186,6 @@ export default function Header() {
                         )}
                       </div>
                       
-                      {/* Address */}
-                      <div className="px-4 py-2 border-b border-[#00ff00]/20">
-                        <div className="text-xs text-[#00ff00]/70 mb-1">Address</div>
-                        <div className="text-[#00ff00] font-mono text-xs break-all">{account}</div>
-                      </div>
                       
                       {/* Actions */}
                       <div className="py-1">
@@ -400,11 +395,6 @@ export default function Header() {
               )}
             </div>
             
-            {/* Address */}
-            <div className="px-4 py-2 border-b border-[#00ff00]/20">
-              <div className="text-xs text-[#00ff00]/70 mb-1">Address</div>
-              <div className="text-[#00ff00] font-mono text-xs break-all">{account}</div>
-            </div>
             
             {/* Actions */}
             <div className="py-1">
