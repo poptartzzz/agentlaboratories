@@ -39,8 +39,8 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center">
             <Image 
-              src="/labswebsite.png"
-              alt="AI Agent Labs" 
+              src="/botslogo.png"
+              alt="BOTS" 
               width={180}
               height={40}
               className="h-10 w-auto"

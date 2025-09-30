@@ -11,21 +11,21 @@ const pressStart = Press_Start_2P({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://agentlaboratories.fun'),
-  title: "AI Agent Labs - AI-Powered Pump.fun Trading Agents",
-  description: "Create and deploy AI trading agents for pump.fun tokens. Automated trading, security scanning, and whale tracking with AI Agent Labs.",
+  title: "BOTS - AI-Powered Pump.fun Trading Agents",
+  description: "Create and deploy AI trading agents for pump.fun tokens. Automated trading, security scanning, and whale tracking with BOTS.",
   keywords: "AI agents, pump.fun, Solana trading, automated trading, crypto bots, DeFi agents",
-  authors: [{ name: "AI Agent Labs" }],
+  authors: [{ name: "BOTS" }],
   openGraph: {
-    title: "AI Agent Labs - AI-Powered Pump.fun Trading Agents",
+    title: "BOTS - AI-Powered Pump.fun Trading Agents",
     description: "Create and deploy AI trading agents for pump.fun tokens. Automated trading, security scanning, and whale tracking.",
     url: "https://agentlaboratories.fun",
-    siteName: "AI Agent Labs",
+    siteName: "BOTS",
     images: [
       {
         url: "/pill.png",
         width: 1200,
         height: 630,
-        alt: "AI Agent Labs - AI Trading Agents for Pump.fun",
+        alt: "BOTS - AI Trading Agents for Pump.fun",
       },
     ],
     locale: "en_US",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Agent Labs - AI-Powered Pump.fun Trading Agents",
+    title: "BOTS - AI-Powered Pump.fun Trading Agents",
     description: "Create and deploy AI trading agents for pump.fun tokens. Automated trading, security scanning, and whale tracking.",
     images: ["/pill.png"],
     creator: "@aiagent_labs",

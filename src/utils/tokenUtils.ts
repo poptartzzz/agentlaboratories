@@ -10,8 +10,8 @@ import {
   getAccount
 } from '@solana/spl-token';
 
-// LABS token on Solana (replace with actual token mint address)
-const LABS_TOKEN_MINT_ADDRESS = '3iGNK6twbuoCScUmTubywPUU6zbQFve6Gcuq63n1pump';
+// BOTS token on Solana (replace with actual token mint address)
+const BOTS_TOKEN_MINT_ADDRESS = '3iGNK6twbuoCScUmTubywPUU6zbQFve6Gcuq63n1pump';
 const REQUIRED_USD_AMOUNT = 10;
 
 // Solana RPC connection
@@ -22,30 +22,30 @@ interface SolanaError extends Error {
   data?: unknown;
 }
 
-// Function to fetch LABS token price from Jupiter or CoinGecko
-export async function getLABSPrice(): Promise<number> {
+// Function to fetch BOTS token price from Jupiter or CoinGecko
+export async function getBOTSPrice(): Promise<number> {
   try {
     // Check if token mint address is configured
-    if (!LABS_TOKEN_MINT_ADDRESS) {
-      console.log('LABS token mint address not configured, using fallback price');
+    if (!BOTS_TOKEN_MINT_ADDRESS) {
+      console.log('BOTS token mint address not configured, using fallback price');
       return 0.01;
     }
     
     // Using Jupiter API for Solana token prices
-    const response = await fetch(`https://price.jup.ag/v4/price?ids=${LABS_TOKEN_MINT_ADDRESS}`);
+    const response = await fetch(`https://price.jup.ag/v4/price?ids=${BOTS_TOKEN_MINT_ADDRESS}`);
     const data = await response.json();
-    return parseFloat(data.data[LABS_TOKEN_MINT_ADDRESS]?.price || '0.01');
+    return parseFloat(data.data[BOTS_TOKEN_MINT_ADDRESS]?.price || '0.01');
   } catch (error) {
-    console.error('Error fetching LABS price:', error);
+    console.error('Error fetching BOTS price:', error);
     // Fallback price
     return 0.01;
   }
 }
 
-export async function calculateRequiredLABS(): Promise<number> {
-  const alabsPrice = await getLABSPrice();
-  const requiredLABS = REQUIRED_USD_AMOUNT / alabsPrice;
-  return Math.ceil(requiredLABS); // Round up to whole number
+export async function calculateRequiredBOTS(): Promise<number> {
+  const alabsPrice = await getBOTSPrice();
+  const requiredBOTS = REQUIRED_USD_AMOUNT / alabsPrice;
+  return Math.ceil(requiredBOTS); // Round up to whole number
 }
 
 export const handleTokenPayment = async (
@@ -63,19 +63,19 @@ export const handleTokenPayment = async (
   }
 
   // Check if token mint address is configured
-  if (!LABS_TOKEN_MINT_ADDRESS) {
-    alert('LABS token is not yet configured. Please wait for token deployment.');
+  if (!BOTS_TOKEN_MINT_ADDRESS) {
+    alert('BOTS token is not yet configured. Please wait for token deployment.');
     return false;
   }
 
   try {
     console.log('Initializing Solana payment process...');
-    const requiredAmount = await calculateRequiredLABS();
-    console.log('Required LABS amount:', requiredAmount);
+    const requiredAmount = await calculateRequiredBOTS();
+    console.log('Required BOTS amount:', requiredAmount);
     
     const senderPublicKey = new PublicKey(adapter.publicKey.toString());
     const recipientPublicKey = new PublicKey(recipientAddress);
-    const alabsTokenMint = new PublicKey(LABS_TOKEN_MINT_ADDRESS);
+    const alabsTokenMint = new PublicKey(BOTS_TOKEN_MINT_ADDRESS);
     
     console.log('Sender wallet:', senderPublicKey.toString());
     console.log('Recipient wallet:', recipientPublicKey.toString());
@@ -95,14 +95,14 @@ export const handleTokenPayment = async (
     try {
       const senderAccount = await getAccount(connection, senderTokenAccount);
       const balance = Number(senderAccount.amount);
-      console.log('Current LABS balance:', balance);
+      console.log('Current BOTS balance:', balance);
       
       if (balance < requiredAmount) {
-        alert(`Insufficient LABS balance. You need at least ${requiredAmount} LABS tokens. Your balance: ${balance}`);
+        alert(`Insufficient BOTS balance. You need at least ${requiredAmount} BOTS tokens. Your balance: ${balance}`);
         return false;
       }
     } catch {
-      alert('You don\'t have an LABS token account. Please acquire LABS tokens first.');
+      alert('You don\'t have an BOTS token account. Please acquire BOTS tokens first.');
       return false;
     }
 

@@ -6,7 +6,7 @@ import { generateAgentResponse } from '@/utils/claude';
 import Header from '@/components/Header';
 import Separator from '@/components/Separator';
 import Image from 'next/image';
-import { handleTokenPayment, calculateRequiredLABS } from '@/utils/tokenUtils';
+import { handleTokenPayment, calculateRequiredBOTS } from '@/utils/tokenUtils';
 import Link from 'next/link';
 
 const pressStart = Press_Start_2P({ 
@@ -391,7 +391,7 @@ export default function CreateAgent() {
   const [isBaking, setIsBaking] = useState(false);
   const [account, setAccount] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [requiredLABS, setRequiredLABS] = useState<string>('Loading...');
+  const [requiredBOTS, setRequiredBOTS] = useState<string>('Loading...');
   const [showGuide, setShowGuide] = useState(true);
   const RECIPIENT_ADDRESS = '0x1fC09820ad9371437329Ba7D33ddb5B96c4953e8';
 
@@ -617,11 +617,11 @@ Do not include any text outside of this JSON structure. All your communication s
   useEffect(() => {
     async function updatePrice() {
       try {
-        const amount = await calculateRequiredLABS();
-        setRequiredLABS(amount.toString());
+        const amount = await calculateRequiredBOTS();
+        setRequiredBOTS(amount.toString());
       } catch (error) {
         console.error('Error updating price:', error);
-        setRequiredLABS('COST');
+        setRequiredBOTS('COST');
       }
     }
     updatePrice();
@@ -652,7 +652,7 @@ Do not include any text outside of this JSON structure. All your communication s
             >
               ✕
             </button>
-            <h2 className="text-xl mb-6">Welcome to AI Agent Labs Creator!</h2>
+            <h2 className="text-xl mb-6">Welcome to BOTS Creator!</h2>
             <p className="text-[#00ff00]/80 mb-6 leading-relaxed">
               Our comprehensive documentation is currently being enhanced. In the meantime, 
               please visit our <Link href="/about" className="underline hover:text-[#00ff00]/70">About page</Link> for 
@@ -915,7 +915,7 @@ Do not include any text outside of this JSON structure. All your communication s
                         ? 'CONNECT WALLET TO BAKE' 
                         : isProcessing 
                           ? 'PROCESSING...' 
-                          : `BAKE AGENT (${requiredLABS} LABS ≈ $20)`}
+                          : `BAKE AGENT (${requiredBOTS} BOTS ≈ $20)`}
                     </button>
                     
                     {!areRequiredFieldsFilled() && !isBaking && (
@@ -939,15 +939,15 @@ Do not include any text outside of this JSON structure. All your communication s
                 <div className="w-16 h-16 rounded-full overflow-hidden">
                   <Image 
                     src="/agentlogowebsitemini.png"
-                    alt="AI Agent Labs AI Assistant"
+                    alt="BOTS AI Assistant"
                     width={48}
                     height={48}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl mb-2">AI Agent Labs - Agent Creator Assistant</h3>
-                  <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AI Agent Labs</div>
+                  <h3 className="text-xl mb-2">BOTS - Agent Creator Assistant</h3>
+                  <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for BOTS</div>
                   <div className="flex gap-3">
                     <a 
                       href="https://launchlab.one"
