@@ -10,8 +10,8 @@ import {
   getAccount
 } from '@solana/spl-token';
 
-// ALABS token on Solana (replace with actual token mint address)
-const ALABS_TOKEN_MINT_ADDRESS = '3iGNK6twbuoCScUmTubywPUU6zbQFve6Gcuq63n1pump';
+// LABS token on Solana (replace with actual token mint address)
+const LABS_TOKEN_MINT_ADDRESS = '3iGNK6twbuoCScUmTubywPUU6zbQFve6Gcuq63n1pump';
 const REQUIRED_USD_AMOUNT = 10;
 
 // Solana RPC connection
@@ -22,30 +22,30 @@ interface SolanaError extends Error {
   data?: unknown;
 }
 
-// Function to fetch ALABS token price from Jupiter or CoinGecko
-export async function getALABSPrice(): Promise<number> {
+// Function to fetch LABS token price from Jupiter or CoinGecko
+export async function getLABSPrice(): Promise<number> {
   try {
     // Check if token mint address is configured
-    if (!ALABS_TOKEN_MINT_ADDRESS) {
-      console.log('ALABS token mint address not configured, using fallback price');
+    if (!LABS_TOKEN_MINT_ADDRESS) {
+      console.log('LABS token mint address not configured, using fallback price');
       return 0.01;
     }
     
     // Using Jupiter API for Solana token prices
-    const response = await fetch(`https://price.jup.ag/v4/price?ids=${ALABS_TOKEN_MINT_ADDRESS}`);
+    const response = await fetch(`https://price.jup.ag/v4/price?ids=${LABS_TOKEN_MINT_ADDRESS}`);
     const data = await response.json();
-    return parseFloat(data.data[ALABS_TOKEN_MINT_ADDRESS]?.price || '0.01');
+    return parseFloat(data.data[LABS_TOKEN_MINT_ADDRESS]?.price || '0.01');
   } catch (error) {
-    console.error('Error fetching ALABS price:', error);
+    console.error('Error fetching LABS price:', error);
     // Fallback price
     return 0.01;
   }
 }
 
-export async function calculateRequiredALABS(): Promise<number> {
-  const alabsPrice = await getALABSPrice();
-  const requiredALABS = REQUIRED_USD_AMOUNT / alabsPrice;
-  return Math.ceil(requiredALABS); // Round up to whole number
+export async function calculateRequiredLABS(): Promise<number> {
+  const alabsPrice = await getLABSPrice();
+  const requiredLABS = REQUIRED_USD_AMOUNT / alabsPrice;
+  return Math.ceil(requiredLABS); // Round up to whole number
 }
 
 export const handleTokenPayment = async (
@@ -63,19 +63,19 @@ export const handleTokenPayment = async (
   }
 
   // Check if token mint address is configured
-  if (!ALABS_TOKEN_MINT_ADDRESS) {
-    alert('ALABS token is not yet configured. Please wait for token deployment.');
+  if (!LABS_TOKEN_MINT_ADDRESS) {
+    alert('LABS token is not yet configured. Please wait for token deployment.');
     return false;
   }
 
   try {
     console.log('Initializing Solana payment process...');
-    const requiredAmount = await calculateRequiredALABS();
-    console.log('Required ALABS amount:', requiredAmount);
+    const requiredAmount = await calculateRequiredLABS();
+    console.log('Required LABS amount:', requiredAmount);
     
     const senderPublicKey = new PublicKey(adapter.publicKey.toString());
     const recipientPublicKey = new PublicKey(recipientAddress);
-    const alabsTokenMint = new PublicKey(ALABS_TOKEN_MINT_ADDRESS);
+    const alabsTokenMint = new PublicKey(LABS_TOKEN_MINT_ADDRESS);
     
     console.log('Sender wallet:', senderPublicKey.toString());
     console.log('Recipient wallet:', recipientPublicKey.toString());
@@ -95,14 +95,14 @@ export const handleTokenPayment = async (
     try {
       const senderAccount = await getAccount(connection, senderTokenAccount);
       const balance = Number(senderAccount.amount);
-      console.log('Current ALABS balance:', balance);
+      console.log('Current LABS balance:', balance);
       
       if (balance < requiredAmount) {
-        alert(`Insufficient ALABS balance. You need at least ${requiredAmount} ALABS tokens. Your balance: ${balance}`);
+        alert(`Insufficient LABS balance. You need at least ${requiredAmount} LABS tokens. Your balance: ${balance}`);
         return false;
       }
     } catch {
-      alert('You don\'t have an ALABS token account. Please acquire ALABS tokens first.');
+      alert('You don\'t have an LABS token account. Please acquire LABS tokens first.');
       return false;
     }
 

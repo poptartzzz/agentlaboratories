@@ -30,8 +30,8 @@ const agents = [
   },
   {
     id: 3,
-    name: "AGENT LABORATORIES - Agent Creator",
-    description: "Made by mew w/ AGENT LABORATORIES",
+    name: "AI AGENT LABS - Agent Creator",
+    description: "Made by mew w/ AI AGENT LABS",
     link: "https://agentlaboratories.fun/\n@agentlaboratories",
     status: "active",
     image: "/agentlogowebsitemini.png"
@@ -103,15 +103,15 @@ export default function Dashboard() {
                   <div className="w-16 h-16 rounded-full overflow-hidden">
                     <Image 
                       src="/agentlogowebsitemini.png"
-                      alt="Agent Laboratories AI Assistant"
+                      alt="AI Agent Labs AI Assistant"
                       width={64}
                       height={64}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
-                    <h3 className="text-xl mb-2">Agent Laboratories - Agent Creator</h3>
-                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for Agent Laboratories</div>
+                    <h3 className="text-xl mb-2">AI Agent Labs - Agent Creator</h3>
+                    <div className="text-sm text-[#00ff00]/70 mb-2">Agent Creator assistant for AI Agent Labs</div>
                     <div className="flex gap-3">
                       <a 
                         href="https://agentlaboratories.fun"
@@ -151,7 +151,7 @@ export default function Dashboard() {
 
           {/* Bots Grid */}
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-            {agents.filter(bot => bot.name !== "AGENT LABORATORIES - Agent Creator").map((bot) => (
+            {agents.filter(bot => bot.name !== "AI AGENT LABS - Agent Creator").map((bot) => (
               <div 
                 key={bot.name}
                 className="border border-[#00ff00] bg-black/50 p-4 sm:p-6 hover:bg-black/80 transition-all cursor-pointer"

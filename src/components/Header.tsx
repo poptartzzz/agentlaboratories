@@ -12,7 +12,7 @@ interface SolanaWalletError extends Error {
 export default function Header() {
   const [account, setAccount] = useState<string>('');
   const [solBalance, setSolBalance] = useState<string>('Loading...');
-  const [alabsBalance, setAlabsBalance] = useState<string>('Loading...');
+  const [labsBalance, setLabsBalance] = useState<string>('Loading...');
   const [isConnecting, setIsConnecting] = useState(false);
   const [showWalletMenu, setShowWalletMenu] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function Header() {
       }
       setAccount('');
       setSolBalance('0');
-      setAlabsBalance('0');
+      setLabsBalance('0');
       setShowWalletMenu(false);
     } catch (error) {
       console.error('Error disconnecting wallet:', error);
@@ -40,9 +40,9 @@ export default function Header() {
   const fetchBalances = async () => {
     // Set waiting state for balance display
     setSolBalance('Loading...');
-    setAlabsBalance('Loading...');
+    setLabsBalance('Loading...');
     
-    console.log('Wallet connected successfully. ALABS contract address configured.');
+    console.log('Wallet connected successfully. LABS contract address configured.');
     
     // TODO: Implement proper balance fetching with the configured contract address
     // For now, show loading state while balance fetching is being implemented
@@ -108,8 +108,8 @@ export default function Header() {
             <div className="flex items-center">
               <Link href="/">
                 <Image 
-                  src="/labswebsitelogo.png"
-                  alt="Agent Labs"
+                  src="/labswebsite.png"
+                  alt="AI Agent Labs"
                   width={180}
                   height={60}
                   className="object-contain h-8 sm:h-10 md:h-12 w-auto"
@@ -176,12 +176,12 @@ export default function Header() {
                         <div className="text-xs text-[#00ff00]/70 mb-1">Balances</div>
                         <div className="flex justify-between items-center">
                           <span className="text-[#00ff00] font-medium">{solBalance === 'Loading...' ? 'Loading...' : `${solBalance} SOL`}</span>
-                          <span className="text-[#00ff00] font-medium">{alabsBalance === 'Loading...' ? 'Loading...' : `${alabsBalance} ALABS`}</span>
+                          <span className="text-[#00ff00] font-medium">{labsBalance === 'Loading...' ? 'Loading...' : `${labsBalance} LABS`}</span>
                         </div>
                         {solBalance === 'Loading...' && (
                           <div className="text-xs text-[#00ff00]/50 mt-1 italic flex items-center gap-1">
                             <div className="w-3 h-3 border border-[#00ff00]/50 border-t-[#00ff00] rounded-full animate-spin"></div>
-                            ALABS contract configured - balance fetching in progress
+                            LABS contract configured - balance fetching in progress
                           </div>
                         )}
                       </div>
@@ -341,8 +341,8 @@ export default function Header() {
                       <div className="text-[#00ff00] font-medium">{solBalance} SOL</div>
                     </div>
                     <div className="p-3 bg-[#00ff00]/5 border border-[#00ff00]/20 rounded">
-                      <div className="text-xs text-[#00ff00]/70 mb-1">ALABS Balance</div>
-                      <div className="text-[#00ff00] font-medium">{alabsBalance} ALABS</div>
+                      <div className="text-xs text-[#00ff00]/70 mb-1">LABS Balance</div>
+                      <div className="text-[#00ff00] font-medium">{labsBalance} LABS</div>
                     </div>
                     <div className="p-3 bg-[#00ff00]/5 border border-[#00ff00]/20 rounded">
                       <div className="text-xs text-[#00ff00]/70 mb-1">Address</div>
@@ -385,12 +385,12 @@ export default function Header() {
               <div className="text-xs text-[#00ff00]/70 mb-1">Balances</div>
               <div className="flex justify-between items-center">
                 <span className="text-[#00ff00] font-medium">{solBalance === 'Loading...' ? 'Loading...' : `${solBalance} SOL`}</span>
-                <span className="text-[#00ff00] font-medium">{alabsBalance === 'Loading...' ? 'Loading...' : `${alabsBalance} ALABS`}</span>
+                <span className="text-[#00ff00] font-medium">{labsBalance === 'Loading...' ? 'Loading...' : `${labsBalance} LABS`}</span>
               </div>
               {solBalance === 'Loading...' && (
                 <div className="text-xs text-[#00ff00]/50 mt-1 italic flex items-center gap-1">
                   <div className="w-3 h-3 border border-[#00ff00]/50 border-t-[#00ff00] rounded-full animate-spin"></div>
-                  Waiting for contract address to display ALABS balance
+                  Waiting for contract address to display LABS balance
                 </div>
               )}
             </div>

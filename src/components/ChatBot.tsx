@@ -15,7 +15,7 @@ interface Message {
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'I am here to assist with setting up your AGENT LABORATORIES bot. How can I help?' }
+    { role: 'assistant', content: 'I am here to assist with setting up your AI AGENT LABS bot. How can I help?' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const context = `You are the AGENT LABORATORIES AI Assistant, helping users set up their bots. You have access to the following documentation:
+      const context = `You are the AI AGENT LABS AI Assistant, helping users set up their bots. You have access to the following documentation:
 
         1. Prerequisites: Users need to set up their BotFather API first:
         - Open Telegram and search for "@BotFather"
@@ -71,7 +71,7 @@ export default function ChatBot() {
 
         Based on this documentation, please answer the following question: ${userMessage}
 
-        Please provide a concise, accurate answer based solely on the information provided in the documentation. If the question is about something not covered in the documentation, politely indicate that you are an AGENT LABORATORIES AI assistant and cannot help with that specific query.`;
+        Please provide a concise, accurate answer based solely on the information provided in the documentation. If the question is about something not covered in the documentation, politely indicate that you are an AI AGENT LABS AI assistant and cannot help with that specific query.`;
       
       const response = await generateAgentResponse(context);
       
