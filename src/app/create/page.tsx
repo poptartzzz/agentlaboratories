@@ -657,11 +657,11 @@ Do not include any text outside of this JSON structure. All your communication s
               Our comprehensive documentation is currently being enhanced. In the meantime, 
               please visit our <Link href="/about" className="underline hover:text-[#00ff00]/70">About page</Link> for 
               an overview, or connect with our AI Assistant <a 
-                href="https://t.me/agentlaboratories" 
+                href="https://t.me/aiagent_labs" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="underline hover:text-[#00ff00]/70"
-              >@agentlaboratories</a> on Telegram for guided assistance.
+              >@aiagent_labs</a> on Telegram for guided assistance.
             </p>
             <button
               onClick={() => setShowGuide(false)}
@@ -958,7 +958,7 @@ Do not include any text outside of this JSON structure. All your communication s
                       WEBSITE →
                     </a>
                     <a 
-                      href="https://t.me/agentlaboratories"
+                      href="https://t.me/aiagent_labs"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"

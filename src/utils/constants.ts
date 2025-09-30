@@ -15,12 +15,12 @@ interface SocialLink {
 export const socialLinks: SocialLink[] = [
   {
     label: 'Twitter',
-    href: 'https://x.com/agentlab_x',
+    href: 'https://x.com/aiagent_labs',
     icon: faTwitter
   },
   {
     label: 'Telegram',
-    href: 'https://t.me/agentlaboratories',
+    href: 'https://t.me/aiagent_labs',
     icon: faTelegram
   },
   {
