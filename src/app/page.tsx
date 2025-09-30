@@ -28,7 +28,6 @@ import {
   faStar
 } from '@fortawesome/free-solid-svg-icons';
 import { generateAgentResponse } from '@/utils/claude';
-import Image from 'next/image';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
