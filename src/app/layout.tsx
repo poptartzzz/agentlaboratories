@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: "BOTS - AI-Powered Pump.fun Trading Agents",
     description: "Create and deploy AI trading agents for pump.fun tokens. Automated trading, security scanning, and whale tracking.",
     images: ["/pill.png"],
-    creator: "@aiagent_labs",
+    creator: "@botscreator",
   },
   icons: {
     icon: "/pill.png",

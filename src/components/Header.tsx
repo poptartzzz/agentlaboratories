@@ -133,7 +133,7 @@ export default function Header() {
               </Link>
               <div className="flex items-center gap-4 border-l border-[#00ff00]/30 pl-6">
                 <a 
-                  href="https://x.com/aiagent_labs"
+                  href="https://x.com/botscreator"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#00ff00] transition-colors"
@@ -141,7 +141,7 @@ export default function Header() {
                   <FaTwitter size={18} />
                 </a>
                 <a 
-                  href="https://t.me/aiagent_labs"
+                  href="https://t.me/botscreator"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#00ff00] transition-colors"
@@ -313,7 +313,7 @@ export default function Header() {
                 <h3 className="text-sm text-[#00ff00]/70 mb-4">Follow Us</h3>
                 <div className="flex gap-4">
                   <a 
-                    href="https://x.com/aiagent_labs"
+                    href="https://x.com/botscreator"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-10 h-10 bg-[#00ff00]/10 border border-[#00ff00]/30 hover:bg-[#00ff00]/20 transition-colors rounded"
@@ -321,7 +321,7 @@ export default function Header() {
                     <FaTwitter size={18} />
                   </a>
                   <a 
-                    href="https://t.me/aiagent_labs"
+                    href="https://t.me/botscreator"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-10 h-10 bg-[#00ff00]/10 border border-[#00ff00]/30 hover:bg-[#00ff00]/20 transition-colors rounded"

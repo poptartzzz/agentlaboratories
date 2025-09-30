@@ -20,12 +20,12 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   {
     icon: faTwitter,
-    href: "https://x.com/aiagent_labs",
+    href: "https://x.com/botscreator",
     label: "Twitter"
   },
   {
     icon: faTelegram,
-    href: "https://t.me/aiagent_labs",
+    href: "https://t.me/botscreator",
     label: "Telegram"
   }
 ];

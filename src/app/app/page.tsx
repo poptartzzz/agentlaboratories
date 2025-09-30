@@ -32,7 +32,7 @@ const agents = [
     id: 3,
     name: "BOTS - Agent Creator",
     description: "Made by mew w/ BOTS",
-    link: "https://agentlaboratories.fun/\n@aiagent_labs",
+    link: "https://agentlaboratories.fun/\n@botscreator",
     status: "active",
     image: "/agentlogowebsitemini.png"
   },
@@ -122,7 +122,7 @@ export default function Dashboard() {
                         WEBSITE →
                       </a>
                       <a 
-                        href="https://t.me/aiagent_labs"
+                        href="https://t.me/botscreator"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
