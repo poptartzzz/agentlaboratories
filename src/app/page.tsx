@@ -879,7 +879,7 @@ Use current prices and real token data. Always start with 🤖.`;
                   height={16}
                   className="rounded-full"
                 />
-                LABS - Launching on PUMP.FUN
+                LABS: 6fTwszLEfRgi9mR5DEy6WJFm1F95h8L93dynqzrbpump
               </a>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-tight sm:leading-relaxed">
