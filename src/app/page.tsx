@@ -879,7 +879,7 @@ Use current prices and real token data. Always start with 🤖.`;
                   height={16}
                   className="rounded-full"
                 />
-                BOTS - LIVE ON PUMP.FUN
+                LIVE ON PUMP.FUN
               </a>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-tight sm:leading-relaxed">
