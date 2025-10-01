@@ -28,6 +28,7 @@ import {
   faStar
 } from '@fortawesome/free-solid-svg-icons';
 import { generateAgentResponse } from '@/utils/claude';
+import Image from 'next/image';
 
 const pressStart = Press_Start_2P({ 
   weight: '400',
@@ -864,6 +865,23 @@ Use current prices and real token data. Always start with 🤖.`;
         
         <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
           <div className="space-y-6 sm:space-y-8 backdrop-blur-md bg-black/30 p-4 sm:p-6 md:p-8 rounded-lg border border-[#00ff00]/20">
+            <div className="inline-block px-3 sm:px-4 py-2 border border-[#00ff00] bg-black/50 hover:bg-[#00ff00]/10 transition-all">
+              <a 
+                href="https://pump.fun/profile/labssol" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#00ff00] text-xs hover:text-white transition-colors flex items-center gap-2"
+              >
+                <Image
+                  src="/pill.png"
+                  alt="BOTS"
+                  width={16}
+                  height={16}
+                  className="rounded-full"
+                />
+                BOTS - LIVE ON PUMP.FUN
+              </a>
+            </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-tight sm:leading-relaxed">
               <span className="flash flash-1">NEXT</span>
               <span className="flash flash-2">-</span>
