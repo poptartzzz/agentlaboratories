@@ -25,7 +25,7 @@ const socialLinks: SocialLink[] = [
   },
   {
     icon: faTelegram,
-    href: "https://t.me/botscreator",
+    href: "https://t.me/botscreatorsol",
     label: "Telegram"
   }
 ];

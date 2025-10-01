@@ -20,7 +20,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: 'Telegram',
-    href: 'https://t.me/botscreator',
+    href: 'https://t.me/botscreatorsol',
     icon: faTelegram
   },
   {

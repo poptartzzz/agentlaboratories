@@ -141,7 +141,7 @@ export default function Header() {
                   <FaTwitter size={18} />
                 </a>
                 <a 
-                  href="https://t.me/botscreator"
+                  href="https://t.me/botscreatorsol"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#00ff00] transition-colors"
@@ -321,7 +321,7 @@ export default function Header() {
                     <FaTwitter size={18} />
                   </a>
                   <a 
-                    href="https://t.me/botscreator"
+                    href="https://t.me/botscreatorsol"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-10 h-10 bg-[#00ff00]/10 border border-[#00ff00]/30 hover:bg-[#00ff00]/20 transition-colors rounded"
